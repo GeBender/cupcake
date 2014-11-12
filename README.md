@@ -1,4 +1,4 @@
-cupcake
+(c) Cupcake: Rapid and Tasty Development Framework.
 =======
 
-Cupcake is a microFramework to autoRoute and autoRender by the url. It is based on the Symfony2 Components. Rapid asd taste.
+Cupcake is a autoRouter and autoRender microFramework based on the Symfony2 Components.
