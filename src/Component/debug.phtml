@@ -1,0 +1,11 @@
+<div class="alert alert-<?php echo $alert; ?>">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>
+	<?php
+	if (isset($backtrace)) {
+        echo $backtrace['file']; ?>
+	 # <?php echo $backtrace['line']; ?></strong><br>
+	 <?php } ?>
+    <?php echo ($message) ? $message . '<br/>' : false; ?>
+    <?php echo (isset($var) === true) ? var_dump($var) : false; ?>
+</div>
