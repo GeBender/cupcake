@@ -1,0 +1,87 @@
+<?php
+/**
+ * (c) CupcakePHP: The Rapid and Tasty Development Framework.
+ *
+ * PHP version 5.5.12
+ *
+ * @author  Ge Bender <gesianbender@gmail.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version GIT: <git_id>
+ * @link    http://cupcake.simplesys.com.br
+ */
+?>
+<ul class="breadcrumb">
+    <li><a href="<?php echo $indexPainel; ?>">Painel</a> <span class="divider">/</span></li>
+    <li><a href="<?php echo $indexController; ?>"><?php echo $titLista; ?></a></li>
+</ul>
+
+<a href="<?php echo $indexController; ?>novo" class="btn btn-small btn-success"><span class="white fa fa-plus"></span> Inserir novo</a>
+
+<div class="row-fluid">
+    <div class="box span12">
+        <div class="box-header well" data-original-title>
+            <h2><i class="<?php echo $icon; ?>"></i> <?php echo $titLista; ?></h2>
+            <?php echo $headerLista; ?>
+        </div>
+        <div class="box-content">
+        <?php if (count($results) > 0) { ?>
+            <table class="table table-striped table-bordered">
+              <thead>
+                  <tr>
+                  <?php foreach ($colunas as $coluna) { ?>
+                      <th><?php echo ucfirst($coluna); ?><a href="<?php echo $lista->getLinkOrder($coluna); ?>"><i class="<?php echo $lista->getIconOrder($coluna); ?> right"></i></a></th>
+                  <?php } ?>
+                      <th>Ações</th>
+                  </tr>
+              </thead>
+              <tbody>
+               <?php
+               foreach ($results as $result) { ?>
+                <tr>
+                <?php foreach ($colunas as $coluna) { ?>
+                    <td><?php echo $pages->showData($result, $coluna); ?></td>
+                <?php } ?>
+                    <td class="center">
+                        <a class="btn btn-mini btn-primary" href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>">
+                            <i class="fa fa-plus-circle white"></i>
+                            Ver
+                        </a>
+                        <a class="btn btn-mini btn-warning" href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>">
+                            <i class="fa fa-pencil-square-o white"></i>
+                            Editar
+                        </a>
+                        <?php //if ($result->podeDeletar() === true) { ?>
+                        <a class="btn btn-mini btn-danger btn-delete" data-rel="<?php echo $result->getId(); ?>" href="#">
+                            <i class="fa fa-trash-o white"></i>
+                            Deletar
+                        </a>
+                        <?php //} ?>
+                    </td>
+                </tr>
+                <?php } ?>
+              </tbody>
+          </table>
+        <?php } else { ?>
+
+            <div class="alert alert-error center" style="margin-top: 15px">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <i class="fa fa-4x fa-frown-o"></i><br/>
+                <strong>Ops!</strong> Nenhum resultado para esta busca.
+            </div>
+
+        <?php } ?>
+
+        <?php echo $pagination; ?>
+
+        </div>
+    </div><!--/span-->
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.btn-delete').click(function() {
+            CupcakeAlert('Confirma a remoção deste registro?', '<a class="btn btn-danger ajax-link" href="<?php echo $indexController; ?>deletar/'+$(this).attr('data-rel')+'/?<?php echo (isset($requestUri[1]) === true) ? urlencode(($requestUri[1])) : ''; ?>"><i class="fa fa-trash-o white"></i> Confirma</a>');
+            CupcakeReady();
+        });
+    });
+</script>

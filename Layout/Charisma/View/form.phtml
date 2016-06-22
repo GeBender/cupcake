@@ -1,0 +1,70 @@
+<?php
+/**
+ * (c) CupcakePHP: The Rapid and Tasty Development Framework.
+ *
+ * PHP version 5.5.12
+ *
+ * @author  Ge Bender <gesianbender@gmail.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @version GIT: <git_id>
+ * @link    http://cupcake.simplesys.com.br
+ */
+?>
+<ul class="breadcrumb">
+    <li><a href="<?php echo $indexPainel; ?>">Painel</a> <span class="divider">/</span></li>
+    <li><a href="<?php echo $indexController; ?>"><?php echo $titulo; ?></a> <span class="divider">/</span></li>
+    <li><a href="#"><?php echo $migalha; ?></a></li>
+</ul>
+
+<a href="<?php echo $indexController; ?>" class="btn btn-small btn-success"><span class="white fa fa-undo"></span> Listar <?php echo $titulo; ?></a>
+
+<div class="row-fluid">
+    <div class="box span12">
+        <div class="box-content">
+            <form class="form-horizontal ajax-form" id="<?php echo $titulo; ?>-form" method="post" action="<?php echo $indexController; ?>salvar">
+                <fieldset>
+                    <input type="hidden" name="<?php echo $titulo; ?>[id]" value="<?php echo $dados->getId(); ?>">
+                    <input type="hidden" name="saida" value="lista">
+                    <input type="hidden" name="flashMsg" value="<?php echo $msgFlash; ?>">
+                    <legend style="margin-bottom: 17px;"><?php echo $acao; ?> de <?php echo $titulo; ?></legend>
+
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <?php for ($i=0; $i<ceil((count($campos) / 2)); $i++) { ?>
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput"><?php echo ucfirst($campos[$i]); ?>:</label>
+                                <div class="controls">
+                                    <?php 
+                                    $param = $campos[$i];
+                                    echo $form->field(
+                                    		$param, 
+                                    		$dados->$param, 
+                                    		array('class' => 'input-xlarge focused')) ?>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+
+                        <div class="span6">
+                            <?php for ($i=$i; isset($campos[$i]) === true; $i++) { ?>
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput"><?php echo ucfirst($campos[$i]); ?>:</label>
+                                <div class="controls">
+                                    <?php
+                                    $param = $campos[$i];
+                                    echo $form->field($param, $dados->$param, array('class' => 'input-xlarge focused')) ?>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="white fa fa-check"></i> Salvar    </button>
+                        <button type="reset" class="btn">Cancelar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

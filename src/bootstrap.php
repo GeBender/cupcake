@@ -67,28 +67,34 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     		$cupcake['debug'],
     		dirname(__DIR__) . DIRECTORY_SEPARATOR . 'tmp'
     );
-    $conn = parse_url($cupcake['config']['db']);
-    $conn['driver'] = str_replace('pdo-mysql', 'pdo_mysql', $conn['scheme']);
-    $conn['dbname'] = substr($conn['path'], 1);
-    $conn['driverOptions'] = array(
-            1002 => 'SET NAMES utf8'
-    );
-    if (isset($conn['pass']) === true) {
-        $conn['password'] = $conn['pass'];
+
+    if (isset($cupcake['config']['db']) === true) {
+        $conn = parse_url($cupcake['config']['db']);
+        $conn['driver'] = str_replace('pdo-mysql', 'pdo_mysql', $conn['scheme']);
+        $conn['dbname'] = substr($conn['path'], 1);
+        $conn['driverOptions'] = array(
+                1002 => 'SET NAMES utf8'
+        );
+        if (isset($conn['pass']) === true) {
+            $conn['password'] = $conn['pass'];
+        }
+        $cupcake['db'] = EntityManager::create($conn, $config);
+    } else {
+        $cupcake['db'] = [];
     }
 
     $config->addCustomStringFunction('REPLACE', 'Cupcake\DoctrineComplements\ReplaceFunction');
 
-    $cupcake['db'] = EntityManager::create($conn, $config);
     $controllerPath = $cupcake['route']['controller'];
 
     $controller = new $controllerPath($cupcake);
     $action = $cupcake['route']['action'];
 
     $loader = new FilesystemLoader(array(
-            dirname(dirname(__FILE__)) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
-            dirname(dirname(__FILE__)) . DS . $cupcake['route']['layoutFolder'] . DS . '%name%',
-            dirname(dirname(__FILE__)) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['layoutFolder'] . DS . '%name%',
+        dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
+        dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',
+        dirname(dirname(__FILE__)) . '/Layout/%name%',
+        dirname(__FILE__).'/Apps/Cupcake/View/%name%',
     ));
     $templateNameParser = new TemplateNameParser();
     $cupcake['Templating'] = new PhpEngine($templateNameParser, $loader);
@@ -96,7 +102,9 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     $respostAction = $controller->$action();
     $toRender = $controller->render($respostAction);
 
-    $cupcake['db']->close();
+    if (is_object($cupcake['db']) === true) {
+        $cupcake['db']->close();
+    }
     return $toRender;
 
 })->assert('url', '.+|');

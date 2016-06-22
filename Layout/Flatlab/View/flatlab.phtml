@@ -1,0 +1,28 @@
+<?php
+if ($v->hasAjax() === false) {
+    echo $header;
+} ?>
+
+<section id="container" class="">
+<?php echo $top; ?>
+
+<?php echo $sidebar; ?>
+
+<!--main content start-->
+<?php if ($v->hasNoVisibleElements() === false)	{ ?>
+<section id="main-content">
+    <section class="wrapper site-min-height">
+<?php } ?>
+    <!-- page start-->
+<?php echo $content; ?>
+    <!-- page end-->
+<?php if ($v->hasNoVisibleElements() === false)	{ ?>
+    </section>
+</section>
+<?php } ?>
+<!--main content end-->
+
+<?php
+if ($v->hasAjax() === false) {
+    echo $footer;
+}

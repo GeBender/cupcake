@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $title; ?></title>
+    <meta name="description" content="Just a simple template, a simple framework and a simple business">
+
+    <?php foreach ($extraHeaderA as $header) {
+        echo $header;
+    } ?>
+
+    <!-- Bootstrap core CSS -->
+    <link href="<?php echo $layoutAsset; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $layoutAsset; ?>css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="<?php echo $layoutAsset; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="<?php echo $layoutAsset; ?>css/style.css" rel="stylesheet">
+    <link href="<?php echo $layoutAsset; ?>css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <?php foreach ($extraHeaderB as $header) {
+        echo $header;
+    } ?>
+
+    <link rel="shortcut icon" href="<?php echo $cupcakeAsset; ?>images/favicon.png">
+    <link rel="icon" href="<?php echo $cupcakeAsset; ?>images/favicon.png" type="image/x-icon">
+    <script type="text/javascript" src="<?php echo $v->getLayoutAsset(); ?>js/jquery.js"></script>
+</head>
+
+<body class="<?php echo (isset($classBody) === true) ? $classBody : ''; ?>">
+
+    <div class="modal hide fade" id="alertDefault">
+        <div class="modal-header" style="padding-bottom: 55px;padding-top: 30px;">
+            <button type="button" class="close" data-dismiss="modal" style="margin-top: -28px;">×</button>
+            <i class="fa-2x fa red fa-exclamation-triangle" style="float: left;margin-right: 15px;"></i><h3 class="left" id="alertDefaultBody">Aviso importante</h3>
+        </div>
+        <div class="modal-footer">
+            <span id="alertBtnAlt" class="left"></span>
+            <a href="#" class="btn" id="dismiss-simplesys-alert" data-dismiss="modal">Fechar</a>
+        </div>
+    </div>

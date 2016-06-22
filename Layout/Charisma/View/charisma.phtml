@@ -1,0 +1,32 @@
+<?php
+if ($v->hasAjax() === false) {
+    echo $header;
+} ?>
+
+<div id="body-content">
+<?php echo $top; ?>
+    <div class="container-fluid">
+		<div class="row-fluid">
+
+<?php
+echo $sidebar;
+if ($v->getNoVisibleElements() === false)	{ ?>
+                <div id="content" class="span10">
+            <!-- content starts -->
+<?php
+}
+echo $content;
+if ($v->getNoVisibleElements() === false)	{ ?>
+            </div>
+            <!-- content ends -->
+<?php
+}
+?>
+        </div>
+    </div>
+</div>
+
+<?php
+if ($v->hasAjax() === false) {
+    echo $footer;
+}

@@ -26,7 +26,7 @@ class Config
     {
         $ambientConfigs = array(
                 'default' => array(
-                        'title' => '(c) CupcakePHP: The Rapid and Tasty Development Framework.',
+                        'title' => 'CupcakePHP: The Rapid and Tasty Development Framework.',
                         'nomeSistema' => 'CupcakePHP'
                 ),
                 'production' => array(
@@ -41,13 +41,13 @@ class Config
 
          $AppConfig = self::getAppConfig();
          $config = array_merge(
-            $ambientConfigs['default'], 
-            (isset($ambientConfigs[getenv('AMBIENT')]) === true) ? $ambientConfigs[getenv('AMBIENT')] : [], 
-            $AppConfig['default'], 
+            $ambientConfigs['default'],
+            (isset($ambientConfigs[getenv('AMBIENT')]) === true) ? $ambientConfigs[getenv('AMBIENT')] : [],
+            (isset($AppConfig['default']) === true) ? $AppConfig['default'] : [],
             (isset($AppConfig[getenv('AMBIENT')]) === true) ? $AppConfig[getenv('AMBIENT')] : []
         );
 
-         return $config;
+        return $config;
 
     }
 
@@ -60,12 +60,13 @@ class Config
     public static function route()
     {
         $AppConfig = self::getAppConfig();
+        $appConfigRoute = (isset($AppConfig['route']) === true) ? $AppConfig['route'] : [];
 
         return array_merge(array(
                 'appName' => 'Cupcake',
                 'entity' => '',
                 'controller' => 'Cupcake\Controller',
-                'action' => 'home',
+                'action' => 'welcomeToCupcake',
                 'arguments' => array(),
                 'appsFolder' => 'Apps',
                 'controllerFolder' => 'Controller',
@@ -74,27 +75,27 @@ class Config
                 'modelFolder' => 'Model',
                 'componentFolder' => 'Component',
                 'webFolder' => 'Web',
-                'layout' => 'charisma',
+                'layout' => 'flatlab',
                 'extensionView' => 'phtml',
                 'view' => 'Index' . DS . 'home',
                 'twig' => true,
                 'contentVar' => 'content',
                 'assetFolder' => 'assets',
-                'cupcakeFolder' => 'Cupcake',
+                'cupcakeFolder' => 'vendor/cupcake',
                 'uploadsFolder' => 'uploads',
-        ), $AppConfig['route']);
+        ), $appConfigRoute);
 
     }
 
 
     public static function getAppConfig()
     {
-        $AppsConfig = Apps\Config::load();
-        $appConfigClass = 'Apps\\' . $AppsConfig['route']['defaultApp'] . '\\Config';
+        if(class_exists('Apps\Config') === true) {
+            $AppsConfig = Apps\Config::load();
+            $appConfigClass = 'Apps\\' . $AppsConfig['route']['defaultApp'] . '\\Config';
 
-        return $appConfigClass::load();
-
+            return $appConfigClass::load();
+        }
+        return [];
     }
-
-
 }

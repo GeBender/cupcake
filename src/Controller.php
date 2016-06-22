@@ -86,16 +86,22 @@ class Controller
         $this->app['GPS']->route['layout'] = $layout;
     }
 
+    public function welcomeToCupcake()
+    {
+        $this->hideElements();
+        $this->layout = 'Flatlab';
+        //
+    }
 
     public function home()
     {
-    	if ($this->app['route']['entity'] !== '') {
-    		if (class_exists($this->app['route']['entity']) === false) {
+        if ($this->app['route']['entity'] !== '') {
+            if (class_exists($this->app['route']['entity']) === false) {
     			$this->layout = false;
     			$this->hideElements();
     			return $this->renderView('Index/404.phtml');
     		}
-    		
+
     		$this->view = 'lista.phtml';
             $this->help('Lista');
 
@@ -234,11 +240,12 @@ class Controller
      */
     public function setBaseVars()
     {
-        $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['layoutFolder'] . '/' . $this->app['GPS']->route['layout'] . '/'. $this->app['GPS']->route['assetFolder'] . '/');
-        $this->setCupcakeAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['cupcakeFolder'] . '/' . $this->app['GPS']->route['assetFolder'] . '/');
+        $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->getLayoutAsset());
+        $this->setCupcakeAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['cupcakeFolder'] . '/src/assets/');
         $this->setAppAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['appsFolder'] . '/' . $this->app['GPS']->route['appName'] . '/' . $this->app['GPS']->route['assetFolder'] . '/');
         $this->setUploadsApp('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['appsFolder'] . '/' . $this->app['GPS']->route['appName'] . '/' . $this->app['GPS']->route['uploadsFolder'] . '/');
-        ($this->app['GPS']->route['appName'] !== $this->app['GPS']->route['defaultApp']) ? $appName = $this->app['GPS']->route['appName'] . '/' : $appName = false;
+        $this->app['GPS']->route['defaultApp'] = (isset($this->app['GPS']->route['defaultApp']) === false) ? $this->app['GPS']->route['appName'] : $this->app['GPS']->route['defaultApp'];
+        $appName = ($this->app['GPS']->route['appName'] !== $this->app['GPS']->route['defaultApp']) ? $this->app['GPS']->route['appName'] . '/' : '';
 
         $url = '//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/';
         $this->setUrl($url);
@@ -333,7 +340,7 @@ class Controller
      */
     public function view()
     {
-        return $this->app['Templating']->render($this->app['GPS']->getViewFile($this->view), $this->app['Vars']->vars);
+        return $this->app['Templating']->render($this->view, $this->app['Vars']->vars);
 
     }
 
@@ -378,21 +385,21 @@ class Controller
     	$this->setArgs($this->args);
         ob_start();
         $componentClassName = $this->app['GPS']->getComponentClassName($component, $this->layout);
-                
+
         if ($componentClassName !== false) {
             $componentClass = new $componentClassName($this->app);
-            
+
             if ($this->layout !== null) {
                 $componentClass->setLayout($this->layout);
             }
-            
+
             $vars = $this->app['Vars']->vars;
             $componentClass->index();
             extract($componentClass->app['Vars']->vars);
         }
 
         extract(isset($vars) === true ? $vars : $this->app['Vars']->vars);
-		
+
         $componentViewFile = $this->app['GPS']->getComponentViewFile($component);
         require $componentViewFile;
         $content = ob_get_clean();

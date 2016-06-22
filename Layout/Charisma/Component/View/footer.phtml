@@ -1,0 +1,78 @@
+<?php if ($noVisibleElements === false)    { ?>
+
+        <hr>
+
+        <div class="modal hide fade" id="myModal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Settings</h3>
+            </div>
+            <div class="modal-body">
+                <p>Here settings can be configured...</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+
+        <footer>
+
+        <div class="left" style="margin-left: 20px;">
+            &copy; Copyright <?php echo date('Y'); ?>
+        </div>
+
+        </footer>
+<?php } ?>
+
+<div class="loading-modal no-print"><a class="modal-spin fa white fa-spinner fa-spin fa-4x fa-fw"></a></div>
+<div class="dark-screen no-print"></div>
+<div class="history-main-content"></div>
+
+ 	<script type="text/javascript"  src="<?php echo $cupcakeAsset; ?>js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" defer src="<?php echo $cupcakeAsset; ?>jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/bootstrap.js?v=20160321"></script>
+
+    <?php foreach ($extraFooter as $footer) {
+	    echo $footer;
+	} ?>
+
+
+	<script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/jquery.noty.js"></script>
+	<script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/charisma.min.js"></script>
+	<div class="noty_bar noty_theme_default noty_layout_top noty_error hide" id="naoImplementado" style="cursor: pointer;"><div class="noty_message"><span class="noty_text noty_error_msg"></span></div></div>
+	<div class="noty_bar noty_theme_default noty_layout_top noty_warning hide" style="cursor: pointer;"><div class="noty_message"><span class="noty_text noty_warning_msg"></span></div></div>
+    <script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/simplesys.js?v=20160321"></script>
+
+	<?php if($alert !== false) { ?>
+    <script>
+    $(document).ready(function() {
+    	CupcakeAlert('<?php echo $alert; ?>');
+    });
+    </script>
+    <?php } ?>
+
+    <?php if ($topFull !== false) { ?>
+        <button class="noty" style="display: none;" id="top-full-call" data-noty-options='{<?php echo $topFull; ?>}'></button>
+        <script>
+        $(document).ready(function() {
+            $('#top-full-call').click();
+        });
+        </script>
+    <?php } ?>
+
+    <?php if ($modal !== false) { ?>
+        <div class="modal hide fade" id="cupcakeModal">
+            <?php echo $modal; ?>
+        </div>
+
+        <script>
+        $(document).ready(function() {
+        	$('#cupcakeModal').modal('show');
+        });
+        </script>
+    <?php } ?>
+
+</body>
+</html>

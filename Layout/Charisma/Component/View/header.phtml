@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="pt-br" ng-app="cupcakeApp">
+<head>
+	<!--
+		Charisma v1.0.0
+
+		Copyright 2012 Muhammad Usman
+		Licensed under the Apache License v2.0
+		http://www.apache.org/licenses/LICENSE-2.0
+
+		http://usman.it
+		http://twitter.com/halalit_usman
+	-->
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title><?php echo $titulo; ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta NAME="Author" CONTENT="GeBender">
+	<meta name="description" content="Just a simple template, a simple framework and a simple business">
+
+	<?php foreach ($extraHeaderA as $header) {
+	    echo $header;
+	} ?>
+
+	<!-- Charisma -->
+	<link href="<?php echo $cupcakeAsset; ?>css/bootstrap-classic-responsive-app.css?v=20160321" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		body {
+			padding-bottom: 40px;
+		}
+
+		@media print
+		{
+			table { page-break-after:auto }
+		  	tr    { page-break-inside:avoid; page-break-after:auto }
+		  	td    { page-break-inside:avoid; page-break-after:auto }
+			thead { display:table-header-group }
+			tfoot { display:table-footer-group }
+		}
+
+		.sidebar-nav {
+			padding: 9px 0;
+		}
+	</style>
+
+    <link type="text/css" rel='stylesheet' href="<?php echo $cupcakeAsset; ?>jquery-ui/jquery-ui.min.css">
+    <link type="text/css" rel='stylesheet' href="<?php echo $cupcakeAsset; ?>css/jquery.noty.css">
+    <link type="text/css" rel='stylesheet' href="<?php echo $cupcakeAsset; ?>css/noty_theme_default.css">
+    <link type="text/css" rel="stylesheet" href="<?php echo $cupcakeAsset; ?>css/simplesys.css?v=20160321" />
+    <link type="text/css" rel="stylesheet" href="<?php echo $cupcakeAsset; ?>css/fonts/font-awesome/css/font-awesome.min.css" />
+
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<?php foreach ($extraHeaderB as $header) {
+	    echo $header;
+	} ?>
+
+	<link type="text/css" rel="stylesheet" href="<?php echo $cupcakeAsset; ?>css/bootstrap-vertical-tabs.css?v=20160321" />
+	<link rel="shortcut icon" href="<?php echo $cupcakeAsset; ?>images/<?php echo $favicon; ?>">
+    <link rel="icon" href="<?php echo $cupcakeAsset; ?>images/<?php echo $favicon; ?>" type="image/x-icon">
+    <!--  --><script type="text/javascript" src="<?php echo $cupcakeAsset; ?>js/jquery/jquery-1.12.2.min.js?v=20160321"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-65021268-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+<body>
+<base href="/"/>
+
+	<div class="modal hide fade no-print" id="alertDefault">
+		<div class="modal-header" style="padding-bottom: 55px;padding-top: 30px;">
+			<button type="button" class="close" data-dismiss="modal" style="margin-top: -28px;">×</button>
+			<i class="fa-2x fa red fa-exclamation-triangle" style="float: left;margin-right: 15px;"></i><h3 class="left" id="alertDefaultBody">Aviso importante</h3>
+		</div>
+		<div class="modal-footer">
+			<span id="alertBtnAlt" class="left"></span>
+			<a href="#" class="btn" id="dismiss-simplesys-alert" data-dismiss="modal">Fechar</a>
+		</div>
+	</div>

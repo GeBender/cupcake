@@ -1,0 +1,64 @@
+
+<footer class="bgcolor-2" style="padding-top: 15px; <?php if(isset($rodapeSimples) === true) { ?>padding-bottom:0px; margin-top:15px;<?php } ?>">
+<div class="container">
+
+	<div class="copyright" style="clear: both;">
+		 © <?php echo date('Y') ?> - Logístick Sistemas para locação, entrega e coleta<br/>
+		 <?php if(isset($rodapeSimples) === false) { ?>
+			 Florianópolis - Santa Catarina - Brasil<br/>
+			 Fones: (48) 3065-0993 / 9847-1396<br>
+			 E-mail: <a href="mailto:assine@logistick.com.br">assine@logistick.com.br</a>
+		 <?php } ?>
+	</div>
+
+	<?php if(isset($rodapeSimples) === false) { ?>
+	<ul class="social-icons">
+		<li><a href="//facebook.com/cacambanet/" target="facebook"><span class="fa fa-facebook-square"></span></a></li>
+		<li><a href="//twitter.com/cacambanet" target="twitter"><span class="fa fa-twitter-square"></span></a></li>
+<!-- 		<li><a href=""><span class="fa fa-pinterest-square"></span></a></li> -->
+		<li><a href="//plus.google.com/u/2/113765610097061933907/posts" target="plus"><span class="fa fa-google-plus-square"></span></a></li>
+<!-- 		<li><a href=""><span class="fa fa-instagram"></span></a></li> -->
+<!-- 		<li><a href=""><span class="fa fa-linkedin-square"></span></a></li> -->
+	</ul>
+<?php } ?>
+</div>
+</footer>
+
+<!-- =========================
+     SCRIPTS
+============================== -->
+
+<script>
+/* =================================
+   LOADER
+=================================== */
+// makes sure the whole site is loaded
+jQuery(window).load(function() {
+	"use strict";
+        // will first fade out the loading animation
+	jQuery(".status").fadeOut();
+        // will fade out the whole DIV that covers the website.
+	jQuery(".preloader").delay(1000).fadeOut("slow");
+})
+
+</script>
+
+<script src="<?php echo $layoutAsset; ?>js/bootstrap.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/retina-1.1.0.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/smoothscroll.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.scrollTo.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.localScroll.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/owl.carousel.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/nivo-lightbox.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/simple-expand.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.nav.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.fitvids.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.ajaxchimp.min.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/jquery.maskedinput.js"></script>
+<script src="<?php echo $layoutAsset; ?>js/custom.js"></script>
+<script src="<?php echo $appAsset; ?>js/landX4.js"></script>
+<!-- ****************
+      After neccessary customization/modification, Please minify JavaScript/jQuery according to http://browserdiet.com/en/ for better performance
+     **************** -->
+</body>
+</html>

@@ -9,7 +9,7 @@
  * @version   GIT: <git_id>
  * @link      http://cupcake.simplesys.com.br
  */
- 
+
 namespace Cupcake;
 
 /**
