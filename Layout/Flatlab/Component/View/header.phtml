@@ -13,11 +13,17 @@
     <!-- Bootstrap core CSS -->
     <link href="<?php echo $layoutAsset; ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $layoutAsset; ?>css/bootstrap-reset.css" rel="stylesheet">
+    <link href="<?php echo $layoutAsset; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo $layoutAsset; ?>assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+    <link href="<?php echo $layoutAsset; ?>assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+   <link rel="stylesheet" href="<?php echo $layoutAsset; ?>css/owl.carousel.css" type="text/css">
+
     <!--external css-->
-    <link href="<?php echo $layoutAsset; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
     <!-- Custom styles for this template -->
     <link href="<?php echo $layoutAsset; ?>css/style.css" rel="stylesheet">
     <link href="<?php echo $layoutAsset; ?>css/style-responsive.css" rel="stylesheet" />
+    <link href="<?php echo $cupcakeAsset; ?>css/cupcake.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -29,20 +35,24 @@
         echo $header;
     } ?>
 
-    <link rel="shortcut icon" href="<?php echo $cupcakeAsset; ?>images/favicon.png">
-    <link rel="icon" href="<?php echo $cupcakeAsset; ?>images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>">
+    <link rel="icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>" type="image/x-icon">
     <script type="text/javascript" src="<?php echo $v->getLayoutAsset(); ?>js/jquery.js"></script>
 </head>
 
 <body class="<?php echo (isset($classBody) === true) ? $classBody : ''; ?>">
 
-    <div class="modal hide fade" id="alertDefault">
-        <div class="modal-header" style="padding-bottom: 55px;padding-top: 30px;">
-            <button type="button" class="close" data-dismiss="modal" style="margin-top: -28px;">×</button>
-            <i class="fa-2x fa red fa-exclamation-triangle" style="float: left;margin-right: 15px;"></i><h3 class="left" id="alertDefaultBody">Aviso importante</h3>
-        </div>
-        <div class="modal-footer">
-            <span id="alertBtnAlt" class="left"></span>
-            <a href="#" class="btn" id="dismiss-simplesys-alert" data-dismiss="modal">Fechar</a>
-        </div>
-    </div>
+    <div class="modal fade" id="alertDefault" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="default-modal-title">Atenção</h4>
+                 </div>
+                 <div class="modal-body" id="default-modal-body"></div>
+                 <div class="modal-footer" id="modal-footer-default">
+                     <button class="btn btn-info" data-dismiss="modal" id="btn-modal-default" type="button"> Ok</button>
+                 </div>
+             </div>
+         </div>
+     </div>

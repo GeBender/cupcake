@@ -97,19 +97,29 @@ class Controller
     {
         if ($this->app['route']['entity'] !== '') {
             if (class_exists($this->app['route']['entity']) === false) {
-    			$this->layout = false;
+    			$this->layout = 'Flatlab';
+    			$this->setClassBody("body-404");
     			$this->hideElements();
     			return $this->renderView('Index/404.phtml');
     		}
 
     		$this->view = 'lista.phtml';
             $this->help('Lista');
-
+            
+            $class = $this->app['route']['entity'];
+            $dados = new $class();
+            $this->setDados($dados);
+            
             $this->setResults($this->Lista->get());
             $this->setTitLista($this->app['route']['entity']);
 
-            $this->setColunas(array_keys(get_class_vars($this->app['route']['entity'])));
-            $this->setIcon('fa fa-star-o');
+            $class = $this->app['route']['entity'];
+            $model = new $class();
+            $this->setColunas($model->getColunasDaLista());
+            
+            $class = $this->app['route']['entity'];
+            $dados = new $class();
+            $this->setIcon($dados->getIcon());
         } else {
             $controllerPath = '\Apps\\' . $this->app['route']['appName'] . '\Controller\IndexController';
             $controller = new $controllerPath($this->app);
@@ -129,9 +139,11 @@ class Controller
         $dados = new $class();
         $this->setDados($dados);
 
+        $this->setIcon($dados->getIcon());
+        $this->setSaida($dados->getSaida());
         $this->setCampos(array_keys(get_class_vars($this->app['route']['entity'])));
         $this->setTitulo($this->app['route']['entity']);
-        $this->setMigalha('Novo registro');
+        $this->setMigalha('Cadastro');
         $this->setAcao('Cadastro');
         $this->setMsgFlash('Registro inserido com sucesso!');
 
@@ -150,10 +162,12 @@ class Controller
         }
 
         $this->setDados($dados);
-
+        $this->setSaida($dados->getSaida());
+        
+        $this->setIcon($dados->getIcon());
         $this->setCampos(array_keys(get_class_vars($this->app['route']['entity'])));
         $this->setTitulo($this->app['route']['entity']);
-        $this->setMigalha('Edição do registro nº ' . $this->args[0]);
+        $this->setMigalha('Edição');
         $this->setAcao('Edição');
         $this->setMsgFlash('Registro editado com sucesso!');
 
@@ -162,7 +176,8 @@ class Controller
 
     public function ver()
     {
-        $this->view = 'view.phtml';
+    	$this->view = 'view.phtml';
+        $this->help('Pages');
 
         $dados = $this->DAO->find($this->args[0]);
         $this->setDados($dados);
@@ -171,7 +186,7 @@ class Controller
         $this->setTitulo($this->app['route']['entity']);
         $this->setMigalha('Registro nº ' . $this->args[0]);
         $this->setAcao('Detalhes');
-        $this->setIcon('fa fa-star-o');
+        $this->setIcon($dados->getIcon());
 
     }
 
@@ -183,18 +198,20 @@ class Controller
      */
     public function salvar()
     {
-        $this->layout = false;
+    	$this->layout = false;
         $dados = $this->DAO->listen($_POST);
 
         $this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
-        	Flash::topFull($_POST['flashMsg'], 'information');
+        	Flash::alert($_POST['flashMsg'], 'information');
         }
 
         $saida = (isset($_POST['saida']) === true) ? $_POST['saida'] : '';
         if ($saida === 'view') {
             return '2;' . $this->getIndexController() . 'ver/' . $dados->getId();
+        } elseif($saida === 'reload') {
+        	return 'reload';
         } else {
             return '2;' . $this->getIndexController();
         }
@@ -242,6 +259,7 @@ class Controller
     {
         $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->getLayoutAsset());
         $this->setCupcakeAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['cupcakeFolder'] . '/src/assets/');
+        $this->setAppFolder($this->app['config']['folder']);
         $this->setAppAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['appsFolder'] . '/' . $this->app['GPS']->route['appName'] . '/' . $this->app['GPS']->route['assetFolder'] . '/');
         $this->setUploadsApp('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['appsFolder'] . '/' . $this->app['GPS']->route['appName'] . '/' . $this->app['GPS']->route['uploadsFolder'] . '/');
         $this->app['GPS']->route['defaultApp'] = (isset($this->app['GPS']->route['defaultApp']) === false) ? $this->app['GPS']->route['appName'] : $this->app['GPS']->route['defaultApp'];
@@ -369,7 +387,6 @@ class Controller
         $layout->index();
 
         return $this->app['Templating']->render($this->app['GPS']->getLayoutViewFile(), $this->app['Vars']->vars);
-
     }
 
 
@@ -418,13 +435,11 @@ class Controller
         $this->DAO->deletar($this->args[0]);
 
         if (isset($_GET['saida']) === true) {
-            $saida = '4;' . $this->getIndex() . urldecode($_GET['saida']);
+            $saida = '4;' . urldecode($_GET['saida']);
         } else {
             $saida = '4;' . $this->getIndexController();
         }
-
-        Flash::topFull('Registro deletado com sucesso.', 'information');
-
+        
         return $saida;
 
     }

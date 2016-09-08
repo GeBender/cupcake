@@ -6,7 +6,7 @@ Website: http://thevectorlab.net/
 */
 
 /* Import fonts */
-/* @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic); */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
 body {
     color: #797979;
@@ -85,6 +85,9 @@ a, a:hover, a:focus {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+.form-control {
+	color: #555555;
 }
 .form-signin .form-control:focus {
     z-index: 2;
@@ -4632,4 +4635,21 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .site-min-height {
     min-height: 900px;
+}
+
+.breadcrumb {
+    margin-bottom: 10px;
+}
+
+.panel {
+    margin-top: 10px;
+}
+
+footer {
+    position: relative;
+}
+
+#sidebar {
+    margin-bottom: 50px;
+    padding-bottom: 50px;
 }

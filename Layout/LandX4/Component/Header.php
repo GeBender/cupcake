@@ -17,7 +17,7 @@ class Header extends LogistickController
 {
 
 	public $layout = 'LandX4';
-	
+
 	public function __construct($app)
 	{
 		$this->allow();
@@ -35,7 +35,7 @@ class Header extends LogistickController
         $this->setTitulo($this->getSistema()->getTitulo());
         $this->setDescription($this->getSistema()->getDescricao());
         $this->setFavicon($this->getSistema()->getFavicon());
-        
+
         if ($this->app['Vars']->getExtraHeaderA() === false) {
             $this->setExtraHeaderA(array());
         }

@@ -11,21 +11,38 @@
  */
 namespace Cupcake\helpers;
 
+use Doctrine\ORM\PersistentCollection;
+
 class Pages extends \Cupcake\Helper
 {
 
 
+	public function viewLista($result, $field) {
+		$viewer = 'viewLista'.ucfirst($field);
+		if(method_exists($result, $viewer) === true) {
+			return $result->$viewer();
+		}
+		return $this->showData($result, $field);
+	}
+	
     public function showData($result, $field)
     {
-        if ($result->$field instanceof \DateTime) {
-            return date('d-m-Y - H:i \h.', $result->$field->getTimestamp());
-        } else if (is_object($result->$field) === true) {
-            (property_exists($result->$field, 'identifier') === true) ? $getter = 'get' . ucfirst($result->$field->getIdentifier()) : $getter = 'getId';
-            return $result->$field->$getter();
-        } else {
-            $getter = 'get'.ucfirst($field);
-            return $result->$getter();
+    	$getter = 'get'.ucfirst($field);
+    	
+    	if ($result->$getter() instanceof \DateTime) {
+    	    return date('d-m-Y - H:i \h.', $result->$getter()->getTimestamp());
+        } else if($result->$getter() instanceof PersistentCollection) {
+        	$mapping = $result->$getter()->getMapping();
+        	$mappedClass = $mapping['targetEntity'];
+        	$mapped = new $mappedClass();
+        	
+        	$compl = ($result->$getter()->count() > 0 ) ? $mapped->getPlural() : $mapped->getSingular();
+        	return $result->$getter()->count() . ' ' . $compl;
+        } else if (is_object($result->$getter()) === true) {
+        	(property_exists($result->$getter(), 'identifier') === true) ? $getter2 = 'get' . ucfirst($result->$getter()->getIdentifier()) : $getter2 = 'getId';
+            return $result->$getter()->$getter2();
         }
+        return $result->$getter();
 
     }
 

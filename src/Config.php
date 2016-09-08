@@ -66,7 +66,7 @@ class Config
                 'appName' => 'Cupcake',
                 'entity' => '',
                 'controller' => 'Cupcake\Controller',
-                'action' => 'welcomeToCupcake',
+                'action' => 'home',
                 'arguments' => array(),
                 'appsFolder' => 'Apps',
                 'controllerFolder' => 'Controller',

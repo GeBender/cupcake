@@ -1,5 +1,5 @@
-<span class="right" style="font-weight: normal; font-size: 13px;">Total: <b><?php echo $lista->getTotal(); ?></b> registros,
-<select id="select-limit" style="width: 70px;">
+<span class="right form-inline" style="font-weight: normal; font-size: 13px;">Total: <b><?php echo $lista->getTotal(); ?></b> registros,
+<select id="select-limit" class="form-control" style="width: 80px;">
   <option <?php if ($lista->limit === '10') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(5); ?>">5</option>
   <option <?php if ($lista->limit === '10') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(10); ?>">10</option>
   <option <?php if ($lista->limit === '25') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(25); ?>">25</option>

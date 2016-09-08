@@ -30,7 +30,7 @@ class Footer extends \Cupcake\Controller
         $this->setModal(Flash::getModal());
 
         if ($this->app['Vars']->getExtraFooter() === false) {
-            $this->setExtraFooter(array());
+            $this->setExtraFooter([]);
         }
 
     }

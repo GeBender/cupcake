@@ -34,10 +34,22 @@ var Script = function () {
     var y = date.getFullYear();
 
     $('#calendar').fullCalendar({
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Sepembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+        dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+        eventLimitText: 'mais',
+        lang: 'pt-BR',
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,basicWeek,basicDay'
+        },
+        buttonText: {
+           today:    'hoje',
+           month:    'mês',
+           week:     'semana',
+           day:      'dia'
         },
         editable: true,
         droppable: true, // this allows things to be dropped onto the calendar !!!

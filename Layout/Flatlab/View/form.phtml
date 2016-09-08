@@ -10,54 +10,55 @@
  * @link    http://cupcake.simplesys.com.br
  */
 ?>
-<ul class="breadcrumb">
-    <li><a href="<?php echo $indexPainel; ?>">Painel</a> <span class="divider">/</span></li>
-    <li><a href="<?php echo $indexController; ?>"><?php echo $titulo; ?></a> <span class="divider">/</span></li>
-    <li><a href="#"><?php echo $migalha; ?></a></li>
-</ul>
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="breadcrumb">
+            <li><a href="<?php echo $indexPainel; ?>"><i class="fa fa-home"></i> Painel</a></li>
+            <li><a href="<?php echo $indexController; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></a></li>
+            <li class="active"><i class="fa fa-plus"></i> Inserir nov<?php echo $dados->getGenero(); ?> <?php echo $dados->getSingular(); ?></li>
+        </ul>
 
-<a href="<?php echo $indexController; ?>" class="btn btn-small btn-success"><span class="white fa fa-undo"></span> Listar <?php echo $titulo; ?></a>
+        <a href="<?php echo $indexController; ?>" class="btn btn-small btn-success">
+            <span class="white fa fa-undo"></span> Listar
+        </a>
 
-<div class="row-fluid">
-    <div class="box span12">
-        <div class="box-content">
-            <form class="form-horizontal ajax-form" id="<?php echo $titulo; ?>-form" method="post" action="<?php echo $indexController; ?>salvar">
-                <fieldset>
-                    <input type="hidden" name="<?php echo $titulo; ?>[id]" value="<?php echo $dados->getId(); ?>">
-                    <input type="hidden" name="saida" value="lista">
-                    <input type="hidden" name="flashMsg" value="<?php echo $msgFlash; ?>">
-                    <legend style="margin-bottom: 17px;"><?php echo $acao; ?> de <?php echo $titulo; ?></legend>
+        <section class="panel">
+            <header class="panel-heading">
+                <i class="<?php echo $icon; ?>"></i> Nov<?php echo $dados->getGenero(); ?> <?php echo $dados->getSingular(); ?>
+            </header>
+            <div class="row panel-body">
+                <div class="col-sm-12">
+                    <form class="form-horizontal tasi-form ajax-form" id="<?php echo $titulo; ?>-form" method="post" action="<?php echo $indexController; ?>salvar">
+                        <fieldset>
+                            <input type="hidden" name="<?php echo $titulo; ?>[id]" value="<?php echo $dados->getId(); ?>">
+                            <input type="hidden" name="saida" value="<?php echo $saida; ?>">
+                            <input type="hidden" name="flashMsg" value="<?php echo $msgFlash; ?>">
 
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <?php for ($i=0; $i<ceil((count($campos) / 2)); $i++) { ?>
-                            <div class="control-group">
-                                <label class="control-label" for="focusedInput"><?php echo ucfirst($campos[$i]); ?>:</label>
-                                <div class="controls">
-                                    <?php echo $form->field($campos[$i], $dados->$campos[$i], array('class' => 'input-xlarge focused')) ?>
+                            <?php for ($i=0; isset($campos[$i]) === true; $i++) { ?>
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label" for="form-field-<?php echo $i; ?> ">
+                                    <strong><?php echo $dados->getLabel($campos[$i]); ?>:</strong>
+                                </label>
+                                <div class="col-sm-10">
+                                    <?php echo $form->field($campos[$i], $dados->$campos[$i], array('class' => 'form-control', 'id' => 'form-field'.$i)); ?>
                                 </div>
                             </div>
                             <?php } ?>
-                        </div>
+                            <div class="form-group">
+                                <class class="col-lg-2 col-sm-2 control-label"></class>
 
-                        <div class="span6">
-                            <?php for ($i=$i; isset($campos[$i]) === true; $i++) { ?>
-                            <div class="control-group">
-                                <label class="control-label" for="focusedInput"><?php echo ucfirst($campos[$i]); ?>:</label>
-                                <div class="controls">
-                                    <?php echo $form->field($campos[$i], $dados->$campos[$i], array('class' => 'input-xlarge focused')) ?>
-                                </div>
+                                <class class="col-lg-10" style="text-align:right">
+                                    <button type="submit" class="btn btn-warning btn-shadow" style="width:150px">
+                                        <i class="white fa fa-check"></i> Salvar</button>
+                                    <button type="reset" class="btn btn-default btn-shadow darkgray">
+                                        <i class="white fa fa-eraser darkgray"></i> Cancelar
+                                    </button>
+                                </class>
                             </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="white fa fa-check"></i> Salvar    </button>
-                        <button type="reset" class="btn">Cancelar</button>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </section>
     </div>
 </div>

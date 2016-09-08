@@ -22,7 +22,7 @@ class Header extends \Cupcake\Controller
     public function index()
     {
         $this->setTitulo($this->app['config']['title']);
-        $this->setClassBody("body-404");
+        // $this->setClassBody("body-404");
         if ($this->app['Vars']->getExtraHeaderA() === false) {
 
             $this->setExtraHeaderA(array());

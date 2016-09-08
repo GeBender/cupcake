@@ -62,8 +62,8 @@ class Lista extends \Cupcake\Helper
             ->select($this->app['route']['entity'])
             ->from($this->app['route']['entity'], $this->app['route']['entity'])
             ->where($this->mountWhere())
-//             ->setFirstResult($this->offset)
-//             ->setMaxResults($this->limit)
+            ->setFirstResult($this->offset)
+            ->setMaxResults($this->limit)
             ->orderBy($this->app['route']['entity'] . '.' . $this->order, $this->direction);
 
         if (count($criteria) > 0) {
@@ -73,7 +73,7 @@ class Lista extends \Cupcake\Helper
         }
 
         $qb = $qb->getQuery();
-        //$this->paginator = new Paginator($qb, true);
+        $this->paginator = new Paginator($qb, true);
         $lista = $qb->getResult();
         $this->useComponent('HeaderLista');
         $this->useComponent('Pagination');
@@ -219,8 +219,8 @@ class Lista extends \Cupcake\Helper
 
     public function getTotal()
     {
-        return false;
-//         return $this->paginator->count();
+//        return false;
+         return $this->paginator->count();
 
     }
 
@@ -281,6 +281,10 @@ class Lista extends \Cupcake\Helper
 
     }
 
+    public function getTituloColuna($coluna) {
+    	return $this->model->getLabel($coluna);
+    }
+    
 
     public function getPaginateTamanho()
     {

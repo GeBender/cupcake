@@ -1,91 +1,43 @@
-function countUp(count)
+$(document).ready(function() {
+    $('.count-up').show(function() {
+
+        countUp($(this).html(), $(this));
+    })
+});
+function countUp(count, display)
 {
     var div_by = 100,
         speed = Math.round(count / div_by),
-        $display = $('.count'),
+        $display = display,
         run_count = 1,
+        fracao = 0,
         int_speed = 24;
 
+        if (speed == 0) {
+            speed = 1;
+        }
+
+        fracao = (count - parseInt(count));
+        count = (count - fracao);
+
+        $display.text(0);
+        $display.css('visibility', 'visible');
+
     var int = setInterval(function() {
-        if(run_count < div_by){
+        if((speed * run_count) <= count){
             $display.text(speed * run_count);
+
+            if ((speed * run_count) == count) {
+                $display.text(FormatCurrency(count + fracao));
+            }
             run_count++;
-        } else if(parseInt($display.text()) < count) {
-            var curr_count = parseInt($display.text()) + 1;
-            $display.text(curr_count);
-        } else {
-            clearInterval(int);
         }
     }, int_speed);
+
 }
 
-countUp(495);
 
-function countUp2(count)
+function FormatCurrency (amount)
 {
-    var div_by = 100,
-        speed = Math.round(count / div_by),
-        $display = $('.count2'),
-        run_count = 1,
-        int_speed = 24;
-
-    var int = setInterval(function() {
-        if(run_count < div_by){
-            $display.text(speed * run_count);
-            run_count++;
-        } else if(parseInt($display.text()) < count) {
-            var curr_count = parseInt($display.text()) + 1;
-            $display.text(curr_count);
-        } else {
-            clearInterval(int);
-        }
-    }, int_speed);
+    return amount.toLocaleString('pt-BR', { style: 'decimal', currency: 'USD' });
 }
-
-countUp2(947);
-
-function countUp3(count)
-{
-    var div_by = 100,
-        speed = Math.round(count / div_by),
-        $display = $('.count3'),
-        run_count = 1,
-        int_speed = 24;
-
-    var int = setInterval(function() {
-        if(run_count < div_by){
-            $display.text(speed * run_count);
-            run_count++;
-        } else if(parseInt($display.text()) < count) {
-            var curr_count = parseInt($display.text()) + 1;
-            $display.text(curr_count);
-        } else {
-            clearInterval(int);
-        }
-    }, int_speed);
-}
-
-countUp3(328);
-
-function countUp4(count)
-{
-    var div_by = 100,
-        speed = Math.round(count / div_by),
-        $display = $('.count4'),
-        run_count = 1,
-        int_speed = 24;
-
-    var int = setInterval(function() {
-        if(run_count < div_by){
-            $display.text(speed * run_count);
-            run_count++;
-        } else if(parseInt($display.text()) < count) {
-            var curr_count = parseInt($display.text()) + 1;
-            $display.text(curr_count);
-        } else {
-            clearInterval(int);
-        }
-    }, int_speed);
-}
-
-countUp4(10328);

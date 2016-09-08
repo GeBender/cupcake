@@ -29,9 +29,39 @@ abstract class Model
     const OFFSET = 0;
 
     const GROUP = false;
+    
+    protected $id;
 
     protected $listSeparator = ', ';
+    
+    protected $icon = 'fa fa-star-o';
 
+    protected $saida = 'lista';
+    
+    protected $labels = [];
+    
+    protected $plural;
+    
+    protected $singular;
+    
+    protected $genero = 'o';
+    
+    protected $identifier = 'id';
+
+    protected $internalFields = [
+    		'listSeparator',
+    		'icon',
+    		'saida',
+    		'labels',
+    		'plural',
+    		'singular',
+    		'genero',
+    		'identifier',
+    		'internalFields',
+    		'extraInternalFields'
+    ];
+    
+    protected $extraInternalFields = [];
 
     /**
      * Call dinamico para invocar getters e setters pelo fw
@@ -73,6 +103,16 @@ abstract class Model
         die('Método de Model não encontrado: <b>'.$name . '</b> em ' . $stacktrace[0]['file'] . '#' . $stacktrace[0]['line']);
 
     }
+    
+    public function getId()
+    {
+    	return $this->id;
+    }
+    
+    public function get($campo) {
+    	$getter = 'get' . ucfirst($campo);
+    	return $this->$getter();
+    }
 
 
     public function defineCallParam($name)
@@ -97,6 +137,10 @@ abstract class Model
     	return $name;
     }
 
+    public function getIcon()
+    {
+    	return $this->icon;
+    }
 
     public function udata($data)
     {
@@ -204,4 +248,36 @@ abstract class Model
     }
 
 
+    public function getLabel($coluna)
+    {
+    	return (isset($this->labels[$coluna]) === true) ? $this->labels[$coluna] : ucfirst($coluna); 
+    }
+    
+    public function getPlural()
+    {
+    	if ((bool) $this->plural === true) {
+    		return $this->plural;
+    	} 
+    	
+    	return get_class($this); 
+    	
+    }
+
+    public function getSingular()
+    {
+    	if ((bool) $this->singular === true) {
+    		return $this->singular;
+    	} 
+    	
+    	return get_class($this); 
+    	
+    }
+    
+    public function getColunasDaLista()
+    {
+    	$internalFields = array_merge($this->internalFields, $this->extraInternalFields);
+    	$fields = array_keys(get_class_vars(get_class($this)));
+
+    	return array_diff($fields, $internalFields);
+    }
 }

@@ -2,11 +2,14 @@
 if ($v->hasNoVisibleElements() === false)	{ ?>
 <!--header start-->
       <header class="header white-bg">
+
+
           <div class="sidebar-toggle-box">
-              <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
+              <div data-original-title="Mover o menu" data-placement="right" class="icon-reorder tooltips"><i class="fa fa-bars"></i></div>
+              <!-- <div data-original-title="Fechar / abrir nenu" data-placement="right" class="fa fa-reorder tooltips"></div> -->
           </div>
           <!--logo start-->
-          <a href="index.html" class="logo" >Cup<span>cake</span></a>
+          <a href="<?php echo $url; ?>" class="logo" ><?php echo $nomeSistema; ?></a>
           <!--logo end-->
           <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
@@ -14,18 +17,18 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
               <!-- settings start -->
               <li class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="icon-tasks"></i>
+                      <i class="fa fa-tasks"></i>
                       <span class="badge bg-success">6</span>
                   </a>
                   <ul class="dropdown-menu extended tasks-bar">
                       <div class="notify-arrow notify-arrow-green"></div>
                       <li>
-                          <p class="green">You have 6 pending tasks</p>
+                          <p class="green">Há 6 lotes em andamento</p>
                       </li>
                       <li>
                           <a href="#">
                               <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
+                                  <div class="desc">Lote 12 - Fazenda Triunfo</div>
                                   <div class="percent">40%</div>
                               </div>
                               <div class="progress progress-striped">
@@ -38,7 +41,7 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
                       <li>
                           <a href="#">
                               <div class="task-info">
-                                  <div class="desc">Database Update</div>
+                                  <div class="desc">Lote 2 - Fazenda Esperança</div>
                                   <div class="percent">60%</div>
                               </div>
                               <div class="progress progress-striped">
@@ -51,7 +54,7 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
                       <li>
                           <a href="#">
                               <div class="task-info">
-                                  <div class="desc">Iphone Development</div>
+                                  <div class="desc">Lote 67 - Fazenda Buriti</div>
                                   <div class="percent">87%</div>
                               </div>
                               <div class="progress progress-striped">
@@ -64,7 +67,7 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
                       <li>
                           <a href="#">
                               <div class="task-info">
-                                  <div class="desc">Mobile App</div>
+                                  <div class="desc">Lote 1 - Fazenda Ouro verde</div>
                                   <div class="percent">33%</div>
                               </div>
                               <div class="progress progress-striped">
@@ -77,7 +80,7 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
                       <li>
                           <a href="#">
                               <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
+                                  <div class="desc">Lote 3 - Santa Laura de Vucina</div>
                                   <div class="percent">45%</div>
                               </div>
                               <div class="progress progress-striped active">
@@ -89,7 +92,7 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
                           </a>
                       </li>
                       <li class="external">
-                          <a href="#">See All Tasks</a>
+                          <a href="#">Ver todos os lotes em andamento</a>
                       </li>
                   </ul>
               </li>
@@ -97,64 +100,64 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
               <!-- inbox dropdown start-->
               <li id="header_inbox_bar" class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="icon-envelope-alt"></i>
+                      <i class="fa fa-envelope-o"></i>
                       <span class="badge bg-important">5</span>
                   </a>
                   <ul class="dropdown-menu extended inbox">
                       <div class="notify-arrow notify-arrow-red"></div>
                       <li>
-                          <p class="red">You have 5 new messages</p>
+                          <p class="red">Você tem 5 novas notificações</p>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
+                              <span class="photo"><img alt="avatar" src="<?php echo $layoutAsset; ?>/img/avatar-mini.jpg"></span>
                                     <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
-                                    <span class="time">Just now</span>
+                                    <span class="from">Ademir Neves Ferreira</span>
+                                    <span class="time">Agora</span>
                                     </span>
                                     <span class="message">
-                                        Hello, this is an example msg.
+                                        Registro de atividade D0
                                     </span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
+                              <span class="photo"><img alt="avatar" src="<?php echo $layoutAsset; ?>/img/avatar-mini2.jpg"></span>
                                     <span class="subject">
-                                    <span class="from">Jhon Doe</span>
+                                    <span class="from">Diego Wendell</span>
                                     <span class="time">10 mins</span>
                                     </span>
                                     <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
+                                     Lançados diagnósticos de gestação
                                     </span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
+                              <span class="photo"><img alt="avatar" src="<?php echo $layoutAsset; ?>/img/avatar-mini3.jpg"></span>
                                     <span class="subject">
-                                    <span class="from">Jason Stathum</span>
+                                    <span class="from">Hernani Ceolin</span>
                                     <span class="time">3 hrs</span>
                                     </span>
                                     <span class="message">
-                                        This is awesome dashboard.
+                                        Novo lote cadastrado
                                     </span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
+                              <span class="photo"><img alt="avatar" src="<?php echo $layoutAsset; ?>/img/avatar-mini4.jpg"></span>
                                     <span class="subject">
-                                    <span class="from">Jondi Rose</span>
-                                    <span class="time">Just now</span>
+                                    <span class="from">Altair</span>
+                                    <span class="time">2 dias</span>
                                     </span>
                                     <span class="message">
-                                        Hello, this is metrolab
+                                        Registro de atividade D7
                                     </span>
                           </a>
                       </li>
                       <li>
-                          <a href="#">See all messages</a>
+                          <a href="#">Ver todas notificações</a>
                       </li>
                   </ul>
               </li>
@@ -163,51 +166,51 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
               <li id="header_notification_bar" class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-                      <i class="icon-bell-alt"></i>
+                      <i class="fa fa-bell-o"></i>
                       <span class="badge bg-warning">7</span>
                   </a>
                   <ul class="dropdown-menu extended notification">
                       <div class="notify-arrow notify-arrow-yellow"></div>
                       <li>
-                          <p class="yellow">You have 7 new notifications</p>
+                          <p class="yellow">7 atividades em aberto</p>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-danger"><i class="icon-bolt"></i></span>
-                              Server #3 overloaded.
-                              <span class="small italic">34 mins</span>
+                              <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                              D7 - Fazenda Esperança
+                              <span class="small italic">Hoje</span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-warning"><i class="icon-bell"></i></span>
-                              Server #10 not respoding.
-                              <span class="small italic">1 Hours</span>
+                              <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                              D9 - Fazenda Esperança
+                              <span class="small italic">Amanhã</span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-danger"><i class="icon-bolt"></i></span>
-                              Database overloaded 24%.
-                              <span class="small italic">4 hrs</span>
+                              <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                              DG - Fazenda Buriti
+                              <span class="small italic"><?php echo date('d-m', (time()+(86400*3))); ?></span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-success"><i class="icon-plus"></i></span>
-                              New user registered.
-                              <span class="small italic">Just now</span>
+                              <span class="label label-success"><i class="fa fa-plus"></i></span>
+                              IATF - Fazenda Ouro Verde
+                              <span class="small italic"><?php echo date('d-m', (time()+(86400*5))); ?></span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-info"><i class="icon-bullhorn"></i></span>
+                              <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
                               Application error.
                               <span class="small italic">10 mins</span>
                           </a>
                       </li>
                       <li>
-                          <a href="#">See all notifications</a>
+                          <a href="#">Ver todas atividades</a>
                       </li>
                   </ul>
               </li>
@@ -217,21 +220,21 @@ if ($v->hasNoVisibleElements() === false)	{ ?>
           <div class="top-nav ">
               <ul class="nav pull-right top-menu">
                   <li>
-                      <input type="text" class="form-control search" placeholder="Search">
+                      <input type="text" class="form-control search" placeholder="Buscar">
                   </li>
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <img alt="" src="img/avatar1_small.jpg">
-                          <span class="username">Jhon Doue</span>
+                          <img alt="" src="<?php echo $layoutAsset; ?>img/avatar2_small.jpg">
+                          <span class="username">Moisés Máximo</span>
                           <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu extended logout">
                           <div class="log-arrow-up"></div>
-                          <li><a href="#"><i class=" icon-suitcase"></i>Profile</a></li>
-                          <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-                          <li><a href="#"><i class="icon-bell-alt"></i> Notification</a></li>
-                          <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+                          <li><a href="#"><i class=" fa fa-briefcase"></i>Perfil</a></li>
+                          <li><a href="#"><i class="fa fa-cog"></i> Ajustes</a></li>
+                          <li><a href="#"><i class="fa fa-bell"></i> Avisos</a></li>
+                          <li><a href="<?PHP echo $url ?>sair"><i class="fa fa-sign-out"></i> Sair do sistema</a></li>
                       </ul>
                   </li>
                   <!-- user login dropdown end -->

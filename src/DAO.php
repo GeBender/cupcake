@@ -11,7 +11,7 @@
  */
 namespace Cupcake;
 
-use \Assinantes;
+use \Assinante;
 use Cupcake\Collection;
 
 class DAO
@@ -121,8 +121,8 @@ class DAO
     {
     	if (property_exists($model, 'assinante') === true) {
         	if ((bool) $model->getAssinante() === false) {
-	            $AssinantesDAO = new DAO($this->app, 'Assinantes');
-	            $model->setAssinante($AssinantesDAO->find($this->app['Auth']->assinanteId()));
+	            $AssinanteDAO = new DAO($this->app, 'Assinante');
+	            $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
         	}
         }
 
@@ -179,9 +179,9 @@ class DAO
     }
 
 
-    public function findAll(array $criteria = array())
+    public function findAll(array $criteria = array(), array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->findBy($criteria);
+        return $this->findBy($criteria, $orderBy, $limit, $offset);
 
     }
 

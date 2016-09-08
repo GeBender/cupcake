@@ -17,7 +17,8 @@ class Form extends \Cupcake\Helper
     public $mappings = array();
 
     public $types = array(
-            'integer' => 'number'
+            'integer' => 'number',
+    		'date' => 'date'
     );
 
 
@@ -28,8 +29,8 @@ class Form extends \Cupcake\Helper
         	$this->mappings = $this->DAO->ClassMetadata->getAssociationMappings();
         }
 
-        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getLayoutAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
-        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getLayoutAsset() . 'js/forms.js"></script>');
+        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/forms.js"></script>');
 
     }
 
@@ -95,6 +96,8 @@ class Form extends \Cupcake\Helper
     {
         if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'float') {
             return number_format($value, 2, ',', '.');
+        } else if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'date' && (bool) $value) {
+        	return $value->format('Y-m-d');
         }
 
         return $value;
@@ -173,7 +176,9 @@ class Form extends \Cupcake\Helper
     {
         $this->uses($this->mappings[$field]['targetEntity']);
         $mappedDAO = $this->mappings[$field]['targetEntity'] . 'DAO';
-        $data = $this->$mappedDAO->findAll();
+        
+        $model = new $this->mappings[$field]['targetEntity'];
+        $data = $this->$mappedDAO->findAll([], [$model::ORDER => $model::DIRECTION]);
 
         return $data;
 
