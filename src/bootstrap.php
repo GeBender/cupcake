@@ -89,10 +89,16 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     $controller = new $controllerPath($cupcake);
     $action = $cupcake['route']['action'];
 
+//     var_dump(dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
+//              dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',
+//              dirname(dirname(__FILE__)) . '/Layout/'.$cupcake['route']['layout'].'/View/%name%',
+//              dirname(dirname(__FILE__)) . '/Layout/%name%',
+//              dirname(__FILE__).'/Apps/Cupcake/View/%name%');
     $loader = new FilesystemLoader(array(
         dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
         dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',
         dirname(dirname(__FILE__)) . '/Layout/'.$cupcake['route']['layout'].'/View/%name%',
+        dirname(dirname(__FILE__)) . '/Layout/%name%',
         dirname(__FILE__).'/Apps/Cupcake/View/%name%',
     ));
     $templateNameParser = new TemplateNameParser();

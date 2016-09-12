@@ -16,6 +16,7 @@ use Cupcake\Flash;
 class Footer extends \Cupcake\Controller
 {
 
+    public $layout = 'LandX4';
 
     /**
      * Prepara e renderiza o header
@@ -31,8 +32,5 @@ class Footer extends \Cupcake\Controller
         if ($this->app['Vars']->getExtraFooter() === false) {
             $this->setExtraFooter(array());
         }
-
     }
-
-
 }

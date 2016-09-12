@@ -6,8 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 require dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-require dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'Apps/CacambaNet/Model/Cacambas.php';
-require dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'Apps/CacambaNet/Model/Assinantes.php';
+require dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'Apps/Logistick/Model/Cacambas.php';
+require dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'Apps/Logistick/Model/Assinantes.php';
 
 putenv('AMBIENT=test');
 define('DS', DIRECTORY_SEPARATOR);

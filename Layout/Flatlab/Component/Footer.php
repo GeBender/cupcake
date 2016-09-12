@@ -17,6 +17,7 @@ use Cupcake\Flash;
 class Footer extends \Cupcake\Controller
 {
 
+    public $layout = 'Flatlab';
 
     /**
      * Prepara e renderiza o header

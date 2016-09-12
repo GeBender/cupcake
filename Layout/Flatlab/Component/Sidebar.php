@@ -14,7 +14,7 @@ namespace Layout\Flatlab\Component;
 class Sidebar extends \Cupcake\Controller
 {
 
-
+    public $layout = 'Flatlab';
     /**
      * Prepara e renderiza o sidebar
      *

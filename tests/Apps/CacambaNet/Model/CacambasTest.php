@@ -18,11 +18,11 @@ class CacambasTest extends TestHelper
         ->setMethods(array('assinanteId'))
         ->getMock();
         
-        $this->AssinantesDAO = $this->getMockBuilder('\Apps\CacambaNet\DAO\AssinantesDAO')
+        $this->AssinantesDAO = $this->getMockBuilder('\Apps\Logistick\DAO\AssinantesDAO')
         ->disableOriginalConstructor()
         ->setMethods(array('find'))
         ->getMock();
-        $this->CacambasDAO = $this->getMockBuilder('\Apps\CacambaNet\DAO\CacambasDAO')
+        $this->CacambasDAO = $this->getMockBuilder('\Apps\Logistick\DAO\CacambasDAO')
         ->disableOriginalConstructor()
         ->setMethods(array('getTotal'))
         ->getMock();

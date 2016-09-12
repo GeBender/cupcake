@@ -17,8 +17,6 @@ class Flatlab extends \Cupcake\Controller
     public $layout = 'Flatlab';
 
     /**
-     * Carrega o componente do layout Charisma
-     *
      * @return void
      */
     public function index()

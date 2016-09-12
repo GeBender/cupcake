@@ -11,19 +11,19 @@
  */
 namespace Layout\LandX4\Component;
 
-use Apps\CacambaNet\Controller\LogistickController;
+use Cupcake\Controller;
 
-class Header extends LogistickController
+class Header extends Controller
 {
 
-	public $layout = 'LandX4';
+    public $layout = 'LandX4';
 
-	public function __construct($app)
-	{
-		$this->allow();
-		parent::__construct($app);
-		$this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['layoutFolder'] . '/' . $this->layout . '/'. $this->app['GPS']->route['assetFolder'] . '/');
-	}
+    public function __construct($app)
+    {
+        $this->allow();
+        parent::__construct($app);
+//         $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['layoutFolder'] . '/' . $this->layout . '/' . $this->app['GPS']->route['assetFolder'] . '/');
+    }
 
     /**
      * Prepara e renderiza o header
@@ -33,8 +33,12 @@ class Header extends LogistickController
     public function index()
     {
         $this->setTitulo($this->getSistema()->getTitulo());
-        $this->setDescription($this->getSistema()->getDescricao());
-        $this->setFavicon($this->getSistema()->getFavicon());
+        $this->setDescription($this->getSistema()
+            ->getDescricao());
+        $this->setFavicon($this->getSistema()
+            ->getFavicon());
+        $this->setLogo($this->getSistema()
+            ->getLogo());
 
         if ($this->app['Vars']->getExtraHeaderA() === false) {
             $this->setExtraHeaderA(array());
@@ -43,8 +47,5 @@ class Header extends LogistickController
         if ($this->app['Vars']->getExtraHeaderB() === false) {
             $this->setExtraHeaderB(array());
         }
-
     }
-
-
 }

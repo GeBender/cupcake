@@ -16,24 +16,18 @@ class LandX4 extends \Cupcake\Controller
 
     public $layout = 'LandX4';
 
-	public function __construct($app)
-	{
-		parent::__construct($app);
-	}
-    
-    /**
-     * Carrega o componente do layout LandX4
-     *
-     * @return void
-     */
+//     /**
+//      * Carrega o componente do layout LandX4
+//      *
+//      * @return void
+//      */
     public function index()
     {
-//         $this->setTitle($this->app['config']['title']);
 
-//         $this->useComponent('Header');
-//         $this->useComponent('Top');
-//         $this->useComponent('Footer');
+        $this->setTitulo($this->getSistema()->getTitulo());
 
+        $this->useComponent('Header');
+        $this->useComponent('Footer');
     }
 
 

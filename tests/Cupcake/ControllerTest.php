@@ -1,7 +1,7 @@
 <?php
 namespace Cupcake;
 
-use Layout\Charisma;
+use Layout\Flatlab;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Templating\PhpEngine;

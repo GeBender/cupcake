@@ -44,7 +44,6 @@ class GPS
 
         $this->cupcakeDir = dirname(__FILE__).'/';
         $this->appsDir = dirname(dirname(dirname(__DIR__))).'/'.$this->route['appsFolder'].'/';
-
     }
 
 
@@ -232,8 +231,8 @@ class GPS
         } else if ($this->fs->classExists($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component) === true) {
             return $this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component);
         } else {
-        	// var_dump($this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component));
-        	// var_dump($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component);
+        	var_dump($this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component));
+        	var_dump($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component);
             return false;
         }
 

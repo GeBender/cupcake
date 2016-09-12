@@ -14,7 +14,7 @@ namespace Layout\Flatlab\Component;
 class Top extends \Cupcake\Controller
 {
 
-
+    public $layout = 'Flatlab';
     /**
      * Prepara e renderiza o topo
      *
@@ -23,7 +23,6 @@ class Top extends \Cupcake\Controller
     public function index()
     {
         $this->setNomeSistema($this->app['config']['nomeSistema']);
-        $this->setLogo($this->getLayoutAsset() . 'charisma/img/logo20.png');
         $this->setUserNome($this->app['Auth']->getInfo('userNome'));
 
     }

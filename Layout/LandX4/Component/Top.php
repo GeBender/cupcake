@@ -14,6 +14,7 @@ namespace Layout\LandX4\Component;
 class Top extends \Cupcake\Controller
 {
 
+    public $layout = 'LandX4';
 
     /**
      * Prepara e renderiza o topo

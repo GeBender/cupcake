@@ -25,7 +25,7 @@ class Header extends Controller
         $this->hideElements();
 
     }
-    
+
     /**
      * Prepara e renderiza o header
      *
@@ -44,6 +44,5 @@ class Header extends Controller
             $this->setExtraHeaderB(array());
         }
     }
-
 
 }

@@ -5,17 +5,17 @@ $(document).ready(function() {
 
 function CupcakeReady() {
 //	$.datepicker.setDefaults( $.datepicker.regional[ "pt" ] );
-	$( ".cupdatepicker" ).datepicker({
-		dateFormat: 'dd/mm/yy',
-	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-	    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-	    nextText: 'Próximo',
-	    prevText: 'Anterior',
-	    enableOnReadonly:false
-	});
+//	$( ".cupdatepicker" ).datepicker({
+//		dateFormat: 'dd/mm/yy',
+//	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+//	    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+//	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+//	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+//	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+//	    nextText: 'Próximo',
+//	    prevText: 'Anterior',
+//	    enableOnReadonly:false
+//	});
 
 	$('.icon-help').click(function() {
 		tour = loadTour();
@@ -170,25 +170,25 @@ function CupcakeReady() {
 	//popover
 	$('[rel="popover"],[data-rel="popover"]').popover();
 
-    if (!Modernizr.inputtypes.date) {
-    	$( 'input[type=date]' ).datepicker({
-    		dateFormat: 'dd/mm/yy',
-    	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-    	    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-    	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-    	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-    	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-    	    nextText: 'Próximo',
-    	    prevText: 'Anterior',
-    	    enableOnReadonly:false
-    	});
-    	$('[type=date]').each(function(){
-    		if ($(this).val()) {
-    			var val = $(this).val().split('-');
-    			$(this).val(val[2]+'/'+val[1]+'/'+val[0]);
-    		}
-    	});
-    }
+//    if (!Modernizr.inputtypes.date) {
+//    	$( 'input[type=date]' ).datepicker({
+//    		dateFormat: 'dd/mm/yy',
+//    	    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+//    	    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+//    	    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+//    	    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+//    	    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+//    	    nextText: 'Próximo',
+//    	    prevText: 'Anterior',
+//    	    enableOnReadonly:false
+//    	});
+//    	$('[type=date]').each(function(){
+//    		if ($(this).val()) {
+//    			var val = $(this).val().split('-');
+//    			$(this).val(val[2]+'/'+val[1]+'/'+val[0]);
+//    		}
+//    	});
+//    }
 
 }
 

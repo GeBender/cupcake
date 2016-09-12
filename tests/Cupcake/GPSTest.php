@@ -58,7 +58,7 @@ class GPSTest extends TestHelper
     public function testMergeConfig()
     {
         self::$Class->route['appsFolder'] = 'Apps';
-        self::$Class->url[0] = 'CacambaNet';
+        self::$Class->url[0] = 'Logistick';
 
         self::$Class->fs->expects($this->at(0))->method('exists')->will($this->returnValue(true));
         self::$Class->mergeConfigs();

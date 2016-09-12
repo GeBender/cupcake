@@ -105,18 +105,18 @@ class Controller
 
     		$this->view = 'lista.phtml';
             $this->help('Lista');
-            
+
             $class = $this->app['route']['entity'];
             $dados = new $class();
             $this->setDados($dados);
-            
+
             $this->setResults($this->Lista->get());
             $this->setTitLista($this->app['route']['entity']);
 
             $class = $this->app['route']['entity'];
             $model = new $class();
             $this->setColunas($model->getColunasDaLista());
-            
+
             $class = $this->app['route']['entity'];
             $dados = new $class();
             $this->setIcon($dados->getIcon());
@@ -163,7 +163,7 @@ class Controller
 
         $this->setDados($dados);
         $this->setSaida($dados->getSaida());
-        
+
         $this->setIcon($dados->getIcon());
         $this->setCampos(array_keys(get_class_vars($this->app['route']['entity'])));
         $this->setTitulo($this->app['route']['entity']);
@@ -257,7 +257,10 @@ class Controller
      */
     public function setBaseVars()
     {
-        $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->getLayoutAsset());
+
+        $this->app['GPS']->route['layout'] = $this->layout;
+
+        $this->setLayoutAsset($this->app['GPS']->getLayoutAsset());
         $this->setCupcakeAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['cupcakeFolder'] . '/src/assets/');
         $this->setAppFolder($this->app['config']['folder']);
         $this->setAppAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['appsFolder'] . '/' . $this->app['GPS']->route['appName'] . '/' . $this->app['GPS']->route['assetFolder'] . '/');
@@ -385,8 +388,7 @@ class Controller
         $layoutClassName = $this->app['GPS']->getLayoutClassName(ucfirst($this->layout));
         $layout = new $layoutClassName($this->app);
         $layout->index();
-
-        return $this->app['Templating']->render($this->app['GPS']->getLayoutViewFile(), $this->app['Vars']->vars);
+        return $this->app['Templating']->render($this->layout.'/View/'.$this->app['GPS']->getLayoutViewFile(), $this->app['Vars']->vars);
     }
 
 
@@ -399,19 +401,21 @@ class Controller
      */
     public function useComponent($component)
     {
+
     	$this->setArgs($this->args);
         ob_start();
         $componentClassName = $this->app['GPS']->getComponentClassName($component, $this->layout);
 
         if ($componentClassName !== false) {
-            $componentClass = new $componentClassName($this->app);
 
+            $componentClass = new $componentClassName($this->app);
             if ($this->layout !== null) {
                 $componentClass->setLayout($this->layout);
             }
 
             $vars = $this->app['Vars']->vars;
             $componentClass->index();
+
             extract($componentClass->app['Vars']->vars);
         }
 
@@ -439,7 +443,7 @@ class Controller
         } else {
             $saida = '4;' . $this->getIndexController();
         }
-        
+
         return $saida;
 
     }
