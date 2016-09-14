@@ -55,7 +55,7 @@
 		                            <li><a href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>"><i class="fa fa-plus-circle"></i> Detalhes</a></li>
 		                            <li><a href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
 		                           <li class="divider"></li>
-		                            <li><a href="<?php echo $indexController; ?>deletar/<?php echo $result->getId(); ?>"><i class="fa fa-trash-o red"></i> Deletar</a></li>
+		                            <li><a class="btn-delete" href="#" data-rel="<?php echo $result->getId(); ?>"><i class="fa fa-trash-o red"></i> Deletar</a></li>
 		                        </ul>
 		                     </div>
                             </td>

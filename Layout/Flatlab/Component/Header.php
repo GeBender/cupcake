@@ -28,9 +28,9 @@ class Header extends \Cupcake\Controller
         }
 
         if ($this->app['Vars']->getExtraHeaderB() === false) {
-            $this->setExtraHeaderB(array());
+            $this->setExtraHeaderB(['<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'jquery-ui/jquery-ui.min.css">']);
         }
-
+        $this->addExtraHeaderB(['<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'jquery-ui/jquery-ui.min.css">']);
     }
 
 }

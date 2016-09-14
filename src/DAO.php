@@ -11,7 +11,6 @@
  */
 namespace Cupcake;
 
-use \Assinante;
 use Cupcake\Collection;
 
 class DAO
@@ -29,12 +28,15 @@ class DAO
 
     public $query;
 
+    public $modelAssinante;
+
 
     public function __construct($app, $entity = '')
     {
         $this->app = $app;
         $this->defineName($app, $entity);
         $this->db = $app['db'];
+        $this->modelAssinante = (isset($app['route']['modelAssinante']) === true) ? $app['route']['modelAssinante'] : 'Assinante';
 
         if ($app['FileSystem']->classExists($this->name) === true) {
             $this->EntityRepository = $app['db']->getRepository($this->name);
@@ -57,11 +59,12 @@ class DAO
     public function defineName($app, $entity)
     {
         $classParts = explode('\\', get_class($this));
+
         $class = array_pop($classParts);
         $class = str_replace('DAO', '', $class);
         if ($class !== '') {
             $this->name = $class;
-        } else if ($entity !== '') {
+        } else if ($entity !== '' && $entity !== $app['route']['appName']) {
             $this->name = $entity;
         } else {
             $this->name = $app['route']['entity'];
@@ -120,9 +123,9 @@ class DAO
     public function defineAssinante($model)
     {
     	if (property_exists($model, 'assinante') === true) {
-        	if ((bool) $model->getAssinante() === false) {
-	            $AssinanteDAO = new DAO($this->app, 'Assinante');
-	            $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
+    	    if ((bool) $model->getAssinante() === false) {
+    	        $AssinanteDAO = new DAO($this->app, $this->modelAssinante);
+    	        $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
         	}
         }
 
@@ -197,7 +200,7 @@ class DAO
 
     public function salvar($model)
     {
-    	$original = $this->find($model->getId());
+        $original = $this->find($model->getId());
         if ($original === null) {
             $model->setId($this->getNext('id'));
             $this->db->persist($model);

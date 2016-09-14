@@ -13,7 +13,7 @@ namespace Layout\LandX4\Component;
 
 use Cupcake\Flash;
 
-class Footer extends \Cupcake\Controller
+class FooterLandX4 extends \Cupcake\Controller
 {
 
     public $layout = 'LandX4';

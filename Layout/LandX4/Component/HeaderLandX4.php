@@ -13,7 +13,7 @@ namespace Layout\LandX4\Component;
 
 use Cupcake\Controller;
 
-class Header extends Controller
+class HeaderLandX4 extends Controller
 {
 
     public $layout = 'LandX4';
@@ -22,7 +22,6 @@ class Header extends Controller
     {
         $this->allow();
         parent::__construct($app);
-//         $this->setLayoutAsset('//' . $this->app['request']->getHost() . $this->app['request']->getBasePath() . '/' . $this->app['GPS']->route['layoutFolder'] . '/' . $this->layout . '/' . $this->app['GPS']->route['assetFolder'] . '/');
     }
 
     /**

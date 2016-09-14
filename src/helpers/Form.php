@@ -30,8 +30,7 @@ class Form extends \Cupcake\Helper
         }
 
         $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
-        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/forms.js"></script>');
-
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/maskedinput.js"></script>');
     }
 
 
@@ -176,7 +175,7 @@ class Form extends \Cupcake\Helper
     {
         $this->uses($this->mappings[$field]['targetEntity']);
         $mappedDAO = $this->mappings[$field]['targetEntity'] . 'DAO';
-        
+
         $model = new $this->mappings[$field]['targetEntity'];
         $data = $this->$mappedDAO->findAll([], [$model::ORDER => $model::DIRECTION]);
 

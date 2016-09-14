@@ -6,24 +6,20 @@
     <title><?php echo $title; ?></title>
     <meta name="description" content="Just a simple template, a simple framework and a simple business">
 
-    <?php foreach ($extraHeaderA as $header) {
-        echo $header;
-    } ?>
+    <?php //foreach ($extraHeaderA as $header) {
+        //echo $header;
+    //} ?>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo $layoutAsset; ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $layoutAsset; ?>css/bootstrap-reset.css" rel="stylesheet">
     <link href="<?php echo $layoutAsset; ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="<?php echo $layoutAsset; ?>assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-    <link href="<?php echo $layoutAsset; ?>assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
-   <link rel="stylesheet" href="<?php echo $layoutAsset; ?>css/owl.carousel.css" type="text/css">
 
     <!--external css-->
 
     <!-- Custom styles for this template -->
     <link href="<?php echo $layoutAsset; ?>css/style.css" rel="stylesheet">
     <link href="<?php echo $layoutAsset; ?>css/style-responsive.css" rel="stylesheet" />
-    <link href="<?php echo $cupcakeAsset; ?>css/cupcake.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -31,9 +27,8 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
 
-    <?php foreach ($extraHeaderB as $header) {
-        echo $header;
-    } ?>
+    <?php
+    echo implode("\n", array_unique($extraHeaderB)); ?>
 
     <link rel="shortcut icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>">
     <link rel="icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>" type="image/x-icon">

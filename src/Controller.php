@@ -62,6 +62,7 @@ class Controller
             $this->$model = new $model();
         }
 
+        $this->setLayout($app['route']['layout']);
         $this->uses($this->entity);
         $DAO = $this->entity . 'DAO';
 
@@ -200,7 +201,6 @@ class Controller
     {
     	$this->layout = false;
         $dados = $this->DAO->listen($_POST);
-
         $this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
@@ -321,6 +321,7 @@ class Controller
             $this->view = $this->app['route']['view'];
         }
 
+        $this->setRoute($this->app['route']);
         $this->setModel();
         $this->setV($this->app['Vars']);
         $this->setArgs($this->args);
@@ -401,7 +402,6 @@ class Controller
      */
     public function useComponent($component)
     {
-
     	$this->setArgs($this->args);
         ob_start();
         $componentClassName = $this->app['GPS']->getComponentClassName($component, $this->layout);

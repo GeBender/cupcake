@@ -53,6 +53,9 @@ $cupcake['route'] = function () {
     return Cupcake\Config::route();
 };
 
+require_once('vendor/cupcake/src/Debug.php');
+Debug::setCupcaker($cupcake['debug']);
+
 $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     $cupcake['GPS'] = new Cupcake\GPS($cupcake['route'], $cupcake['config'], substr($request->getPathInfo(), 1));
     $cupcake['route'] = $cupcake['GPS']->route();

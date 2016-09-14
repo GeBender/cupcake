@@ -30,10 +30,7 @@ class Footer extends \Cupcake\Controller
         $this->setTopFull(Flash::getTopFull());
         $this->setModal(Flash::getModal());
 
-        if ($this->app['Vars']->getExtraFooter() === false) {
-            $this->setExtraFooter([]);
-        }
-
+        $this->setExtraFooter(['<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'jquery-ui/jquery-ui.min.js"></script>']);
     }
 
 
