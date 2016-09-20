@@ -125,7 +125,7 @@ class Controller
             $controllerPath = '\Apps\\' . $this->app['route']['appName'] . '\Controller\IndexController';
             $controller = new $controllerPath($this->app);
             $controller->home();
-            $this->view = 'Landing' . DS . 'landingHome.phtml';
+            $this->view = 'Landing' . DS . 'home.phtml';
         }
 
     }
@@ -330,7 +330,6 @@ class Controller
             if ($content === null) {
                 $content = $this->view();
             }
-
             $this->setContent($content);
             return $this->getLayout();
         } else {
@@ -363,7 +362,6 @@ class Controller
     public function view()
     {
         return $this->app['Templating']->render($this->view, $this->app['Vars']->vars);
-
     }
 
 
@@ -388,6 +386,7 @@ class Controller
     {
         $layoutClassName = $this->app['GPS']->getLayoutClassName(ucfirst($this->layout));
         $layout = new $layoutClassName($this->app);
+
         $layout->index();
         return $this->app['Templating']->render($this->layout.'/View/'.$this->app['GPS']->getLayoutViewFile(), $this->app['Vars']->vars);
     }
@@ -402,7 +401,7 @@ class Controller
      */
     public function useComponent($component)
     {
-    	$this->setArgs($this->args);
+        $this->setArgs($this->args);
         ob_start();
         $componentClassName = $this->app['GPS']->getComponentClassName($component, $this->layout);
 
@@ -421,7 +420,7 @@ class Controller
 
         extract(isset($vars) === true ? $vars : $this->app['Vars']->vars);
 
-        $componentViewFile = $this->app['GPS']->getComponentViewFile($component);
+        $componentViewFile = $this->app['GPS']->getComponentViewFile($component, $this->layout);
         require $componentViewFile;
         $content = ob_get_clean();
 

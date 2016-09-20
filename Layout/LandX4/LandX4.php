@@ -23,6 +23,7 @@ class LandX4 extends \Cupcake\Controller
 //      */
     public function index()
     {
+        $this->layout = 'LandX4';
         $this->setTitulo($this->getSistema()->getTitulo());
 
         $this->useComponent('HeaderLandX4');
