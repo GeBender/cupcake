@@ -27,7 +27,8 @@ class Config
         $ambientConfigs = array(
                 'default' => array(
                         'title' => 'CupcakePHP: The Rapid and Tasty Development Framework.',
-                        'nomeSistema' => 'CupcakePHP'
+                        'nomeSistema' => 'CupcakePHP',
+                		'folder' => false
                 ),
                 'production' => array(
                         'db' => str_replace('pdo_mysql', 'pdo-mysql', 'pdo-'.getenv('CLEARDB_DATABASE_URL'))

@@ -30,7 +30,21 @@ class Form extends \Cupcake\Helper
         }
 
         $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
+        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'bootstrap-datepicker/css/datepicker.css">');
+        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'bootstrap-colorpicker/css/colorpicker.css">');
+        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/daterangepicker.css">');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/maskedinput.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/bootstrap-switch.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/ga.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery.tagsinput.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-datepicker/js/bootstrap-datepicker.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/date.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/daterangepicker.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'ckeditor/ckeditor.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-inputmask/bootstrap-inputmask.min.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/form-component.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/maskMoney.min.js"></script>');
     }
 
 

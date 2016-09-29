@@ -58,8 +58,11 @@ abstract class Model
     		'genero',
     		'identifier',
     		'internalFields',
-    		'extraInternalFields'
+    		'extraInternalFields',
+    		'lista'
     ];
+    
+    protected $lista = [];
     
     protected $extraInternalFields = [];
 
@@ -275,8 +278,12 @@ abstract class Model
     
     public function getColunasDaLista()
     {
-    	$internalFields = array_merge($this->internalFields, $this->extraInternalFields);
-    	$fields = array_keys(get_class_vars(get_class($this)));
+    	if(count($this->lista) === 0) {
+    		$internalFields = array_merge($this->internalFields, $this->extraInternalFields);
+    		$fields = array_keys(get_class_vars(get_class($this)));
+    	} else {
+    		return $this->lista;
+    	}
 
     	return array_diff($fields, $internalFields);
     }
