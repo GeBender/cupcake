@@ -246,16 +246,16 @@ class GPS
      *
      * @return string|boolean
      */
-    public function getComponentViewFile($component)
+    public function getComponentViewFile($component, $layout)
     {
         if ($this->fs->exists($this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
             return $this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView'];
 
-        } else if ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $this->route['layout'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
-            return dirname($this->cupcakeDir) . '/Layout/' . $this->route['layout'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView'];
+        } else if ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
+            return dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView'];
         } else {
             var_dump('getComponentViewFile: '. $this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']);
-            var_dump(dirname($this->cupcakeDir) . '/Layout/' . $this->route['layout'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']);
+            var_dump(dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']);
             return false;
         }
 
