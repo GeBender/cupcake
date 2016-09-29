@@ -29,8 +29,9 @@ class Form extends \Cupcake\Helper
         	$this->mappings = $this->DAO->ClassMetadata->getAssociationMappings();
         }
 
-        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
+        $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'css/chosen.css">');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/maskedinput.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/chosen.jquery.min.js"></script>');
     }
 
 

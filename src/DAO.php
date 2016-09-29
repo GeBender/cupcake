@@ -30,6 +30,19 @@ class DAO
 
     public $modelAssinante;
 
+    public $page =  1;
+
+    public $pageSize = 25;
+
+    public $direction = 'ASC';
+
+    const PAGE = 'page';
+
+    const PAGE_SIZE = 'page-size';
+
+    const DIRECTION = 'direction';
+
+    const ORDER = 'order';
 
     public function __construct($app, $entity = '')
     {
@@ -280,7 +293,6 @@ class DAO
         return $this->query
             ->getQuery()
             ->getResult();
-
     }
 
 
@@ -292,8 +304,31 @@ class DAO
         $collection = new $collectionClassName($lista);
 
         return $collection;
-
     }
 
+    public function getLimit()
+    {
+        $class = $this->name;
+        $offset = (isset($_GET[self::PAGE]) === true) ? ($_GET[self::PAGE]-1) : $class::OFFSET;
+        return ($offset * $this->getPageSize());
+    }
+
+    public function getPageSize()
+    {
+        $class = $this->name;
+        return (isset($_GET[self::PAGE_SIZE]) === true) ? $_GET[self::PAGE_SIZE] : $class::LIMIT;
+    }
+
+    public function getOrder()
+    {
+        $class = $this->name;
+        return (isset($_GET[self::ORDER]) === true) ? $_GET[self::ORDER] : $class::ORDER;
+    }
+
+    public function getDirection()
+    {
+        $class = $this->name;
+        return (isset($_GET[self::DIRECTION]) === true) ? $_GET[self::DIRECTION] : $class::DIRECTION;
+    }
 
 }
