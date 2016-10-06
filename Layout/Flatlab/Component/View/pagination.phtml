@@ -1,7 +1,7 @@
 <?php
  if ($lista->getPages() > 1) { ?>
-    <div class="pagination pagination-centered no-print" style="">
-    	<ul>
+    <div class="text-center" style="border-top: solid 1px #eff2f7;">
+        <ul class="pagination">
     	   <li class="<?php echo ($lista->getPage() == 1) ? "active" : false; ?>"><a href="<?php echo ($lista->getPage() > 1) ? $lista->getLinkOffset(($lista->getPage() - 1)) : '#'; ?>">Anterior</a></li>
     		<?php for($i=$lista->getPaginateIni(); $i <= $lista->getPaginateEnd(); $i++) { ?>
     			<li class="<?php echo ($lista->getPage() == $i) ? "active" : false; ?>"><a href="<?php echo (($lista->getPage() != $i)) ? $lista->getLinkOffset($i) : '#'; ?>"><?php echo $i; ?></a></li>

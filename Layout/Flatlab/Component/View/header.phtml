@@ -6,7 +6,7 @@
     <title><?php echo $title; ?></title>
     <meta name="description" content="Just a simple template, a simple framework and a simple business">
 
-    <?php 
+    <?php
     echo implode("\n", array_unique($extraHeaderA)); ?>
 
     <!-- Bootstrap core CSS -->
@@ -26,13 +26,10 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
 
-    <?php 
+    <?php
     echo implode("\n", array_unique($extraHeaderB)); ?>
 
-	<link href="<?php echo $cupcakeAsset; ?>css/cupcake.css" rel="stylesheet">
-	<link href="<?php echo $appAsset; ?>css/style.css" rel="stylesheet">
-	
-    <link rel="shortcut icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>">
+	<link rel="shortcut icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>">
     <link rel="icon" href="<?php echo (isset($favicon) === true) ? $appAsset.$favicon : $cupcakeAsset.'images/favicon.png'; ?>" type="image/x-icon">
     <script type="text/javascript" src="<?php echo $v->getLayoutAsset(); ?>js/jquery.js"></script>
 </head>

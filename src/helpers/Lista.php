@@ -56,7 +56,7 @@ class Lista extends \Cupcake\Helper
     }
 
 
-    public function get(array $criteria = array())
+    public function get(array $criteria = array(), array $joins = array())
     {
         $qb = $this->app['db']->createQueryBuilder()
             ->select($this->app['route']['entity'])
@@ -65,6 +65,10 @@ class Lista extends \Cupcake\Helper
             ->setFirstResult($this->offset)
             ->setMaxResults($this->limit)
             ->orderBy($this->app['route']['entity'] . '.' . $this->order, $this->direction);
+
+        foreach ($joins as $k => $v) {
+            $qb->leftJoin($k, $v);
+        }
 
         if (count($criteria) > 0) {
             foreach ($criteria as $and) {
@@ -284,7 +288,7 @@ class Lista extends \Cupcake\Helper
     public function getTituloColuna($coluna) {
     	return $this->model->getLabel($coluna);
     }
-    
+
 
     public function getPaginateTamanho()
     {

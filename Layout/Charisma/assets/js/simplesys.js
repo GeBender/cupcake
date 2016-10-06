@@ -234,7 +234,11 @@ function ajaxCall(url, inner) {
 				retorno = trataAjaxReturn(data);
 				if (inner !== null) {
 					$('#'+inner).html(retorno);
-					$("#"+inner).effect( "shake", { direction: "up", times: 10, distance: 3}, 12 );
+					$("#"+inner).pulsate({
+                        color: $("#"+inner).attr('data-rel'),
+                        repeat: false
+                    });
+					
 					closeModal();
 				} else {
 					return retorno;

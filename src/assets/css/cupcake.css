@@ -229,9 +229,7 @@ a:HOVER, a:ACTIVE {
 	padding: 0px !important;
 	border-top: 0px !important;
 }
-.btn {
-	margin: 3px;
-}
+
 .dataTables_filter {
 	float: right;
 }
