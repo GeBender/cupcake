@@ -268,8 +268,9 @@ function telaCheia() {
 	$('.main-content').addClass('span11');
 }
 
-function CupcakeAlert(msg, btnAlt) {
-	typeof btnAlt !== 'undefined' ? $('#default-modal-title').html(btnAlt) : false;
+function CupcakeAlert(msg, btnAlt, title) {
+	typeof btnAlt !== 'undefined' ? $('#extra-button-modal').html(btnAlt) : false;
+	typeof title !== 'undefined' ? $('#default-modal-title').html(title) : false;
 	$('#default-modal-body').html(msg);
 
     closeModal();
