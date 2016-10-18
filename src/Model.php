@@ -96,6 +96,17 @@ abstract class Model
             }
 
             return $this->$param->add($arguments[0]);
+        } else if ($prefix === 'fnd') {
+        	$getter = 'get' . $param;
+        	if ((bool) $this->$getter()) {
+	        	$manyToManies = $this->$getter()->toArray();
+		    	foreach ($manyToManies as $manyToMany) {
+		    		if ($manyToMany->getId() === $arguments[0]) {
+		    			return true;
+		    		}
+		    	}
+        	}
+	    	return false;
         } else if (property_exists($this, $param) === true && $prefix !== 'add') {
             return $this->$param;
         } else if (isset($this->$name) === true) {
@@ -106,7 +117,7 @@ abstract class Model
         die('Método de Model não encontrado: <b>'.$name . '</b> em ' . $stacktrace[0]['file'] . '#' . $stacktrace[0]['line']);
 
     }
-
+    
     public function getId()
     {
     	return $this->id;

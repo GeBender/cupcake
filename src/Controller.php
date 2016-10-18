@@ -94,7 +94,7 @@ class Controller
         //
     }
 
-    public function home()
+    public function home($criteria=[], $joins=[])
     {
         if ($this->app['route']['entity'] !== '') {
             if (class_exists($this->app['route']['entity']) === false) {
@@ -111,7 +111,7 @@ class Controller
             $dados = new $class();
             $this->setDados($dados);
 
-            $this->setResults($this->Lista->get());
+            $this->setResults($this->Lista->get($criteria, $joins));
             $this->setTitLista($this->app['route']['entity']);
 
             $class = $this->app['route']['entity'];
@@ -200,8 +200,9 @@ class Controller
     public function salvar()
     {
     	$this->layout = false;
-        $dados = $this->DAO->listen($_POST);
-        $this->DAO->salvar($dados);
+    	$dados = $this->DAO->listen($_POST);
+ 
+    	$this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
         	Flash::alert($_POST['flashMsg'], 'information');
@@ -212,6 +213,8 @@ class Controller
             return '2;' . $this->getIndexController() . 'ver/' . $dados->getId();
         } elseif($saida === 'reload') {
         	return 'reload';
+        } elseif ((bool) $saida) {
+        	return '2;'. $saida;
         } else {
             return '2;' . $this->getIndexController();
         }

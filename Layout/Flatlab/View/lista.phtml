@@ -17,9 +17,11 @@
             <li class="active"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></li>
         </ul>
 
-        <a href="<?php echo $indexController; ?>novo" class="btn btn-small btn-success">
-            <span class="white fa fa-plus"></span> Inserir novo
-        </a>
+		<div class="panel" style="background:none;">
+	        <a href="<?php echo $indexController; ?>novo" class="btn btn-small btn-success btn-shadow">
+	            <span class="white fa fa-plus"></span> Inserir novo
+	        </a>
+	    </div>
 
         <section class="panel">
             <header class="panel-heading">
@@ -27,7 +29,7 @@
                 <span class="right"><?php echo $headerLista; ?></span>
             </header>
 
-            <div class="panel-body">
+            <div class="panel-body" style="padding-bottom: 100px">
                 <?php if (count($results) > 0) { ?>
                     <table class="table table-bordered table-striped table-condensed">
                         <thead>
@@ -50,7 +52,7 @@
                         <?php } ?>
                             <td style="max-width:90px">
                             <div class="btn-group">
-		            			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm" type="button" aria-expanded="false">Opções <span class="caret"></span></button>
+		            			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm btn-shadow" type="button" aria-expanded="false">Opções <span class="caret"></span></button>
 		            			<ul role="menu" class="dropdown-menu pull-right">
 		                            <li><a href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>"><i class="fa fa-plus-circle"></i> Detalhes</a></li>
 		                            <li><a href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>"><i class="fa fa-pencil-square-o"></i> Editar</a></li>

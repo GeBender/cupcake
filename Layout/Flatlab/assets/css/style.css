@@ -6224,3 +6224,10 @@ header.blue-bg .search:focus {
 .muted {
     color: #999;
 }
+
+.panel-btns {
+	background:none;
+}
+.panel-btns > .btn {
+	margin-right: 15px;
+}

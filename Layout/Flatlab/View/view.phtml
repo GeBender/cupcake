@@ -18,12 +18,14 @@
             <li><a href="#"><?php echo $migalha; ?></a></li>
         </ul>
 
-        <a href="<?php echo $indexController; ?>" class="btn btn-small btn-success">
-            <span class="white fa fa-undo"></span> Listar
-        </a>
-        <a href="<?php echo $indexController; ?>editar/<?php echo $dados->getId(); ?>" class="btn btn-warning">
-            <i class="white fa fa-pencil-square-o"></i> Editar
-        </a>
+        <div class="panel panel-btns">
+	        <a href="<?php echo $indexController; ?>" class="btn btn-small btn-success">
+	            <span class="white fa fa-list"></span> Listar
+	        </a>
+	        <a href="<?php echo $indexController; ?>editar/<?php echo $dados->getId(); ?>" class="btn btn-warning">
+	            <i class="white fa fa-pencil-square-o"></i> Editar
+	        </a>
+        </div>
 
         <section class="panel">
             <header class="panel-heading">
