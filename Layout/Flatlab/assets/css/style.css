@@ -6224,7 +6224,16 @@ header.blue-bg .search:focus {
 .muted {
     color: #999;
 }
+
 .btn-salvar {
     padding: 6px 40px;
     margin-right: 7px;
+}
+
+.panel-btns {
+	background:none;
+}
+
+.panel-btns > .btn {
+	margin-right: 15px;
 }

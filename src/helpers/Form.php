@@ -36,8 +36,8 @@ class Form extends \Cupcake\Helper
         $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/daterangepicker.css">');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/maskedinput.js"></script>');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/bootstrap-switch.js"></script>');
-        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/ga.js"></script>');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery.tagsinput.js"></script>');
+        $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/ga.js"></script>');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-datepicker/js/bootstrap-datepicker.js"></script>');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/date.js"></script>');
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'bootstrap-daterangepicker/daterangepicker.js"></script>');
@@ -109,7 +109,7 @@ class Form extends \Cupcake\Helper
     public function value($value, $field)
     {
         if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'float') {
-            return number_format($value, 2, ',', '.');
+            return ($value > 0 ) ? number_format($value, 2, ',', '.') : false;
         } else if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'date' && (bool) $value) {
         	return $value->format('Y-m-d');
         }

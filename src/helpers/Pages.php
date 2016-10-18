@@ -26,7 +26,11 @@ class Pages extends \Cupcake\Helper
 	}
 	
     public function showData($result, $field)
-    {
+    {	$viewer = 'showData'.ucfirst($field);
+    	if(method_exists($result, $viewer) === true) {
+    		return $result->$viewer();
+    	}
+    	
     	$getter = 'get'.ucfirst($field);
     	
     	if ($result->$getter() instanceof \DateTime) {

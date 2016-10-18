@@ -93,41 +93,94 @@ class DAO
      */
     public function findModel($data)
     {
-        $model = $this->EntityRepository->find($data[$this->name]['id']);
+    	$id = (is_array($data[$this->name]['id'])) ? @$data[$this->name]['id'][0] : $data[$this->name]['id'];
+        $model = $this->EntityRepository->find($id);
         if ($model === null) {
-            $model = $this->loadModel($data[$this->name]['id']);
+            $model = $this->loadModel($id);
         }
-
+        
         return $model;
 
     }
 
+    
+    public function fixDataToListen($data)
+    {
+    	$fields = $this->ClassMetadata->getFieldNames();
+    	foreach ($fields as $field) {
+    		$type = $this->ClassMetadata->getTypeOfField($field);
+    		if ($type === 'boolean' && isset($data[$this->name][$field]) === false) {
+    			$data[$this->name][$field] = false;
+    		} else if ($type === 'boolean' && isset($data[$this->name][$field]) === true) {
+    			$data[$this->name][$field] = (bool) @$data[$this->name][$field];
+    		}
+    	}
+    	
+    	return $data;
+    }
 
+    public function cleanManyToMany($model, $mappings) {
+    	foreach ($mappings as $k => $v) {
+    		if (isset($v['joinTable'])) {
+    			$getter = 'get'. ucfirst($k);
+    			$model->$getter()->clear();
+    		}
+    	}
+    	
+    	return $model;
+    }
+    
     public function listen(array $data)
     {
-        $model = $this->findModel($data);
-        $mappings = $this->ClassMetadata->getAssociationMappings();
+    	$mappings = $this->ClassMetadata->getAssociationMappings();
+    	$data = $this->fixDataToListen($data, $mappings);
+    	$model = $this->findModel($data);
+    	
         foreach ($data[$this->name] as $k => $v) {
-            $set = 'set' . ucfirst($k);
+        	$set = 'set' . ucfirst($k);
             if (isset($mappings[$k]) === true) {
-                $mappedDAO = new DAO($this->app, $mappings[$k]['targetEntity']);
-                // Antes fazia isso se o v não fosse array: $mappedDAO->find($v)
-
-                $key = each($v);
-                if (is_array($v) === true && (bool) $key['value'] === true) {
-                	$v = $mappedDAO->listen(array($mappings[$k]['targetEntity'] => $v));
-                } else if (is_object($v) === false) {
-                     $v = null;
+            	$daoClass = (class_exists('Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO') === true) ? 'Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO' : '\Cupcake\DAO';
+            	$mappedDAO = new $daoClass($this->app, $mappings[$k]['targetEntity']);
+                
+            	if (is_array($v) === true ) {
+            		$v = array_filter($v);
+                	if ((bool) @$v['id'] === false && count($v) > 0) {
+                		$v['id'] = $mappedDAO->getNext('id');
+                	}
+                	
+                	$key = each($v);
+	            	if ((bool) $key['value'] === true) {	
+	            		// ManyToMany
+	            		if (is_array($v['id'])) {
+	                		foreach ($v['id'] as $id) {
+	                			if ($id === '0') {
+	                				$get = 'get' . ucfirst($k);
+	                				if((bool) $model->$get() === true) {
+	                					$model->$get()->clear();
+	                				}
+	                			} else {
+		                			$add = 'add' . ucfirst($k);
+		                			$model->$add($mappedDAO->find($id));
+	                			}
+	                		}
+	                	} else {
+	                		$v = $mappedDAO->listen(array($mappings[$k]['targetEntity'] => $v));
+	                		$model->$set($v);
+	                	}
+	
+	                } else if (is_object($v) === false) {
+	                	$model->$set(null);
+	                }
                 }
-
-                $model->$set($v);
+                
             } else {
                 (is_array($v) === true) ? $v = implode($model->getListSeparator(), $v) : false;
                 $method = 'set' . ucfirst($k);
-                $model->$method($v);
+                if((bool) $v) {
+                	$model->$method($v);
+                }
             }
         }
-
         return $model;
 
     }
@@ -139,6 +192,17 @@ class DAO
     	    if ((bool) $model->getAssinante() === false) {
     	        $AssinanteDAO = new DAO($this->app, $this->modelAssinante);
     	        $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
+        	}
+        }
+        return $model;
+
+    }
+
+    public function defineIdLocal($model)
+    {
+    	if (property_exists($model, 'idLocal') === true) {
+    	    if ((bool) $model->getIdLocal() === false) {
+    	        $model->setIdLocal($this->getNext('idLocal'));
         	}
         }
 
@@ -216,10 +280,12 @@ class DAO
         $original = $this->find($model->getId());
         if ($original === null) {
             $model->setId($this->getNext('id'));
+            
             $this->db->persist($model);
+            $model = $this->defineIdLocal($model);
             $model = $this->defineAssinante($model);
         }
-
+        
         $this->db->merge($model);
         $this->db->flush();
 
@@ -230,7 +296,11 @@ class DAO
 
     public function deletar($id)
     {
-        $model = $this->find($id);
+//         $model = $this->find($id);
+        $data = [$this->name => ['id' => $id]];
+//         dbg($data);
+        $model = $this->findModel($data);
+//         dbg($model, true);
         $this->db->remove($model);
         $this->db->flush();
 
