@@ -1,9 +1,9 @@
-<ul class="pagination right" style="font-size: 13px;margin: 0px">
-    <li class="active" style="background: #41cac0;">
-        <a style="padding: 6px 12px;background-color: #ddd;color: #666;border-color:#ddd;"><b><?php echo $lista->getTotal(); ?></b> registros,</a>
+<ul class="nav nav-tabs pull-right" style="margin-top: -5px;margin-right: 5px;">
+    <li style="color: #FFF;padding: 10px;">
+        <b><?php echo $lista->getTotal(); ?></b> registros,
     </li>
     <li>
-        <a style="border: none;padding: 0px;">
+
             <select id="select-limit" class="form-control" style="width: 100%;height: 32px;border-radius: 0;">
               <option <?php if ($lista->limit === '10') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(5); ?>">5</option>
               <option <?php if ($lista->limit === '10') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(10); ?>">10</option>
@@ -12,9 +12,9 @@
               <option <?php if ($lista->limit === '50') echo "selected"; ?> value="<?php echo $lista->getLinkLimit(100); ?>">100</option>
               <option <?php if ($lista->limit === (string) $lista->getTotal()) echo "selected"; ?> value="<?php echo $lista->getLinkLimit($lista->getTotal()); ?>">Todos</option>
             </select>
-        </a>
+
     </li>
-    <li class="active">
-        <a style="padding: 6px 12px;background-color: #ddd;color: #666;border-color:#ddd;">por página</a>
+    <li style="color: #FFF;padding: 10px;">
+         por página
     </li>
 </ul>

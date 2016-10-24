@@ -24,9 +24,9 @@
 	    </div>
 
         <section class="panel">
-            <header class="panel-heading">
-                <strong><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></strong>
-                <span class="right" style="margin-top: -5px;"><?php echo $headerLista; ?></span>
+            <header class="panel-heading tab-bg-dark-navy-blue">
+                <span class="hidden-sm wht-color"><strong><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></strong></span>
+                <span class="right"><?php echo $headerLista; ?></span>
             </header>
 
             <div class="panel-body" style="padding-bottom: 100px">
@@ -52,12 +52,12 @@
                         <?php } ?>
                             <td style="max-width:90px">
                             <div class="btn-group">
-		            			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm btn-shadow" type="button" aria-expanded="false">Opções <span class="caret"></span></button>
+		            			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm" type="button" aria-expanded="false">Opções <span class="caret"></span></button>
 		            			<ul role="menu" class="dropdown-menu pull-right">
 		                            <li><a href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>"><i class="fa fa-plus-circle"></i> Detalhes</a></li>
 		                            <li><a href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
 		                           <li class="divider"></li>
-		                            <li><a class="btn-delete" href="#" data-rel="<?php echo $result->getId(); ?>"><i class="fa fa-trash-o red"></i> Deletar</a></li>
+		                            <li><a class="link-delete" href="#" data-rel="<?php echo $result->getId(); ?>"><i class="fa fa-trash-o red"></i> Deletar</a></li>
 		                        </ul>
 		                     </div>
                             </td>
@@ -67,7 +67,6 @@
                 </table>
                 <?php } else { ?>
                 <div class="alert alert-blck alert-warning center" style="margin-top: 15px">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
                     <i class="fa fa-4x fa-frown-o"></i><br/>
                     <strong>Ops!</strong> Nenhum resultado para esta busca.
                 </div>
@@ -81,11 +80,12 @@
 
 <script>
     $(document).ready(function() {
-        $('.btn-delete').click(function() {
+        $('.link-delete').click(function() {
             $('#modal-footer-default').hide();
-            CupcakeAlert(
-                '<a class="btn btn-danger ajax-link" href="<?php echo $indexController; ?>deletar/'+$(this).attr('data-rel')+'/?<?php echo (isset($requestUri[1]) === true) ? urlencode(($requestUri[1])) : ''; ?>"><i class="fa fa-trash-o white"></i> Confirma</a>',
-                'Confirma a remoção deste registro?'
+            CupcakeAlert('<a class="btn btn-danger ajax-link" href="<?php echo $indexController; ?>deletar/'+$(this).attr('data-rel')+'/?<?php echo (isset($requestUri[1]) === true) ? urlencode(($requestUri[1])) : ''; ?>"><i class="fa fa-trash-o white"></i> Confirma</a>',
+                    '',
+                    'Confirma a remoção deste registro?'
+
             );
             CupcakeReady();
         });

@@ -16,7 +16,21 @@ function CupcakeReady() {
 //	    prevText: 'Anterior',
 //	    enableOnReadonly:false
 //	});
-
+	$('.modal-link').click(function() {
+        type = 'GET';
+        url = $(this).attr('data-rel');
+        $.ajax({
+            type: type,
+            url: url,
+            success:function(data){
+                if(data && data != 1) {
+                    $('#modal-content-aux').html(data);
+                }
+            }
+        });
+        return true;
+    });
+	
 	$('.icon-help').click(function() {
 		tour = loadTour();
 		tour.restart(true);
@@ -39,25 +53,6 @@ function CupcakeReady() {
 
 	$('.load-modal').click(function(){
 		loadingModal();
-	});
-	
-	$('.ajax-form').submit(function(){
-		loadingModal();
-		type = $(this).attr('method').toUpperCase();
-		url = $(this).attr('action');
-		data = $(this).serialize();
-		
-		$.ajax({
-			type: type,
-	  		url: url,
-	  		data: data,
-			success:function(data){
-				if(data && data != 1) {
-					return trataAjaxReturn(data);
-				} 
-			}
-		});
-		return false;
 	});
 
 	$('.ajax-link').click(function(e){

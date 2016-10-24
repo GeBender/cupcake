@@ -98,12 +98,12 @@ class DAO
         if ($model === null) {
             $model = $this->loadModel($id);
         }
-        
+
         return $model;
 
     }
 
-    
+
     public function fixDataToListen($data)
     {
     	$fields = $this->ClassMetadata->getFieldNames();
@@ -115,7 +115,7 @@ class DAO
     			$data[$this->name][$field] = (bool) @$data[$this->name][$field];
     		}
     	}
-    	
+
     	return $data;
     }
 
@@ -126,30 +126,30 @@ class DAO
     			$model->$getter()->clear();
     		}
     	}
-    	
+
     	return $model;
     }
-    
+
     public function listen(array $data)
     {
-    	$mappings = $this->ClassMetadata->getAssociationMappings();
+        $mappings = $this->ClassMetadata->getAssociationMappings();
     	$data = $this->fixDataToListen($data, $mappings);
     	$model = $this->findModel($data);
-    	
+
         foreach ($data[$this->name] as $k => $v) {
         	$set = 'set' . ucfirst($k);
             if (isset($mappings[$k]) === true) {
             	$daoClass = (class_exists('Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO') === true) ? 'Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO' : '\Cupcake\DAO';
             	$mappedDAO = new $daoClass($this->app, $mappings[$k]['targetEntity']);
-                
+
             	if (is_array($v) === true ) {
             		$v = array_filter($v);
                 	if ((bool) @$v['id'] === false && count($v) > 0) {
                 		$v['id'] = $mappedDAO->getNext('id');
                 	}
-                	
+
                 	$key = each($v);
-	            	if ((bool) $key['value'] === true) {	
+	            	if ((bool) $key['value'] === true) {
 	            		// ManyToMany
 	            		if (is_array($v['id'])) {
 	                		foreach ($v['id'] as $id) {
@@ -167,12 +167,12 @@ class DAO
 	                		$v = $mappedDAO->listen(array($mappings[$k]['targetEntity'] => $v));
 	                		$model->$set($v);
 	                	}
-	
+
 	                } else if (is_object($v) === false) {
 	                	$model->$set(null);
 	                }
                 }
-                
+
             } else {
                 (is_array($v) === true) ? $v = implode($model->getListSeparator(), $v) : false;
                 $method = 'set' . ucfirst($k);
@@ -280,12 +280,12 @@ class DAO
         $original = $this->find($model->getId());
         if ($original === null) {
             $model->setId($this->getNext('id'));
-            
+
             $this->db->persist($model);
             $model = $this->defineIdLocal($model);
             $model = $this->defineAssinante($model);
         }
-        
+
         $this->db->merge($model);
         $this->db->flush();
 
@@ -296,18 +296,19 @@ class DAO
 
     public function deletar($id)
     {
-//         $model = $this->find($id);
         $data = [$this->name => ['id' => $id]];
-//         dbg($data);
         $model = $this->findModel($data);
-//         dbg($model, true);
-        $this->db->remove($model);
-        $this->db->flush();
+        $this->remove($model);
 
         return true;
 
     }
 
+    public function remove($model)
+    {
+        $this->db->remove($model);
+        $this->db->flush();
+    }
 
     public function createQueryBuilder()
     {
