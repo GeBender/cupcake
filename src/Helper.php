@@ -37,6 +37,7 @@ class Helper extends Controller
             $this->DAO = new DAO($app, $this->entity);
         }
 
+
         $setName = 'set'.$helperName;
         $this->$setName($this);
 
