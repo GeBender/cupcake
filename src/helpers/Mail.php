@@ -25,7 +25,7 @@ class Mail extends \Cupcake\Helper
 
         $this->mailer = new \PHPMailer();
 
-        //$this->mailer->isSMTP();
+        $this->mailer->isSMTP();
         $this->mailer->CharSet = 'UTF-8';
         $this->mailer->SMTPAuth = true;
         $this->mailer->SMTPSecure = 'ssl';
