@@ -12,7 +12,7 @@
 namespace Cupcake\helpers;
 
 use FileUpload\Validator\Simple;
-use FileUpload\PathResolver\Simple;
+use FileUpload\PathResolver\Simple as PathResolverSimple;
 use FileUpload\Validator\MimeTypeValidator;
 use FileUpload\Validator\SizeValidator;
 use FileUpload\FileUpload;
@@ -40,7 +40,7 @@ class JQFileUpload extends \Cupcake\Helper
     {
     	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
-    	$this->pathresolver = new FileUpload\PathResolver\Simple(dirname(__DIR__).'Apps/'.$app['route']['appName'].'/uploads');
+    	$this->pathresolver = new PathResolverSimple(dirname(__DIR__).'Apps/'.$app['route']['appName'].'/uploads');
     	$fileupload->setPathResolver($this->pathresolver);
     	$result = $fileupload->setFileSystem($this->filesystem);
 
