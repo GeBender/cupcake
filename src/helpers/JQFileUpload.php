@@ -39,7 +39,8 @@ class JQFileUpload extends \Cupcake\Helper
     {
     	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
-    	$fileupload->setPathResolver(dirname(__DIR__).'/Apps/Logisttick/uploads');
+    	$this->pathresolver = new FileUpload\PathResolver\Simple(dirname(__DIR__).'Apps/'.$app['route']['appName'].'/uploads');
+    	$fileupload->setPathResolver($this->pathresolver);
     	$result = $fileupload->setFileSystem($this->filesystem);
 
     	foreach ($this->validator as $validator) {
