@@ -304,8 +304,8 @@ function telaCheia() {
 function CupcakeAlert(msg, btnAlt, title) {
 	typeof btnAlt !== 'undefined' ? $('#extra-button-modal').html(btnAlt) : false;
 	typeof title !== 'undefined' ? $('#default-modal-title').html(title) : false;
-	$('#default-modal-body').html(msg);
-
+	$('#alertDefaultBody').html(msg);
+ 
     closeModal();
 	$('#alertDefault').modal('show');
 }
