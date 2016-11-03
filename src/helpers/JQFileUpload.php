@@ -12,6 +12,7 @@
 namespace Cupcake\helpers;
 
 use FileUpload\Validator\Simple;
+use FileUpload\PathResolver\Simple;
 use FileUpload\Validator\MimeTypeValidator;
 use FileUpload\Validator\SizeValidator;
 use FileUpload\FileUpload;
