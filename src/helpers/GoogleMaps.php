@@ -18,8 +18,11 @@ class GoogleMaps extends \Cupcake\Helper
     public function geocode($stringAddress)
     {
         $buscaUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($stringAddress);
+        dbg($buscaUrl);
         $json = file_get_contents($buscaUrl);
-
+        dbg($json);
+        $jsonDecoded = json_decode($json, true);
+        dbg($jsonDecoded, true);
         return json_decode($json, true);
 
     }
