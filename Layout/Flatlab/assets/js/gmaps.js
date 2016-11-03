@@ -1487,7 +1487,7 @@ if(window.google && window.google.maps){
       var parameters = [];
       var data;
 
-      var static_root = 'http://maps.googleapis.com/maps/api/staticmap';
+      var static_root = 'https://maps.googleapis.com/maps/api/staticmap';
       if (options.url){
         static_root = options.url;
         delete options.url;

@@ -17,7 +17,7 @@ class GoogleMaps extends \Cupcake\Helper
 
     public function geocode($stringAddress)
     {
-        $buscaUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($stringAddress).'&key='.$this->app['config']['googlemaps-api'];
+        $buscaUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($stringAddress).'&key='.$this->app['config']['googlemaps-api'];
         $json = file_get_contents($buscaUrl);
         $jsonDecoded = json_decode($json, true);
 
