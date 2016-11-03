@@ -23,7 +23,7 @@ class JQFileUpload extends \Cupcake\Helper
 	public $validator = [];
 	public $mimeTypeValidator;
 	public $sizeValidator;
-	public $pathresolver = 'LAGALGDLAFADF';
+	public $pathresolver;
 	public $filesystem;
 
     public function __construct($app)
@@ -39,7 +39,7 @@ class JQFileUpload extends \Cupcake\Helper
     {
     	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
-    	$fileupload->setPathResolver($this->pathresolver);
+    	$fileupload->setPathResolver(dirname(__DIR__).'/Apps/Logisttick/uploads');
     	$result = $fileupload->setFileSystem($this->filesystem);
 
     	foreach ($this->validator as $validator) {
