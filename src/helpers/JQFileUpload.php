@@ -23,7 +23,7 @@ class JQFileUpload extends \Cupcake\Helper
 	public $validator = [];
 	public $mimeTypeValidator;
 	public $sizeValidator;
-	public $pathresolver;
+	public $pathresolver = 'LAGALGDLAFADF';
 	public $filesystem;
 
     public function __construct($app)
@@ -34,12 +34,6 @@ class JQFileUpload extends \Cupcake\Helper
 		$this->setSimplePathresolver($app['GPS']->getUploadFolder());
 		$this->setSimpleFileSystem();
     }
-
-    public function get() {
-//         $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getLayoutAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
-//         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getLayoutAsset() . 'js/forms.js"></script>');
-    }
-
 
     public function upload($field)
     {
