@@ -40,7 +40,7 @@ class JQFileUpload extends \Cupcake\Helper
     {
     	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
-    	$this->pathresolver = new PathResolverSimple(dirname(__DIR__).'Apps/'.$this->app['route']['appName'].'/uploads');
+    	$this->pathresolver = new PathResolverSimple(dirname(dirname(dirname(dirname(__DIR__)))).'/Apps/'.$this->app['route']['appName'].'/uploads');
     	$fileupload->setPathResolver($this->pathresolver);
     	$result = $fileupload->setFileSystem($this->filesystem);
 
