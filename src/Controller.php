@@ -333,6 +333,8 @@ class Controller
         $this->setV($this->app['Vars']);
         $this->setArgs($this->args);
 
+        $this->preRender();
+
         if ($this->layout !== false) {
             if ($content === null) {
                 $content = $this->view();
@@ -349,6 +351,10 @@ class Controller
 
     }
 
+    public function preRender()
+    {
+
+    }
 
     public function setModel()
     {

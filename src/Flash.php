@@ -33,6 +33,20 @@ class Flash
 
     }
 
+    public static function panel($msg)
+    {
+        Sessions::save('panelMsg', $msg);
+    }
+
+
+    public static function getPanel()
+    {
+        $msg = Sessions::restore('panelMsg');
+        Sessions::delete('panelMsg');
+
+        return $msg;
+
+    }
 
     public static function topFull($msg, $type='information')
     {
@@ -49,7 +63,7 @@ class Flash
 
         Sessions::delete('flashTopFull');
         Sessions::delete('flashTopFullType');
-        
+
         if ($msg !== null) {
             return '"text":"'.$msg.'","layout":"top","type":"'.$type.'"';
         }

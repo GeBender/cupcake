@@ -354,15 +354,17 @@ function imprime() {
 }
 
 function showNotyError(msg) {
-	$('.noty_error_msg').html(msg);
-	$('.noty_error').slideDown();
-	$('.noty_error').delay(4000).slideUp();
+	CupcakeAlert(msg);
+//	$('.noty_error_msg').html(msg);
+//	$('.noty_error').slideDown();
+//	$('.noty_error').delay(4000).slideUp();
 }
 
 function showNotyWarning(msg) {
-	$('.noty_warning_msg').html(msg);
-	$('.noty_warning').slideDown();
-	$('.noty_warning').delay(4000).slideUp();
+	CupcakeAlert(msg);
+//	$('.noty_warning_msg').html(msg);
+//	$('.noty_warning').slideDown();
+//	$('.noty_warning').delay(4000).slideUp();
 }
 
 function preparaData(idField)
