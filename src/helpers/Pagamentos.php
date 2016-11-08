@@ -42,6 +42,7 @@ class Pagamentos extends \Cupcake\Helper
             $Pagamento->setStatus($this->driver->getStatus($PagamentoAsaas->status));
             $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
             $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
+            $Pagamento->setOriginal($PagamentoAsaas);
 
             return $Pagamento;
         }

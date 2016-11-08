@@ -27,6 +27,8 @@ class PagamentoModel extends Model
     public $linkPagamento;
     public $linkBoleto;
 
+    public $original;
+
     const AGUARDANDO = 'Aguardando pagamento';
     const CONFIRMADO = 'Confirmado';
     const RECEBIDO = 'Recebido';
