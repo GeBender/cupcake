@@ -32,17 +32,21 @@ class Pagamentos extends \Cupcake\Helper
     {
         $Pagamento = new PagamentoModel();
 
-        $Pagamento->setId($PagamentoAsaas->invoiceNumber);
-        $Pagamento->setNossoNumero($PagamentoAsaas->nossoNumero);
-        $Pagamento->setClienteId($PagamentoAsaas->customer);
-        $Pagamento->setValor($PagamentoAsaas->value);
-        $Pagamento->setValor($PagamentoAsaas->value);
-        $Pagamento->setVencimento($PagamentoAsaas->dueDate);
-        $Pagamento->setStatus($this->driver->getStatus($PagamentoAsaas->status));
-        $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
-        $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
+        if ($PagamentoAsaas) {
+            $Pagamento->setId($PagamentoAsaas->invoiceNumber);
+            $Pagamento->setNossoNumero($PagamentoAsaas->nossoNumero);
+            $Pagamento->setClienteId($PagamentoAsaas->customer);
+            $Pagamento->setValor($PagamentoAsaas->value);
+            $Pagamento->setValor($PagamentoAsaas->value);
+            $Pagamento->setVencimento($PagamentoAsaas->dueDate);
+            $Pagamento->setStatus($this->driver->getStatus($PagamentoAsaas->status));
+            $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
+            $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
 
-        return $Pagamento;
+            return $Pagamento;
+        }
+        return false;
+
     }
 
     public function getLastOpenedPayment($id) {
