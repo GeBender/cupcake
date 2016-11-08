@@ -55,6 +55,10 @@ class Pagamentos extends \Cupcake\Helper
         return $this->newPagamento($PagamentoAsaas);
     }
 
+    public function getClient($id) {
+        return $this->driver->getClient($id);
+    }
+
     public function getPagamentosDoCliente($id) {
         $PagamentosAsaas = $this->driver->getPagamentosDoCliente($id);
 

@@ -21,4 +21,6 @@ interface PagamentosInterface
 
     public function getStatus($status);
 
+    public function getClient($id);
+
 }

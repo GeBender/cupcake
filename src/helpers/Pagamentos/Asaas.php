@@ -42,6 +42,11 @@ class Asaas implements PagamentosInterface
         return $this->driver->payment()->getByCustomer($id);
     }
 
+    public function getClient($id)
+    {
+        return $this->driver->customer()->getById($id);
+    }
+
     public function getStatus($status)
     {
         $statusPagamento = [
