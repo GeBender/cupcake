@@ -20,11 +20,13 @@ class Asaas implements PagamentosInterface
 
     public $driver;
 
+
     public function __construct($app)
     {
         $adapter = new BuzzAdapter($app['config']['pagamento']['key']);
         $this->driver = new AsaasDriver($adapter);
     }
+
 
     public function getLastOpenedPayment($id)
     {
@@ -37,10 +39,12 @@ class Asaas implements PagamentosInterface
         }
     }
 
+
     public function getPagamentosDoCliente($id)
     {
         return $this->driver->payment()->getByCustomer($id);
     }
+
 
     public function getClient($id)
     {
@@ -57,6 +61,32 @@ class Asaas implements PagamentosInterface
         ];
 
         return $statusPagamento[$status];
+    }
+
+    public function newPagamento($PagamentoAsaas)
+    {
+        $Pagamento = new PagamentoModel();
+
+        $Pagamento->setId($PagamentoAsaas->invoiceNumber);
+        $Pagamento->setNossoNumero($PagamentoAsaas->nossoNumero);
+        $Pagamento->setClienteId($PagamentoAsaas->customer);
+        $Pagamento->setValor($PagamentoAsaas->value);
+        $Pagamento->setValor($PagamentoAsaas->value);
+        $Pagamento->setVencimento($PagamentoAsaas->dueDate);
+        $Pagamento->setStatus($this->getStatus($PagamentoAsaas->status));
+        $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
+        $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
+        $Pagamento->setOriginal($PagamentoAsaas);
+
+        return $Pagamento;
+    }
+
+    /**
+     * @param array $dadosCliente
+     */
+    public function createClient($dadosCliente)
+    {
+
     }
 
 }

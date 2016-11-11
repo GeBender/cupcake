@@ -23,4 +23,8 @@ interface PagamentosInterface
 
     public function getClient($id);
 
+    public function newPagamento($pagamento);
+
+    public function createClient($dadosCliente);
+
 }

@@ -28,31 +28,18 @@ class Pagamentos extends \Cupcake\Helper
 
     }
 
-    public function newPagamento($PagamentoAsaas)
+    public function newPagamento($Pagamento)
     {
-        $Pagamento = new PagamentoModel();
-
-        if ($PagamentoAsaas) {
-            $Pagamento->setId($PagamentoAsaas->invoiceNumber);
-            $Pagamento->setNossoNumero($PagamentoAsaas->nossoNumero);
-            $Pagamento->setClienteId($PagamentoAsaas->customer);
-            $Pagamento->setValor($PagamentoAsaas->value);
-            $Pagamento->setValor($PagamentoAsaas->value);
-            $Pagamento->setVencimento($PagamentoAsaas->dueDate);
-            $Pagamento->setStatus($this->driver->getStatus($PagamentoAsaas->status));
-            $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
-            $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
-            $Pagamento->setOriginal($PagamentoAsaas);
-
-            return $Pagamento;
+        if ($Pagamento) {
+            return $this->driver->newPagamento($Pagamento);
         }
         return false;
 
     }
 
     public function getLastOpenedPayment($id) {
-        $PagamentoAsaas = $this->driver->getLastOpenedPayment($id);
-        return $this->newPagamento($PagamentoAsaas);
+        $Pagamento = $this->driver->getLastOpenedPayment($id);
+        return $this->newPagamento($Pagamento);
     }
 
     public function getClient($id) {
@@ -60,13 +47,21 @@ class Pagamentos extends \Cupcake\Helper
     }
 
     public function getPagamentosDoCliente($id) {
-        $PagamentosAsaas = $this->driver->getPagamentosDoCliente($id);
+        $Pagamentos = $this->driver->getPagamentosDoCliente($id);
 
         $pagamentos = [];
-        foreach ($PagamentosAsaas as $PagamentoAsaas) {
-            $pagamentos[] = $this->newPagamento($PagamentoAsaas);
+        foreach ($Pagamentos as $Pagamento) {
+            $pagamentos[] = $this->newPagamento($Pagamento);
         }
 
         return $pagamentos;
+    }
+
+    /**
+     * @param \Assinantes $Assinante
+     */
+    public function createClient($Assinante)
+    {
+        $this->driver->createClient([]);
     }
 }
