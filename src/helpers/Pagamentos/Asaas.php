@@ -51,7 +51,7 @@ class Asaas implements PagamentosInterface
         return $this->driver->customer()->getById($id);
     }
 
-    public function getStatus($status)
+    public function getPaymentStatus($status)
     {
         $statusPagamento = [
             'PENDING' => PagamentoModel::AGUARDANDO,
@@ -63,6 +63,24 @@ class Asaas implements PagamentosInterface
         return $statusPagamento[$status];
     }
 
+    public function getSubscriptionCycle($periodo)
+    {
+        $cycles = [
+            'mensal' => 'MONTHLY',
+            'trimestral' => 'QUARTERLY',
+            'semestral' => 'SEMIANNUALLY',
+            'anual' => 'YEARLY'
+        ];
+
+        return $cycles[$periodo];
+    }
+
+    public function getSubscriptionBillingType($formaDePagamento)
+    {
+        return ($formaDePagamento === 'credito') ? 'CREDIT_CARD' : 'UNDEFINED';
+    }
+
+
     public function newPagamento($PagamentoAsaas)
     {
         $Pagamento = new PagamentoModel();
@@ -73,7 +91,7 @@ class Asaas implements PagamentosInterface
         $Pagamento->setValor($PagamentoAsaas->value);
         $Pagamento->setValor($PagamentoAsaas->value);
         $Pagamento->setVencimento($PagamentoAsaas->dueDate);
-        $Pagamento->setStatus($this->getStatus($PagamentoAsaas->status));
+        $Pagamento->setStatus($this->getPaymentStatus($PagamentoAsaas->status));
         $Pagamento->setLinkPagamento($PagamentoAsaas->invoiceUrl);
         $Pagamento->setBoletoPagamento($PagamentoAsaas->boletoUrl);
         $Pagamento->setOriginal($PagamentoAsaas);
@@ -82,11 +100,56 @@ class Asaas implements PagamentosInterface
     }
 
     /**
-     * @param array $dadosCliente
+     * @param \Assinantes $dadosCliente
+     * @param \Enderecos $Endereco
      */
-    public function createClient($dadosCliente)
+    public function createClient($Assinante, $Endereco)
     {
+        $clientData = [
+            "name" => $Assinante->getRazao(),
+            "email" => $Assinante->getEmail(),
+            "mobilePhone" => $Assinante->getCelular(),
+            "cpfCnpj" => $Assinante->getDoc(),
+            "postalCode" => $Endereco->getCep(),
+            "address" => $Endereco->getEndereco(),
+            "addressNumber" => $Endereco->getNumero(),
+            "complement" => $Endereco->getComplemento(),
+            "province" => $Endereco->getBairro(),
+        ];
 
+        return $this->driver->customer()->create($clientData);
+    }
+
+    public function updateSubscription($Assinante) {
+        $subscriptionData = [
+            "customer" => $Assinante->getIdGatewayPagamento(),
+            "description" => $Assinante->getDescricaoAssinatura(),
+            "billingType" => $this->getSubscriptionBillingType($Assinante->getFormaDePagamento()),
+            "nextDueDate" => $Assinante->getProximoVencimento(),
+            "value" => $Assinante->getValor(),
+            "status" => 'ACTIVE',
+            "cycle" => $this->getSubscriptionCycle($Assinante->getPeriodo())
+        ];
+
+        if($subscription = $this->driver->subscription()->getByCustomer($Assinante->getIdGatewayPagamento())) {
+            $this->cancelPendingPayments($Assinante);
+            $subscription = $this->driver->subscription()->delete($subscription[0]->id);
+        }
+        $subscription = $this->driver->subscription()->create($subscriptionData);
+
+
+        return $subscription;
+
+    }
+
+    public function cancelPendingPayments($Assinante)
+    {
+        $payments = $this->getPagamentosDoCliente($Assinante->getIdGatewayPagamento());
+        foreach ($payments as $payment) {
+            if ($payment->status === 'PENDING') {
+                $this->driver->payment()->delete($payment->id);
+            }
+        }
     }
 
 }

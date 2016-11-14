@@ -19,12 +19,14 @@ interface PagamentosInterface
 
     public function getPagamentosDoCliente($id);
 
-    public function getStatus($status);
+    public function getPaymentStatus($status);
 
     public function getClient($id);
 
     public function newPagamento($pagamento);
 
-    public function createClient($dadosCliente);
+    public function createClient($Assinante, $Endereco);
+
+    public function updateSubscription($Assinante);
 
 }

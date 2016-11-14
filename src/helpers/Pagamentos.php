@@ -62,6 +62,17 @@ class Pagamentos extends \Cupcake\Helper
      */
     public function createClient($Assinante)
     {
-        $this->driver->createClient([]);
+        $this->uses('Patios');
+        $Endereco = $this->PatiosDAO->getPatioPadraoDoAssinante($Assinante->getId());
+        return $this->driver->createClient($Assinante, $Endereco);
+    }
+
+
+    /**
+     * @param \Assinantes $Assinante
+     */
+    public function updateSubscription($Assinante)
+    {
+        return $this->driver->updateSubscription($Assinante);
     }
 }
