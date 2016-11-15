@@ -437,7 +437,7 @@ class Controller
 
     public function deletar()
     {
-        $this->layout = false;
+    	$this->layout = false;
         $this->DAO->deletar($this->args[0]);
 
         if (isset($_GET['saida']) === true) {
