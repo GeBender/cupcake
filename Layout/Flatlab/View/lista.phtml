@@ -18,26 +18,27 @@
         </ul>
 
 		<div class="panel panel-btns">
-	        <a href="<?php echo $indexController; ?>novo" class="btn btn-small btn-success btn-shadow">
-	            <span class="white fa fa-plus"></span> Inserir novo
+	        <a href="<?php echo $indexController; ?>novo" class="btn btn-sm btn-success btn-shadow">
+	            <span class="white fa fa-plus-circle"></span> Inserir novo
 	        </a>
 	    </div>
 
         <section class="panel">
             <header class="panel-heading tab-bg-dark-navy-blue">
-                <span class="hidden-sm wht-color"><strong><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></strong></span>
+                <span class="hidden-sm wht-color"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></span>
                 <span class="right"><?php echo $headerLista; ?></span>
             </header>
 
             <div class="panel-body" style="padding-bottom: 100px">
                 <?php if (count($results) > 0) { ?>
-                    <table class="table table-bordered table-striped table-condensed">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                             <?php foreach ($colunas as $coluna) { ?>
-                                <th><?php echo $lista->getTituloColuna($coluna); ?>
+                                <th>
                                     <a href="<?php echo $lista->getLinkOrder($coluna); ?>">
-                                        <i class="<?php echo $lista->getIconOrder($coluna); ?> right"></i>
+                                        <i class="<?php echo $lista->getIconOrder($coluna); ?>" style="margin-right: 3px;"></i>
+                                        <?php echo $lista->getTituloColuna($coluna); ?>
                                     </a>
                                 </th>
                             <?php } ?>
@@ -51,15 +52,18 @@
                             <td><?php echo $pages->viewLista($result, $coluna); ?></td>
                         <?php } ?>
                             <td style="max-width:90px">
-                            <div class="btn-group">
-		            			<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm" type="button" aria-expanded="false">Opções <span class="caret"></span></button>
-		            			<ul role="menu" class="dropdown-menu pull-right">
-		                            <li><a href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>"><i class="fa fa-plus-circle"></i> Detalhes</a></li>
-		                            <li><a href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
-		                           <li class="divider"></li>
-		                            <li><a class="link-delete" href="#" data-rel="<?php echo $result->getId(); ?>"><i class="fa fa-trash-o red"></i> Deletar</a></li>
-		                        </ul>
-		                     </div>
+                                <div class="btn-group">
+                                    <a href="<?php echo $indexController; ?>editar/<?php echo $result->getId(); ?>" class="btn btn-sm btn-warning modal-link" style="border-color:#FFF;">
+                                        <i class="fa fa-pencil-square"></i> Editar</a>
+                                    <button data-toggle="dropdown" class="btn btn-sm btn-warning dropdown-toggle" type="button" aria-expanded="false" style="border-color:#FFF;">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li><a href="<?php echo $indexController; ?>ver/<?php echo $result->getId(); ?>"><i style="min-width: 20px" class="fa fa-search-plus"></i> Detalhes</a></li>
+                                        <li class="divider"></li>
+                                        <li><a class="link-delete" href="#" data-rel="<?php echo $result->getId(); ?>"><i style="min-width: 20px" class="fa fa-trash"></i> Deletar</a></li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     <?php } ?>

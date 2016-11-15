@@ -22,9 +22,9 @@ class Form extends \Cupcake\Helper
     );
 
 
-    public function __construct($app)
+    public function __construct($app, $entity=false)
     {
-        parent::__construct($app);
+        parent::__construct($app, $entity);
         if ((bool) $this->DAO->ClassMetadata === true) {
         	$this->mappings = $this->DAO->ClassMetadata->getAssociationMappings();
         }
@@ -127,7 +127,7 @@ class Form extends \Cupcake\Helper
         $value = explode($this->model->getListSeparator(), $value);
 
         foreach ($options as $k => $v) {
-            $strOpts .= '<label class="left" style="margin-right:10px;"><input type="checkbox" value="'.$v.'" ' . $this->checked($v, $value) . ' id="form-' . $this->entity . '-' . $field . '" name="' . $this->entity . '[' . $field . '][]" ' . $this->concatAttr($attr) . '>' . $v . '</label>';
+            $strOpts .= '<label style="margin-right:10px;"><input type="checkbox" value="'.$v.'" ' . $this->checked($v, $value) . ' id="form-' . $this->entity . '-' . $field . '" name="' . $this->entity . '[' . $field . '][]" ' . $this->concatAttr($attr) . '>' . $v . '</label><br>';
         }
 
         return $strOpts;
@@ -245,6 +245,19 @@ class Form extends \Cupcake\Helper
 
     }
 
+
+    public function isRequired($field)
+    {
+        if ($this->ehMapeado($field) === true) {
+            if (isset($this->mappings[$field]['joinColumns'][0]['nullable']) === true || @$this->mappings[$field]['joinColumns'][0]['nullable'] === false) {
+                return true;
+            }
+        } else if ($this->DAO->ClassMetadata->isnullable($field) === false) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function required($field)
     {

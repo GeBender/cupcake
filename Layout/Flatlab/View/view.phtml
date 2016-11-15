@@ -13,9 +13,9 @@
 <div class="row">
     <div class="col-sm-12">
         <ul class="breadcrumb">
-            <li><a href="<?php echo $indexPainel; ?>">Painel</a></li>
-            <li><a href="<?php echo $indexController; ?>"><?php echo $titulo; ?></a> </li>
-            <li><a href="#"><?php echo $migalha; ?></a></li>
+            <li><a href="<?php echo $indexPainel; ?>"><i class="fa fa-home"></i> Painel</a></li>
+            <li><a href="<?php echo $indexController; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></a></li>
+            <li class="active"><i class="fa fa-search-plus"></i> <?php echo $migalha; ?></li>
         </ul>
 
         <div class="panel panel-btns">
@@ -25,19 +25,22 @@
 	        <a href="<?php echo $indexController; ?>editar/<?php echo $dados->getId(); ?>" class="btn btn-warning btn-sm btn-shadow">
 	            <i class="white fa fa-pencil-square-o"></i> Editar
 	        </a>
+	        <a data-rel="<?php echo $dados->getId(); ?>" class="btn btn-danger btn-delete btn-sm btn-shadow">
+	            <i class="white fa fa-trash-o"></i> Deletar
+	        </a>
         </div>
 
         <section class="panel">
-            <header class="panel-heading">
-                <i class="<?php echo $icon; ?>"></i> <?php echo $acao; ?> de <strong><?php echo $titulo; ?> <?php echo $migalha ?></strong>
+            <header class="panel-heading tab-bg-dark-navy-blue">
+                <span class="hidden-sm wht-color"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getSingular(); ?>: <?php echo $migalha ?></span>
             </header>
             <div class="row panel-body">
                 <div class="col-sm-12">
-                    <table class="table table-bordered table-striped table-condensed">
+                    <table class="table table-striped" style="border-bottom: 1px solid #ddd;">
                         <tbody>
                         <?php for ($i=0; isset($campos[$i]) === true; $i++) { ?>
                             <tr>
-                                <td><strong><?php echo $dados->getLabel($campos[$i]); ?>: </strong></td>
+                                <td class="col-lg-3" style="text-align: right; border-right: 1px solid #ddd;"><strong><?php echo $dados->getLabel($campos[$i]); ?>: </strong></td>
                                 <td><?php echo $pages->showData($dados, $campos[$i]); ?></td>
                             </tr>
                         <?php } ?>
@@ -48,3 +51,18 @@
         </section>
     </div><!--/span-->
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        $('.btn-delete').click(function() {
+            $('#modal-footer-default').hide();
+            CupcakeAlert('<a class="btn btn-danger ajax-link" href="<?php echo $indexController; ?>deletar/'+$(this).attr('data-rel')+'/?<?php echo (isset($requestUri[1]) === true) ? urlencode(($requestUri[1])) : ''; ?>"><i class="fa fa-trash-o white"></i> Confirma</a>',
+                    '',
+                    'Confirma a remoção deste registro?'
+
+            );
+            CupcakeReady();
+        });
+    });
+</script>

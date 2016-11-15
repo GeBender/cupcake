@@ -61,7 +61,10 @@ class Debug
 
     }
 
-
+    public static function isCupcaker()
+    {
+        return self::$isCupcaker;
+    }
 }
 
 

@@ -15,51 +15,55 @@
         <ul class="breadcrumb">
             <li><a href="<?php echo $indexPainel; ?>"><i class="fa fa-home"></i> Painel</a></li>
             <li><a href="<?php echo $indexController; ?>"><i class="<?php echo $icon; ?>"></i> <?php echo $dados->getPlural(); ?></a></li>
-            <li class="active"><i class="fa fa-plus"></i> Inserir nov<?php echo $dados->getGenero(); ?> <?php echo $dados->getSingular(); ?></li>
+            <li class="active"> <?php echo $migalha . $dados->getSingular(); ?></li>
         </ul>
 
 		<div class="panel panel-btns">
-	        <a href="<?php echo $indexController; ?>" class="btn btn-small btn-primary btn-shadow">
+	        <a href="<?php echo $indexController; ?>" class="btn btn-sm btn-primary btn-shadow">
 	            <span class="white fa fa-list"></span> Listar
 	        </a>
         </div>
 
         <section class="panel">
-            <header class="panel-heading">
-                <i class="<?php echo $icon; ?>"></i> Nov<?php echo $dados->getGenero(); ?> <?php echo $dados->getSingular(); ?>
+            <header class="panel-heading tab-bg-dark-navy-blue">
+                <span class="hidden-sm wht-color"><i class="<?php echo $icon; ?>"></i> <?php echo $acao; ?> <?php echo $dados->getSingular(); ?></span>
             </header>
-            <div class="row panel-body">
-                <div class="col-sm-12">
-                    <form class="form-horizontal tasi-form ajax-form" id="<?php echo $titulo; ?>-form" method="post" action="<?php echo $indexController; ?>salvar">
-                        <fieldset>
-                            <input type="hidden" name="<?php echo $titulo; ?>[id]" value="<?php echo $dados->getId(); ?>">
-                            <input type="hidden" name="saida" value="<?php echo $saida; ?>">
-                            <input type="hidden" name="flashMsg" value="<?php echo $msgFlash; ?>">
 
-                            <?php for ($i=0; isset($campos[$i]) === true; $i++) { ?>
-                            <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label" for="form-field-<?php echo $i; ?> ">
-                                    <strong><?php echo $dados->getLabel($campos[$i]); ?>:</strong>
-                                </label>
-                                <div class="col-sm-10">
-                                    <?php echo $form->field($campos[$i], $dados->$campos[$i], array('class' => 'form-control', 'id' => 'form-field'.$i)); ?>
-                                </div>
-                            </div>
-                            <?php } ?>
-                            <div class="form-group">
-                                <div class="col-lg-2 col-sm-2 control-label"></div>
+            <div class="panel-body">
+                <form class="form-horizontal tasi-form ajax-form" id="<?php echo $titulo; ?>-form" method="post" action="<?php echo $indexController; ?>salvar">
+                    <fieldset>
+                        <input type="hidden" name="<?php echo $titulo; ?>[id]" value="<?php echo $dados->getId(); ?>">
+                        <input type="hidden" name="saida" value="<?php echo $saida; ?>">
+                        <input type="hidden" name="flashMsg" value="<?php echo $msgFlash; ?>">
 
-                                <div class="col-lg-10" style="text-align:right">
-                                    <button type="submit" class="btn btn-success btn-salvar btn-shadow">
-                                        <i class="white fa fa-check"></i> Salvar</button>
-                                    <button type="reset" class="btn btn-default btn-shadow">
-                                        <i class="fa fa-eraser"></i> Cancelar
-                                    </button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                        <table class="table table-striped">
+                            <tbody>
+                                <?php for ($i=0; isset($campos[$i]) === true; $i++) { ?>
+                                <tr>
+                                    <td class="col-lg-3" style="text-align: right; vertical-align:middle; border-right: 1px solid #ddd;">
+                                        <label for="form-field-tipo">
+                                            <?php if ($form->isRequired($campos[$i])) { ?><i class="fa fa-thumb-tack tooltips" style="color:#fbb1ab" data-placement="right" data-toggle="tooltip" data-original-title="Campo obrigatório"></i><?php } ?>
+                                            <?php echo $dados->getLabel($campos[$i]); ?>:
+                                        </label>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <?php echo $form->field($campos[$i], $dados->$campos[$i], array('class' => 'form-control', 'id' => 'form-field'.$i)); ?>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+
+                        <div class="panel-form-action">
+                                <button type="submit" class="btn btn-success btn-salvar btn-shadow">
+                                    <i class="white fa fa-check"></i> Salvar</button>
+                                <button type="reset" class="btn btn-default btn-shadow">
+                                    <i class="fa fa-eraser"></i> Cancelar
+                                </button>
+                        </div>
+
+                    </fieldset>
+                </form>
             </div>
         </section>
     </div>

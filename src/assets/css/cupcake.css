@@ -147,31 +147,35 @@
 }
 
 .black {
-	color: #333;
+	color: #333 !important;
 }
 
 .white {
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 
 .green {
-	color: #49A436
+	color: #49A436 !important;
 }
 
 .blue {
-	color: #027CD3
+	color: #027CD3 !important;
 }
 
 .darkgray {
-	color: #606666
+	color: #606666 !important;
 }
 
 .orange {
-	color: #dd4814
+	color: #dd4814 !important;
+}
+
+.red {
+	color: #dd4814 !important;
 }
 
 .gray {
-	color: #C0C0C0
+	color: #C0C0C0 !important;
 }
 
 .top-block.tab-block {
@@ -302,4 +306,10 @@ a:HOVER, a:ACTIVE {
 
 .campo-obrigatorio {
 	margin-left: 7px;
+}
+.link-delete {
+    color: #ff6969 !important;
+}
+.link-cancelar {
+    color: #ff6969 !important;
 }

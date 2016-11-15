@@ -59,12 +59,12 @@ class Lista extends \Cupcake\Helper
     public function get(array $criteria = array(), array $joins = array())
     {
         $qb = $this->app['db']->createQueryBuilder()
-            ->select($this->app['route']['entity'])
-            ->from($this->app['route']['entity'], $this->app['route']['entity'])
+            ->select($this->entity)
+            ->from($this->entity, $this->entity)
             ->where($this->mountWhere())
             ->setFirstResult($this->offset)
             ->setMaxResults($this->limit)
-            ->orderBy($this->app['route']['entity'] . '.' . $this->order, $this->direction);
+            ->orderBy($this->entity . '.' . $this->order, $this->direction);
 
         foreach ($joins as $k => $v) {
             $qb->leftJoin($k, $v);
@@ -95,7 +95,7 @@ class Lista extends \Cupcake\Helper
         $model = $this->model;
 
         if (property_exists($model, 'assinante') === true) {
-            $this->request['search'][] = $this->app['route']['entity'] . '.assinante = ' . $this->app['Auth']->assinanteId();
+            $this->request['search'][] = $this->entity . '.assinante = ' . $this->app['Auth']->assinanteId();
         }
 
         if (isset($this->request['search']) === true) {
@@ -205,7 +205,7 @@ class Lista extends \Cupcake\Helper
         ($campo === $this->order && isset($_GET['direction']) === true) ? $iconDirection = $inverse[$_GET['direction']] : $iconDirection = $asc;
         ($campo === $this->order) ? $retorna = $iconDirection : $retorna = $false;
 
-        return 'fa right fa-' . $retorna;
+        return 'fa fa-' . $retorna;
 
     }
 
@@ -216,7 +216,7 @@ class Lista extends \Cupcake\Helper
         $true = 'magnet fa-flip-vertical red';
         ($campo === $this->group) ? $retorna = $true : $retorna = $false;
 
-        return 'fa right fa-' . $retorna;
+        return 'fa fa-' . $retorna;
 
     }
 

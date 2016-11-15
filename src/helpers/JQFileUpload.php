@@ -12,6 +12,7 @@
 namespace Cupcake\helpers;
 
 use FileUpload\Validator\Simple;
+use FileUpload\PathResolver\Simple as PathResolverSimple;
 use FileUpload\Validator\MimeTypeValidator;
 use FileUpload\Validator\SizeValidator;
 use FileUpload\FileUpload;
@@ -35,16 +36,11 @@ class JQFileUpload extends \Cupcake\Helper
 		$this->setSimpleFileSystem();
     }
 
-    public function get() {
-//         $this->addExtraHeaderB('<link type="text/css" rel="stylesheet" href="' . $this->getLayoutAsset() . 'css/chosen-uniform-colorbox-cleditor.css">');
-//         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getLayoutAsset() . 'js/forms.js"></script>');
-    }
-
-
     public function upload($field)
     {
     	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
+    	$this->pathresolver = new PathResolverSimple(dirname(dirname(dirname(dirname(__DIR__)))).'/Apps/'.$this->app['route']['appName'].'/uploads');
     	$fileupload->setPathResolver($this->pathresolver);
     	$result = $fileupload->setFileSystem($this->filesystem);
 

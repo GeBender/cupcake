@@ -10,12 +10,19 @@
  * @link    http://cupcake.simplesys.com.br
  */
 namespace Cupcake\helpers;
-use PHPMailer;
+
+use SendGrid;
 
 class Mail extends \Cupcake\Helper
 {
 
     public $mailer;
+
+    public $from;
+
+    public $to;
+
+    public $debug;
 
     public function __construct($app)
     {
@@ -23,37 +30,55 @@ class Mail extends \Cupcake\Helper
 
         $mailConf = $this->app['config']['mail'];
 
-        $this->mailer = new \PHPMailer();
+        $this->mailer = new \SendGrid($this->app['config']['mail']['sendGridKey']);
+        //dbg($this->mailer, true);
+        //$this->mailer = new \PHPMailer();
 
-        $this->mailer->isSMTP();
-        $this->mailer->CharSet = 'UTF-8';
-        $this->mailer->SMTPAuth = true;
-        $this->mailer->SMTPSecure = 'ssl';
-        $this->mailer->Host = $mailConf['host'];
-        $this->mailer->Port = $mailConf['port'];
-        $this->mailer->Username = $mailConf['username'];
-        $this->mailer->Password = $mailConf['password'];
+        //$this->mailer->isSMTP();
+        //$this->mailer->CharSet = 'UTF-8';
+        //$this->mailer->SMTPAuth = true;
+        ///$this->mailer->SMTPSecure = 'ssl';
+        //$this->mailer->Host = $mailConf['host'];
+        //$this->mailer->Port = $mailConf['port'];
+        //$this->mailer->Username = $mailConf['username'];
+        //$this->mailer->Password = $mailConf['password'];
 
-        $this->mailer->setFrom($mailConf['from'], $mailConf['fromName']);
-        $this->mailer->addReplyTo($mailConf['from'], $mailConf['fromName']);
+        $this->from = new SendGrid\Email($mailConf['fromName'], $mailConf['from']);
 
+    }
+
+    public function addFrom($email, $nome=null)
+    {
+        $this->from = new SendGrid\Email($nome, $email);
+    }
+
+    public function addAddress($email, $nome=null)
+    {
+        $this->to = new SendGrid\Email($nome, $email);
     }
 
     public function debug()
     {
-    	$this->mailer->SMTPDebug = 4;
+    	$this->debug = true;
     }
 
     public function send($subject, $view)
     {
         $this->layout = 'emails';
-        $this->mailer->Subject = $subject;
         $body = $this->renderView('Emails'.DS.$view.'.phtml');
+        $content = new SendGrid\Content("text/html", $body);
 
-        $this->mailer->msgHTML($body);
-        $result = $this->mailer->send();
+        $mail = new SendGrid\Mail($this->from, $subject, $this->to, $content);
 
-        return $result;
+        $response = $this->mailer->client->mail()->send()->post($mail);
+
+        if ($this->debug) {
+            dbg($response->statusCode());
+            dbg($response->headers());
+            dbg($response->body());
+        }
+
+        return ($response->statusCode() == 202) ? true : false;
 
     }
 }

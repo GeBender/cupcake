@@ -13,7 +13,7 @@ namespace Layout\LandX4\Component;
 
 use Cupcake\Flash;
 
-class Footer extends \Cupcake\Controller
+class LandX4Footer extends \Cupcake\Controller
 {
 
 

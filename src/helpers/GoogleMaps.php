@@ -17,8 +17,9 @@ class GoogleMaps extends \Cupcake\Helper
 
     public function geocode($stringAddress)
     {
-        $buscaUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($stringAddress);
+        $buscaUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($stringAddress).'&key='.$this->app['config']['googlemaps-api'];
         $json = file_get_contents($buscaUrl);
+        $jsonDecoded = json_decode($json, true);
 
         return json_decode($json, true);
 
@@ -30,7 +31,7 @@ class GoogleMaps extends \Cupcake\Helper
     	if(is_array($this->geoTypes($geocode)) === false) {
     		return false;
     	}
-    	
+
         if (in_array('street_address', $this->geoTypes($geocode)) === true || in_array('route', $this->geoTypes($geocode)) === true) {
             return true;
         }
@@ -56,15 +57,15 @@ class GoogleMaps extends \Cupcake\Helper
         return urlencode(@$geocode['results'][0]['formatted_address']);
 
     }
-    
+
     public function getLatitude($geocode)
     {
-    	return $geocode['results'][0]['geometry']['location']['lat'];
+    	return (isset($geocode['results'][0])) ? $geocode['results'][0]['geometry']['location']['lat'] : false;
     }
 
     public function getLongitude($geocode)
     {
-    	return $geocode['results'][0]['geometry']['location']['lng'];
+    	return isset($geocode['results'][0]) ? $geocode['results'][0]['geometry']['location']['lng'] : false;
     }
 
 

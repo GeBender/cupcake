@@ -175,11 +175,11 @@ function CupcakeReady() {
 	});
 
 	//notifications
-	$('.noty').click(function(e){
-		e.preventDefault();
-		var options = $.parseJSON($(this).attr('data-noty-options'));
-		noty(options);
-	});
+//	$('.noty').click(function(e){
+//		e.preventDefault();
+//		var options = $.parseJSON($(this).attr('data-noty-options'));
+//		noty(options);
+//	});
 
 	//popover
 	$('[rel="popover"],[data-rel="popover"]').popover();
@@ -304,8 +304,8 @@ function telaCheia() {
 function CupcakeAlert(msg, btnAlt, title) {
 	typeof btnAlt !== 'undefined' ? $('#extra-button-modal').html(btnAlt) : false;
 	typeof title !== 'undefined' ? $('#default-modal-title').html(title) : false;
-	$('#default-modal-body').html(msg);
-
+	$('#alertDefaultBody').html(msg);
+ 
     closeModal();
 	$('#alertDefault').modal('show');
 }
@@ -366,15 +366,17 @@ function imprime() {
 }
 
 function showNotyError(msg) {
-	$('.noty_error_msg').html(msg);
-	$('.noty_error').slideDown();
-	$('.noty_error').delay(4000).slideUp();
+	CupcakeAlert(msg);
+//	$('.noty_error_msg').html(msg);
+//	$('.noty_error').slideDown();
+//	$('.noty_error').delay(4000).slideUp();
 }
 
 function showNotyWarning(msg) {
-	$('.noty_warning_msg').html(msg);
-	$('.noty_warning').slideDown();
-	$('.noty_warning').delay(4000).slideUp();
+	CupcakeAlert(msg);
+//	$('.noty_warning_msg').html(msg);
+//	$('.noty_warning').slideDown();
+//	$('.noty_warning').delay(4000).slideUp();
 }
 
 function preparaData(idField)

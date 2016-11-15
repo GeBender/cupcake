@@ -144,8 +144,8 @@ class Controller
         $this->setSaida($dados->getSaida());
         $this->setCampos(array_keys(get_class_vars($this->app['route']['entity'])));
         $this->setTitulo($this->app['route']['entity']);
-        $this->setMigalha('Cadastro');
-        $this->setAcao('Cadastro');
+        $this->setMigalha('<i class="fa fa-plus-circle"></i> Inserir ');
+        $this->setAcao('Inserir');
         $this->setMsgFlash('Registro inserido com sucesso!');
 
     }
@@ -168,8 +168,8 @@ class Controller
         $this->setIcon($dados->getIcon());
         $this->setCampos(array_keys(get_class_vars($this->app['route']['entity'])));
         $this->setTitulo($this->app['route']['entity']);
-        $this->setMigalha('Edição');
-        $this->setAcao('Edição');
+        $this->setMigalha('<i class="fa fa-pencil-square"></i> Editar ');
+        $this->setAcao('Editar');
         $this->setMsgFlash('Registro editado com sucesso!');
 
     }
@@ -201,8 +201,8 @@ class Controller
     {
     	$this->layout = false;
     	$dados = $this->DAO->listen($_POST);
- 
-    	$this->DAO->salvar($dados);
+
+    	$dados = $this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
         	Flash::alert($_POST['flashMsg'], 'information');
@@ -211,6 +211,10 @@ class Controller
         $saida = (isset($_POST['saida']) === true) ? $_POST['saida'] : '';
         if ($saida === 'view') {
             return '2;' . $this->getIndexController() . 'ver/' . $dados->getId();
+        } elseif($saida === 'model') {
+            return $dados;
+        } elseif($saida === 'id') {
+            return $dados->getId();
         } elseif($saida === 'reload') {
         	return 'reload';
         } elseif ((bool) $saida) {
@@ -329,6 +333,8 @@ class Controller
         $this->setV($this->app['Vars']);
         $this->setArgs($this->args);
 
+        $this->preRender();
+
         if ($this->layout !== false) {
             if ($content === null) {
                 $content = $this->view();
@@ -345,6 +351,10 @@ class Controller
 
     }
 
+    public function preRender()
+    {
+
+    }
 
     public function setModel()
     {
@@ -437,17 +447,21 @@ class Controller
 
     public function deletar()
     {
-    	$this->layout = false;
-        $this->DAO->deletar($this->args[0]);
+        try {
+            $this->layout = false;
+            $this->DAO->deletar($this->args[0]);
 
-        if (isset($_GET['saida']) === true) {
-            $saida = '4;' . urldecode($_GET['saida']);
-        } else {
-            $saida = '4;' . $this->getIndexController();
+            if (isset($_GET['saida']) === true) {
+                $saida = '4;' . urldecode($_GET['saida']);
+            } else {
+                $saida = '4;' . $this->getIndexController();
+            }
+
+            return $saida;
+        }  catch(\Exception $e){
+            Flash::alert('Este registro não pode ser deledo por <b>ESTAR SENDO USADO</b> em outros cadastros do sistema.', 'warning');
+            return  'reload';
         }
-
-        return $saida;
-
     }
 
 
@@ -519,6 +533,10 @@ class Controller
     public function deny()
     {
         $this->allow = false;
+        $this->uses('Assinantes');
+        $assinatura = $this->app['Auth']->getAssinante($this->AssinantesDAO);
+
+        $this->TravaEmailNaoConfirmado($assinatura);
         $this->checkLogin();
 
     }

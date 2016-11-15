@@ -87,11 +87,6 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
 
     $config->addCustomStringFunction('REPLACE', 'Cupcake\DoctrineComplements\ReplaceFunction');
 
-    $controllerPath = $cupcake['route']['controller'];
-
-    $controller = new $controllerPath($cupcake);
-    $action = $cupcake['route']['action'];
-
 //     var_dump(dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
 //              dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',
 //              dirname(dirname(__FILE__)) . '/Layout/'.$cupcake['route']['layout'].'/View/%name%',
@@ -106,6 +101,10 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     ));
     $templateNameParser = new TemplateNameParser();
     $cupcake['Templating'] = new PhpEngine($templateNameParser, $loader);
+
+    $controllerPath = $cupcake['route']['controller'];
+    $controller = new $controllerPath($cupcake);
+    $action = $cupcake['route']['action'];
 
     $respostAction = $controller->$action();
     $toRender = $controller->render($respostAction);
