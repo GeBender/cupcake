@@ -70,9 +70,6 @@ class Mail extends \Cupcake\Helper
         $body = $this->renderView('Emails'.DS.$view.'.phtml');
         $body = $this->render($body);
 
-        echo $body;
-        die(true);
-
         $content = new SendGrid\Content("text/html", $body);
 
         $mail = new SendGrid\Mail($this->from, $subject, $this->to, $content);
