@@ -336,7 +336,7 @@ table {
                                                                                 <td>
                                                                                     <img
                                                                                     style="display: block;"
-                                                                                    src="http://www.<?php echo $sistema->getDominio(); ?><?php echo $layoutAsset; ?>img/email-img/icon-cal.png"
+                                                                                    src="http://www.<?php echo $sistema->getDominio(); ?><?php echo $layoutAsset; ?>img/icon-cal.png"
                                                                                     alt="icon 1"
                                                                                     width="13">
                                                                                 </td>
@@ -392,7 +392,7 @@ table {
                                                                                 <td>
                                                                                     <img
                                                                                     style="display: block;"
-                                                                                    src="https://logistick.com.br/<?php echo $layoutAsset; ?>img/email-img/icon-tel.png"
+                                                                                    src="http://www.<?php echo $sistema->getDominio(); ?><?php echo $layoutAsset; ?>img/icon-tel.png"
                                                                                     alt="icon 2"
                                                                                     width="17">
                                                                                 </td>
@@ -400,11 +400,7 @@ table {
                                                                                 <td
                                                                                     style="color: #fefefe; font-size: 11px; font-weight: normal; font-family: Helvetica, Arial, sans-serif;">
                                                                                     <singleline>
-                                                                                    Sales
-                                                                                    :
-                                                                                    +1
-                                                                                    (222)
-                                                                                    333-4444
+                                                                                    <?php echo $sistema->getTelefone(); ?>
                                                                                     </singleline>
                                                                                 </td>
                                                                             </tr>
@@ -460,7 +456,7 @@ table {
                                                                     href=""
                                                                     style="display: block;"><img
                                                                         style="display: block;"
-                                                                        src="img/email-img/vector-lab.jpg"
+                                                                        src="http://www.<?php echo $sistema->getDominio(); ?><?php echo $appAsset; ?>images/logotipo-peq.png"
                                                                         alt="logo"
                                                                         width="155"></a>
                                                                 </td>
@@ -556,7 +552,7 @@ table {
                                                                                     style="display: block; width: 16px;"
                                                                                     href="#"><img
                                                                                         style="display: block;"
-                                                                                        src="img/email-img/social-google.png"
+                                                                                        src="img/social-google.png"
                                                                                         alt="google plus"
                                                                                         width="16"></a>
                                                                                 </td>
@@ -565,7 +561,7 @@ table {
                                                                                     style="display: block; width: 16px;"
                                                                                     href="#"><img
                                                                                         style="display: block;"
-                                                                                        src="img/email-img/social-youtube.png"
+                                                                                        src="img/social-youtube.png"
                                                                                         alt="youtube"
                                                                                         width="16"></a>
                                                                                 </td>
@@ -574,7 +570,7 @@ table {
                                                                                     style="display: block; width: 16px;"
                                                                                     href="#"><img
                                                                                         style="display: block;"
-                                                                                        src="img/email-img/social-facebook.png"
+                                                                                        src="img/social-facebook.png"
                                                                                         alt="facebook"
                                                                                         width="16"></a>
                                                                                 </td>
@@ -583,7 +579,7 @@ table {
                                                                                     style="display: block; width: 16px;"
                                                                                     href="#"><img
                                                                                         style="display: block;"
-                                                                                        src="img/email-img/social-twitter.png"
+                                                                                        src="img/social-twitter.png"
                                                                                         alt="twitter"
                                                                                         width="16"></a>
                                                                                 </td>
@@ -592,7 +588,7 @@ table {
                                                                                     style="display: block; width: 16px;"
                                                                                     href="#"><img
                                                                                         style="display: block;"
-                                                                                        src="img/email-img/social-linkedin.png"
+                                                                                        src="img/social-linkedin.png"
                                                                                         alt="linkedin"
                                                                                         width="16"></a>
                                                                                 </td>
@@ -619,12 +615,12 @@ table {
                                     style="color: #939393; font-size: 11px; font-weight: normal; font-family: Helvetica, Arial, sans-serif;"
                                     class="prefooter-subheader"
                                     align="center"><span
-                                    style="color: #7087A3">Adress :</span>
-                                    3423 Dream Land &nbsp;&nbsp;&nbsp; <span
-                                    style="color: #7087A3">Phone :</span>
-                                    123233243 &nbsp;&nbsp;&nbsp;<span
+                                    style="color: #7087A3">Endereço :</span>
+                                    <?php echo $sistema->getEndereco(); ?> &nbsp;&nbsp;&nbsp; <span
+                                    style="color: #7087A3">Telefone :</span>
+                                    <?php echo $sistema->getTelefone(); ?> &nbsp;&nbsp;&nbsp;<span
                                     style="color: #7087A3">Email :</span>
-                                    dkmosa(@)gmail.com</td>
+                                    <?php echo $sistema->getEmail(); ?></td>
                             </tr>
 
                             <tr>
@@ -641,8 +637,8 @@ table {
                             <tr bgcolor="7087A3">
                                 <td
                                     style="color: #fff; font-size: 10px; font-weight: normal; font-family: Helvetica, Arial, sans-serif;"
-                                    align="center">FlatLab © Copyright
-                                    2013 . All Rights Reserved</td>
+                                    align="center">Logístick © Copyright
+                                    <?php echo date('Y')?> . Todos os direitos reservados</td>
                             </tr>
 
                             <tr>
