@@ -459,7 +459,6 @@ class Controller
             return $saida;
         }  catch(\Exception $e){
             Flash::alert('Este registro não pode ser deledo por <b>ESTAR SENDO USADO</b> em outros cadastros do sistema.', 'warning');
-//             dbg($e->getMessage(), true);
             return  'reload';
         }
     }
