@@ -386,7 +386,6 @@ class Controller
     public function renderView($view)
     {
         return $this->app['Templating']->render($view, $this->app['Vars']->vars);
-
     }
 
 
@@ -401,7 +400,7 @@ class Controller
         $layout = new $layoutClassName($this->app);
 
         $layout->index();
-        return $this->app['Templating']->render($this->layout.'/View/'.$this->app['GPS']->getLayoutViewFile(), $this->app['Vars']->vars);
+        return $this->app['Templating']->render($this->layout.'/View/'.$this->app['GPS']->getLayoutViewFile($this->layout), $this->app['Vars']->vars);
     }
 
 
