@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CupcakePHP : Rapid and Tast Development Framework
  *
@@ -58,7 +57,6 @@ class Debug
                 echo '<BR/>';
             }
         }
-
     }
 
     public static function isCupcaker()
@@ -80,7 +78,6 @@ class Debug
 function dbg($var, $die = false, $backtrace = 1)
 {
     Debug::dbg($var, $die, $backtrace);
-
 }
 
 
@@ -96,5 +93,4 @@ function dbg($var, $die = false, $backtrace = 1)
 function debug($var, $die = false, $backtrace = 1)
 {
     Debug::dbg($var, $die, $backtrace);
-
 }
