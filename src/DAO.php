@@ -56,7 +56,6 @@ class DAO
             $this->ClassMetadata = $this->db->getMetadataFactory()
                 ->getMetadataFor($this->name);
         }
-
     }
 
 
@@ -65,7 +64,6 @@ class DAO
         $this->query = $this->createQueryBuilder()
             ->select($this->name);
         return $this;
-
     }
 
 
@@ -77,12 +75,11 @@ class DAO
         $class = str_replace('DAO', '', $class);
         if ($class !== '') {
             $this->name = $class;
-        } else if ($entity !== '' && $entity !== $app['route']['appName']) {
+        } elseif ($entity !== '' && $entity !== $app['route']['appName']) {
             $this->name = $entity;
         } else {
             $this->name = $app['route']['entity'];
         }
-
     }
 
 
@@ -93,121 +90,128 @@ class DAO
      */
     public function findModel($data)
     {
-    	$id = (is_array($data[$this->name]['id'])) ? @$data[$this->name]['id'][0] : $data[$this->name]['id'];
+        $id = (is_array($data[$this->name]['id'])) ? @$data[$this->name]['id'][0] : $data[$this->name]['id'];
         $model = $this->EntityRepository->find($id);
         if ($model === null) {
             $model = $this->loadModel($id);
         }
 
         return $model;
+    }
 
+    public function getTotal()
+    {
+        $result = $this->createQueryBuilder()
+        ->select('COUNT('.$this->name.'.id) AS total')
+        ->getQuery()
+        ->getResult();
+
+        return $result[0]['total'];
     }
 
 
     public function fixDataToListen($data)
     {
-    	$fields = $this->ClassMetadata->getFieldNames();
-    	foreach ($fields as $field) {
-    		$type = $this->ClassMetadata->getTypeOfField($field);
-    		if ($type === 'boolean' && isset($data[$this->name][$field]) === false) {
-    			$data[$this->name][$field] = false;
-    		} else if ($type === 'boolean' && isset($data[$this->name][$field]) === true) {
-    			$data[$this->name][$field] = (bool) @$data[$this->name][$field];
-    		}
-    	}
+        $fields = $this->ClassMetadata->getFieldNames();
+        foreach ($fields as $field) {
+            $type = $this->ClassMetadata->getTypeOfField($field);
+            if ($type === 'boolean' && isset($data[$this->name][$field]) === false) {
+                $data[$this->name][$field] = false;
+            } elseif ($type === 'boolean' && isset($data[$this->name][$field]) === true) {
+                $data[$this->name][$field] = (bool) @$data[$this->name][$field];
+            }
+        }
 
-    	return $data;
+        return $data;
     }
 
-    public function cleanManyToMany($model, $mappings) {
-    	foreach ($mappings as $k => $v) {
-    		if (isset($v['joinTable'])) {
-    			$getter = 'get'. ucfirst($k);
-    			$model->$getter()->clear();
-    		}
-    	}
+    public function cleanManyToMany($model, $mappings)
+    {
+        foreach ($mappings as $k => $v) {
+            if (isset($v['joinTable'])) {
+                $getter = 'get'. ucfirst($k);
+                $model->$getter()->clear();
+            }
+        }
 
-    	return $model;
+        return $model;
     }
+
 
     public function listen(array $data)
     {
         $mappings = $this->ClassMetadata->getAssociationMappings();
-    	$data = $this->fixDataToListen($data, $mappings);
-    	$model = $this->findModel($data);
+        $data = $this->fixDataToListen($data, $mappings);
+        $model = $this->findModel($data);
 
         foreach ($data[$this->name] as $k => $v) {
-        	$set = 'set' . ucfirst($k);
+            $set = 'set' . ucfirst($k);
             if (isset($mappings[$k]) === true) {
-            	$daoClass = (class_exists('Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO') === true) ? 'Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO' : '\Cupcake\DAO';
-            	$mappedDAO = new $daoClass($this->app, $mappings[$k]['targetEntity']);
+                $daoClass = (class_exists('Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO') === true) ? 'Apps\\' . $this->app['route']['appName'] . '\DAO\\' . $mappings[$k]['targetEntity'] . 'DAO' : '\Cupcake\DAO';
+                $mappedDAO = new $daoClass($this->app, $mappings[$k]['targetEntity']);
 
-            	if (is_array($v) === true ) {
-            		$v = array_filter($v);
-                	if ((bool) @$v['id'] === false && count($v) > 0) {
-                		$v['id'] = $mappedDAO->getNext('id');
-                	}
+                if (is_array($v) === true) {
+                    $v = array_filter($v);
+                    if ((bool) @$v['id'] === false && count($v) > 0) {
+                        $v['id'] = $mappedDAO->getNext('id');
+                    }
 
-                	$key = each($v);
-	            	if ((bool) $key['value'] === true) {
-	            		// ManyToMany
-	            		if (is_array($v['id'])) {
-	                		foreach ($v['id'] as $id) {
-	                			if ($id === '0') {
-	                				$get = 'get' . ucfirst($k);
-	                				if((bool) $model->$get() === true) {
-	                					$model->$get()->clear();
-	                				}
-	                			} else {
-		                			$add = 'add' . ucfirst($k);
-		                			$model->$add($mappedDAO->find($id));
-	                			}
-	                		}
-	                	} else {
-	                		$v = $mappedDAO->listen(array($mappings[$k]['targetEntity'] => $v));
-	                		$model->$set($v);
-	                	}
-
-	                } else if (is_object($v) === false) {
-	                	$model->$set(null);
-	                }
+                    $key = each($v);
+                    if ((bool) $key['value'] === true) {
+                        // ManyToMany
+                        if (is_array($v['id'])) {
+                            foreach ($v['id'] as $id) {
+                                if ($id === '0') {
+                                    $get = 'get' . ucfirst($k);
+                                    if ((bool) $model->$get() === true) {
+                                        $model->$get()->clear();
+                                    }
+                                } else {
+                                    $add = 'add' . ucfirst($k);
+                                    $model->$add($mappedDAO->find($id));
+                                }
+                            }
+                        } else {
+                            $v = $mappedDAO->listen(array($mappings[$k]['targetEntity'] => $v));
+                            $model->$set($v);
+                        }
+                    } elseif (is_object($v) === false) {
+                        $model->$set(null);
+                    }
                 }
-
             } else {
                 (is_array($v) === true) ? $v = implode($model->getListSeparator(), $v) : false;
                 $method = 'set' . ucfirst($k);
-                if((bool) $v) {
-                	$model->$method($v);
+                if ((bool) $v) {
+                    $model->$method($v);
                 }
             }
         }
         return $model;
-
     }
 
 
     public function defineAssinante($model)
     {
-    	if (property_exists($model, 'assinante') === true) {
-    	    if ((bool) $model->getAssinante() === false) {
-    	        $AssinanteDAO = new DAO($this->app, $this->modelAssinante);
-    	        $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
-        	}
+        if (property_exists($model, 'assinante') === true) {
+            if ((bool) $model->getAssinante() === false) {
+                $AssinanteDAO = new DAO($this->app, $this->modelAssinante);
+                $model->setAssinante($AssinanteDAO->find($this->app['Auth']->assinanteId()));
+            }
         }
         return $model;
-
     }
+
 
     public function defineIdLocal($model)
     {
-    	if (property_exists($model, 'idLocal') === true) {
-    	    if ((bool) $model->getIdLocal() === false) {
-    	        $model->setIdLocal($this->getNext('idLocal'));
-        	}
+        if (property_exists($model, 'idLocal') === true) {
+            if ((bool) $model->getIdLocal() === false) {
+                $model->setIdLocal($this->getNext('idLocal'));
+            }
         }
 
         return $model;
-
     }
 
 
@@ -217,7 +221,6 @@ class DAO
         $model = new $name();
 
         return $model;
-
     }
 
 
@@ -231,7 +234,6 @@ class DAO
         if (isset($result[0]) === true) {
             return $result[0];
         }
-
     }
 
 
@@ -241,11 +243,10 @@ class DAO
         $model = new $modelName();
         if (property_exists($model, 'assinante') === true && ((bool) $this->app['Auth']->assinanteId() === true || (bool) $model->getAssinante() === true)) {
             $assinanteId = ((bool) $model->getAssinante() === true) ? $model->getAssinante() : $this->app['Auth']->assinanteId();
-        	$criteria['assinante'] = (string) $assinanteId;
+            $criteria['assinante'] = (string) $assinanteId;
         }
 
         return $criteria;
-
     }
 
 
@@ -255,14 +256,12 @@ class DAO
         $result = $this->EntityRepository->findBy($criteria, $orderBy, $limit, $offset);
 
         return $result;
-
     }
 
 
     public function findAll(array $criteria = array(), array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->findBy($criteria, $orderBy, $limit, $offset);
-
     }
 
 
@@ -271,7 +270,6 @@ class DAO
         return $this->findBy(array(
                 $field => $flag
         ));
-
     }
 
 
@@ -290,7 +288,6 @@ class DAO
         $this->db->flush();
 
         return $model;
-
     }
 
 
@@ -301,7 +298,6 @@ class DAO
         $this->remove($model);
 
         return true;
-
     }
 
     public function remove($model)
@@ -324,7 +320,6 @@ class DAO
         }
 
         return $query;
-
     }
 
 
@@ -342,7 +337,6 @@ class DAO
         }
 
         return $next[0]['next'];
-
     }
 
 
@@ -355,7 +349,6 @@ class DAO
         }
 
         return $this;
-
     }
 
 
@@ -401,5 +394,4 @@ class DAO
         $class = $this->name;
         return (isset($_GET[self::DIRECTION]) === true) ? $_GET[self::DIRECTION] : $class::DIRECTION;
     }
-
 }

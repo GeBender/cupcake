@@ -11,19 +11,25 @@ if ($v->hasAjax() === false) {
 <?php echo $sidebar; ?>
 
 <!--main content start-->
-<?php if ($v->hasNoVisibleElements() === false)	{ ?>
+<?php if ($v->hasNoVisibleElements() === false) { ?>
 
 <section id="main-content">
     <section class="wrapper site-min-height">
 
 <?php echo Flash::getPanel(); ?>
 
-    <?php if ($assinatura->getEmail_validado() === false) { ?>
+<?php if ($assinatura->getEmail_validado() === false) { ?>
     <div style="text-align: center;" class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <h4 style="margin-top: 5px;"><i class="fa fa-envelope-o fa-2x"></i> E-mail não confirmado.</h4>
-        <h4 style="margin-top: 5px;"><small>Por favor, faça a confirmação do seu e-mail para manter a conta ativa.</small></h4>
-        <a class="btn btn-success btn-lg btn-shadow ajax-link" href="<?php echo $url; ?>enviar-validacao-email"><i class="fa fa-check"></i> Confirmar e-mail</a>
+        <h4 style="margin-top: 5px;">
+            <small>
+                Por favor, faça a confirmação do seu e-mail para manter a conta ativa.
+            </small>
+        </h4>
+        <a class="btn btn-success btn-lg btn-shadow ajax-link" href="<?php echo $url; ?>enviar-validacao-email">
+            <i class="fa fa-check"></i> Confirmar e-mail
+        </a>
     </div>
 <?php } ?>
 
@@ -31,7 +37,7 @@ if ($v->hasAjax() === false) {
     <!-- page start-->
 <?php echo $content; ?>
     <!-- page end-->
-<?php if ($v->hasNoVisibleElements() === false)	{ ?>
+<?php if ($v->hasNoVisibleElements() === false) { ?>
     </section>
 </section>
 <?php } ?>
