@@ -19,18 +19,13 @@ if ($v->hasAjax() === false) {
 <?php echo Flash::getPanel(); ?>
 
 <?php if ($assinatura->getEmail_validado() === false) { ?>
-    <div style="text-align: center;" class="alert alert-danger">
+    <!-- <div style="text-align: center;" class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <h4 style="margin-top: 5px;"><i class="fa fa-envelope-o fa-2x"></i> E-mail não confirmado.</h4>
-        <h4 style="margin-top: 5px;">
-            <small>
-                Por favor, faça a confirmação do seu e-mail para manter a conta ativa.
-            </small>
-        </h4>
-        <a class="btn btn-success btn-lg btn-shadow ajax-link" href="<?php echo $url; ?>enviar-validacao-email">
+        <strong><i class="fa fa-envelope-o fa-2x"></i> E-mail não confirmado.</strong> Por favor, faça a confirmação do seu e-mail para manter a conta ativa.
+        <a class="btn btn-success btn-sm btn-shadow ajax-link" href="<?php echo $url; ?>enviar-validacao-email">
             <i class="fa fa-check"></i> Confirmar e-mail
         </a>
-    </div>
+    </div> -->
 <?php } ?>
 
 <?php } ?>
