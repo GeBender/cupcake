@@ -18,6 +18,8 @@ if ($v->hasAjax() === false) {
 
 <?php echo Flash::getPanel(); ?>
 
+<?php echo @$tutorial; ?>
+
 <?php if ($assinatura->getEmail_validado() === false) { ?>
     <!-- <div style="text-align: center;" class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>
