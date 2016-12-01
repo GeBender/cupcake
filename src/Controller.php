@@ -71,21 +71,23 @@ class Controller
         if (isset($_GET['hide']) === true) {
             $this->hideElements();
         }
-
     }
+
 
     public function detectAjax()
     {
-    	if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-    		$this->layout = false;
-    	}
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            $this->layout = false;
+        }
     }
+
 
     public function setLayout($layout)
     {
         $this->layout = $layout;
         $this->app['GPS']->route['layout'] = $layout;
     }
+
 
     public function welcomeToCupcake()
     {
@@ -94,17 +96,18 @@ class Controller
         //
     }
 
-    public function home($criteria=[], $joins=[])
+
+    public function home($criteria = [], $joins = [])
     {
         if ($this->app['route']['entity'] !== '') {
             if (class_exists($this->app['route']['entity']) === false) {
-    			$this->layout = 'Flatlab';
-    			$this->setClassBody("body-404");
-    			$this->hideElements();
-    			return $this->renderView('Index/404.phtml');
-    		}
+                $this->layout = 'Flatlab';
+                $this->setClassBody("body-404");
+                $this->hideElements();
+                return $this->renderView('Index/404.phtml');
+            }
 
-    		$this->view = 'lista.phtml';
+            $this->view = 'lista.phtml';
             $this->help('Lista');
 
             $class = $this->app['route']['entity'];
@@ -127,7 +130,6 @@ class Controller
             $controller->home();
             $this->view = 'Landing' . DS . 'home.phtml';
         }
-
     }
 
 
@@ -147,7 +149,6 @@ class Controller
         $this->setMigalha('<i class="fa fa-plus-circle"></i> Inserir ');
         $this->setAcao('Inserir');
         $this->setMsgFlash('Registro inserido com sucesso!');
-
     }
 
 
@@ -171,13 +172,12 @@ class Controller
         $this->setMigalha('<i class="fa fa-pencil-square"></i> Editar ');
         $this->setAcao('Editar');
         $this->setMsgFlash('Registro editado com sucesso!');
-
     }
 
 
     public function ver()
     {
-    	$this->view = 'view.phtml';
+        $this->view = 'view.phtml';
         $this->help('Pages');
 
         $dados = $this->DAO->find($this->args[0]);
@@ -188,7 +188,6 @@ class Controller
         $this->setMigalha('Registro nº ' . $this->args[0]);
         $this->setAcao('Detalhes');
         $this->setIcon($dados->getIcon());
-
     }
 
 
@@ -199,30 +198,29 @@ class Controller
      */
     public function salvar()
     {
-    	$this->layout = false;
-    	$dados = $this->DAO->listen($_POST);
+        $this->layout = false;
+        $dados = $this->DAO->listen($_POST);
 
-    	$dados = $this->DAO->salvar($dados);
+        $dados = $this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
-        	Flash::alert($_POST['flashMsg'], 'information');
+            Flash::alert($_POST['flashMsg'], 'information');
         }
 
         $saida = (isset($_POST['saida']) === true) ? $_POST['saida'] : '';
         if ($saida === 'view') {
             return '2;' . $this->getIndexController() . 'ver/' . $dados->getId();
-        } elseif($saida === 'model') {
+        } elseif ($saida === 'model') {
             return $dados;
-        } elseif($saida === 'id') {
+        } elseif ($saida === 'id') {
             return $dados->getId();
-        } elseif($saida === 'reload') {
-        	return 'reload';
+        } elseif ($saida === 'reload') {
+            return 'reload';
         } elseif ((bool) $saida) {
-        	return '2;'. $saida;
+            return '2;'. $saida;
         } else {
             return '2;' . $this->getIndexController();
         }
-
     }
 
 
@@ -237,11 +235,10 @@ class Controller
         }
 
         return $this->$entityDAO;
-
     }
 
 
-    public function help($helper, $entity=false)
+    public function help($helper, $entity = false)
     {
         $helperName = 'Apps\\' . $this->app['route']['appName'] . '\helpers\\' . ucfirst($helper);
         if ($this->app['FileSystem']->classExists($helperName) === false) {
@@ -253,7 +250,6 @@ class Controller
         $this->$helper->request = $this->request;
 
         return $this->$helper;
-
     }
 
 
@@ -281,7 +277,6 @@ class Controller
         $this->setIndexPainel($url . $appName . 'painel/');
         $this->setIndexController($url . $appName . lcfirst($this->app['route']['entity']) . '/');
         $this->setHere($this->app['request']->getBasePath() . $this->app['request']->getPathInfo());
-
     }
 
 
@@ -304,7 +299,6 @@ class Controller
         }
 
         return $var;
-
     }
 
 
@@ -348,13 +342,13 @@ class Controller
 
             return $this->view();
         }
-
     }
+
 
     public function preRender()
     {
-
     }
+
 
     public function setModel()
     {
@@ -363,7 +357,6 @@ class Controller
         if (isset($this->$model) === true) {
             $this->$setModel($this->$model);
         }
-
     }
 
 
@@ -418,7 +411,6 @@ class Controller
         $componentClassName = $this->app['GPS']->getComponentClassName($component, $this->layout);
 
         if ($componentClassName !== false) {
-
             $componentClass = new $componentClassName($this->app);
             if ($this->layout !== null) {
                 $componentClass->setLayout($this->layout);
@@ -426,13 +418,12 @@ class Controller
 
             $vars = $this->app['Vars']->vars;
             $componentClass->index();
-
             extract($componentClass->app['Vars']->vars);
         }
 
         extract(isset($vars) === true ? $vars : $this->app['Vars']->vars);
-
         $componentViewFile = $this->app['GPS']->getComponentViewFile($component, $this->layout);
+
         require $componentViewFile;
         $content = ob_get_clean();
 
@@ -440,7 +431,6 @@ class Controller
         $this->$setVar($content);
 
         return true;
-
     }
 
 
@@ -457,7 +447,7 @@ class Controller
             }
 
             return $saida;
-        }  catch(\Exception $e){
+        } catch (\Exception $e) {
             Flash::alert('Este registro não pode ser deledo por <b>ESTAR SENDO USADO</b> em outros cadastros do sistema.', 'warning');
             return  'reload';
         }
@@ -467,7 +457,6 @@ class Controller
     public function arg($index)
     {
         return $this->args($index);
-
     }
 
 
@@ -481,7 +470,6 @@ class Controller
         }
 
         return false;
-
     }
 
 
@@ -494,21 +482,18 @@ class Controller
         }
 
         return false;
-
     }
 
 
     public function hideElements()
     {
         $this->setNoVisibleElements(true);
-
     }
 
 
     public function showElements()
     {
         $this->setNoVisibleElements(false);
-
     }
 
 
@@ -518,14 +503,12 @@ class Controller
             header('location: '.$this->getIndex() . 'login');
             die;
         }
-
     }
 
 
     public function allow()
     {
         $this->allow = true;
-
     }
 
 
@@ -537,14 +520,11 @@ class Controller
 
         $this->TravaEmailNaoConfirmado($assinatura);
         $this->checkLogin();
-
     }
 
 
     public function isAllowed()
     {
         return $this->allow;
-
     }
-
 }
