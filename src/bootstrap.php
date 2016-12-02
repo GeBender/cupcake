@@ -36,7 +36,7 @@ if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
 
 if (getenv('AMBIENT') === false) {
     putenv('AMBIENT=production');
-    $cupcake['debug'] = false;
+//s    $cupcake['debug'] = false;
 }
 
 if ($cupcake['debug'] === true) {
