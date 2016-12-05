@@ -31,6 +31,15 @@ function CupcakeReady() {
         return true;
     });
 	
+    $('#fechar-mapa').click(function() {
+        hideMap();
+    });
+
+    $('#expandir-mapa').click(function() {
+    	alert('!!!');
+        window.open($("#iframe-mapa").attr("src"), 'embed-mapa');
+    });	 
+	
 	$('.icon-help').click(function() {
 		tour = loadTour();
 		tour.restart(true);
