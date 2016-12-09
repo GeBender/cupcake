@@ -15,6 +15,8 @@ class Sidebar extends \Cupcake\Controller
 {
 
     public $layout = 'Flatlab';
+
+
     /**
      * Prepara e renderiza o sidebar
      *
@@ -23,8 +25,6 @@ class Sidebar extends \Cupcake\Controller
     public function index()
     {
         $this->setAssinanteNome($this->app['Auth']->getInfo('assinanteNome'));
-
+        $this->setPerfil($this->app['Auth']->getInfo('perfil'));
     }
-
-
 }
