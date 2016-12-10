@@ -7,7 +7,7 @@ use Cupcake\Cookies;
 class Auth
 {
 
-    public $authName = 'authCupcake';
+    public $authName = 'authCupcake2';
 
 
     public function register($sistema, $assinanteId, $userId, $extra = array())
