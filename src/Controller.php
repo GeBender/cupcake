@@ -533,12 +533,20 @@ class Controller
     public function deny()
     {
         $this->allow = false;
-        $this->uses('Assinantes');
-        $assinatura = $this->app['Auth']->getAssinante($this->AssinantesDAO);
+        $assinaturaClass = (isset($this->app['config']['assinanteClass'])) ? $this->app['config']['assinanteClass'] : 'Assinantes';
+        $this->uses($assinaturaClass);
+        
+        $DAO = $assinaturaClass . 'DAO';
+        $assinatura = $this->app['Auth']->getAssinante($this->$DAO);
 
         $this->TravaEmailNaoConfirmado($assinatura);
         $this->checkLogin();
 
+    }
+    
+    public function TravaEmailNaoConfirmado()
+    {
+    	return ;
     }
 
 
