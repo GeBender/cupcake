@@ -24,6 +24,8 @@ class Mail extends \Cupcake\Helper
 
     public $debug;
 
+    public $layout = 'FlatlabEmails';
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -44,28 +46,30 @@ class Mail extends \Cupcake\Helper
         //$this->mailer->Password = $mailConf['password'];
 
         $this->from = new SendGrid\Email($mailConf['fromName'], $mailConf['from']);
-
     }
 
-    public function addFrom($email, $nome=null)
+    public function addFrom($email, $nome = null)
     {
         $this->from = new SendGrid\Email($nome, $email);
     }
 
-    public function addAddress($email, $nome=null)
+    public function addAddress($email, $nome = null)
     {
         $this->to = new SendGrid\Email($nome, $email);
     }
 
     public function debug()
     {
-    	$this->debug = true;
+        $this->debug = true;
     }
 
     public function send($subject, $view)
     {
-        $this->layout = 'emails';
+        $this->layout = 'FlatlabEmails';
+
         $body = $this->renderView('Emails'.DS.$view.'.phtml');
+        $body = $this->render($body);
+
         $content = new SendGrid\Content("text/html", $body);
 
         $mail = new SendGrid\Mail($this->from, $subject, $this->to, $content);
@@ -79,6 +83,5 @@ class Mail extends \Cupcake\Helper
         }
 
         return ($response->statusCode() == 202) ? true : false;
-
     }
 }

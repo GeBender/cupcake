@@ -36,10 +36,13 @@ if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
 
 if (getenv('AMBIENT') === false) {
     putenv('AMBIENT=production');
+//    $cupcake['debug'] = false;
 }
 
 if ($cupcake['debug'] === true) {
     ini_set('display_errors', true);
+} else {
+    ini_set('display_errors', false);
 }
 
 $cupcake['autoload'] = $autoload;
@@ -66,8 +69,8 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     $cupcake['autoload']->add('', dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['modelFolder'] . DS);
 
     $config = Setup::createAnnotationMetadataConfiguration(
-    		array(dirname(dirname(__FILE__)) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['modelFolder']),
-    		$cupcake['debug']
+        array(dirname(dirname(__FILE__)) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['modelFolder']),
+        $cupcake['debug']
     );
 
     if (isset($cupcake['config']['db']) === true) {
@@ -86,12 +89,6 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     }
 
     $config->addCustomStringFunction('REPLACE', 'Cupcake\DoctrineComplements\ReplaceFunction');
-
-//     var_dump(dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
-//              dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',
-//              dirname(dirname(__FILE__)) . '/Layout/'.$cupcake['route']['layout'].'/View/%name%',
-//              dirname(dirname(__FILE__)) . '/Layout/%name%',
-//              dirname(__FILE__).'/Apps/Cupcake/View/%name%');
     $loader = new FilesystemLoader(array(
         dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['appsFolder'] . DS . $cupcake['route']['appName'] . DS . $cupcake['route']['viewFolder'] . DS . '%name%',
         dirname(dirname(dirname(__DIR__))) . DS . $cupcake['route']['layoutFolder'] . '/%name%',

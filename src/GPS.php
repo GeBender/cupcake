@@ -207,14 +207,13 @@ class GPS
     {
         if ($this->fs->classExists('\\'.$this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['layoutFolder'] . '\\' . $layout) === true) {
             return '\\'.$this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['layoutFolder'] . '\\' . $layout;
-        } else if ($this->fs->classExists('Layout\\' . $layout . '\\' . $layout) === true) {
+        } elseif ($this->fs->classExists('Layout\\' . $layout . '\\' . $layout) === true) {
             return 'Layout\\' . $layout . '\\' . $layout;
         } else {
             var_dump('getLayoutClassName: ' . 'Layout\\' . $this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['layoutFolder'] . '\\' . $layout . '\\' . $layout);
             var_dump('Layout\\' . $layout . '\\' . $layout);
             return false;
         }
-
     }
 
     /**
@@ -228,14 +227,13 @@ class GPS
     {
         if ($this->fs->classExists($this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component)) === true) {
             return $this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component);
-        } else if ($this->fs->classExists($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component) === true) {
+        } elseif ($this->fs->classExists($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component) === true) {
             return $this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component);
         } else {
 //         	var_dump($this->route['appsFolder'] . '\\' . $this->route['appName'] . '\\' . $this->route['componentFolder'] . '\\' . str_replace('/', '\\', $component));
 //         	var_dump($this->route['layoutFolder'] . '\\' . $layout . '\\' . $this->route['componentFolder'] . '\\' . $component);
             return false;
         }
-
     }
 
 
@@ -250,15 +248,13 @@ class GPS
     {
         if ($this->fs->exists($this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
             return $this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView'];
-
-        } else if ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
+        } elseif ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']) === true) {
             return dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView'];
         } else {
             var_dump('getComponentViewFile: '. $this->appsDir . $this->route['appName'] . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']);
             var_dump(dirname($this->cupcakeDir) . '/Layout/' . $layout . DS . $this->route['componentFolder'] . DS . $this->route['viewFolder'] . DS . lcfirst($component) . '.' . $this->route['extensionView']);
             return false;
         }
-
     }
 
 
@@ -267,18 +263,17 @@ class GPS
      *
      * @return string|boolean
      */
-    public function getLayoutViewFile()
+    public function getLayoutViewFile($layout)
     {
-        if ($this->fs->exists($this->appsDir . $this->route['appName'] . DS . $this->route['layoutFolder'] . DS . $this->route['layout'] . DS . $this->route['viewFolder'] . DS . lcfirst($this->route['layout']) . '.' . $this->route['extensionView']) === true) {
-            return lcfirst($this->route['layout']) . '.' . $this->route['extensionView'];
-        } else if ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $this->route['layout'] . '/'.$this->route['viewFolder'].'/' . lcfirst($this->route['layout']) . '.' . $this->route['extensionView']) === true) {
-            return lcfirst($this->route['layout']) . '.' . $this->route['extensionView'];
+        if ($this->fs->exists($this->appsDir . $this->route['appName'] . DS . $this->route['layoutFolder'] . DS . $layout . DS . $this->route['viewFolder'] . DS . lcfirst($layout) . '.' . $this->route['extensionView']) === true) {
+            return lcfirst($layout) . '.' . $this->route['extensionView'];
+        } elseif ($this->fs->exists(dirname($this->cupcakeDir) . '/Layout/' . $layout . '/'.$this->route['viewFolder'].'/' . lcfirst($layout) . '.' . $this->route['extensionView']) === true) {
+            return lcfirst($layout) . '.' . $this->route['extensionView'];
         } else {
-            var_dump('getLayoutViewFile: ' . $this->appsDir . $this->route['appName'] . DS . $this->route['layoutFolder'] . DS . $this->route['layout'] . DS . $this->route['viewFolder'] . DS . lcfirst($this->route['layout']) . '.' . $this->route['extensionView']);
-            var_dump(dirname($this->cupcakeDir) . '/Layout/' . $this->route['layout'] . '/'.$this->route['viewFolder'].'/' . lcfirst($this->route['layout']) . '.' . $this->route['extensionView']);
+            var_dump('getLayoutViewFile: ' . $this->appsDir . $this->route['appName'] . DS . $this->route['layoutFolder'] . DS . $layout . DS . $this->route['viewFolder'] . DS . lcfirst($layout) . '.' . $this->route['extensionView']);
+            var_dump(dirname($this->cupcakeDir) . '/Layout/' . $layout . '/'.$this->route['viewFolder'].'/' . lcfirst($layout) . '.' . $this->route['extensionView']);
             return false;
         }
-
     }
 
     public function getLayoutAsset()

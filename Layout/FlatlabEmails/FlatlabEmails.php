@@ -9,22 +9,19 @@
  * @version GIT: <git_id>
  * @link    http://cupcake.simplesys.com.br
  */
-namespace Layout\Flatlab\Component;
+namespace Layout\FlatlabEmails;
 
-class Sidebar extends \Cupcake\Controller
+class FlatlabEmails extends \Cupcake\Controller
 {
 
-    public $layout = 'Flatlab';
-
+    public $layout = 'FlatlabEmails';
 
     /**
-     * Prepara e renderiza o sidebar
-     *
      * @return void
      */
     public function index()
     {
-        $this->setAssinanteNome($this->app['Auth']->getInfo('assinanteNome'));
-        $this->setPerfil($this->app['Auth']->getInfo('perfil'));
+        $this->layout = 'FlatlabEmails';
+        $this->view = 'FlatlabEmails';
     }
 }

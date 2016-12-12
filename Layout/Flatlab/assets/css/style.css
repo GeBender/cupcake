@@ -6298,3 +6298,10 @@ label > input[type=checkbox], input[type=radio] {
 label > input[type=checkbox], input[type=radio] :AFTER {
     clear: both;
 }
+
+.btn-play {
+    width: 40px;
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 30px;
+}
