@@ -180,9 +180,13 @@ class DAO
                     }
                 }
             } else {
-                (is_array($v) === true) ? $v = implode($model->getListSeparator(), $v) : false;
                 $method = 'set' . ucfirst($k);
-                if ((bool) $v) {
+                if (is_array($v) === true) {
+                    $v = implode($model->getListSeparator(), $v);
+                    if ((bool) $v) {
+                        $model->$method($v);
+                    }
+                } else {
                     $model->$method($v);
                 }
             }
