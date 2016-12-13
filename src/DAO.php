@@ -185,7 +185,8 @@ class DAO
                     if ((bool) $v) {
                         $model->$set($v);
                     }
-                } elseif ((bool) $v) {
+                } else {
+                    $v = (!(bool) $v) ? false : $v;
                     $model->$set($v);
                 }
             }
