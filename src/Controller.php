@@ -515,11 +515,17 @@ class Controller
     public function deny()
     {
         $this->allow = false;
-        $this->uses('Assinantes');
-        $assinatura = $this->app['Auth']->getAssinante($this->AssinantesDAO);
+        $this->uses($this->app['GPS']->route['modelAssinante']);
+        
+        $assinantesDAO = $this->app['GPS']->route['modelAssinante'] . 'DAO';
+        $assinatura = $this->app['Auth']->getAssinante($this->$assinantesDAO);
 
         $this->TravaEmailNaoConfirmado($assinatura);
         $this->checkLogin();
+    }
+    
+    public function TravaEmailNaoConfirmado($assinatura) {
+    	return false;
     }
 
 
