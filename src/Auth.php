@@ -58,7 +58,7 @@ class Auth
     public function getInfo($var)
     {
         $auth = Cookies::restore($this->authName);
-        return $auth[$var];
+        return @$auth[$var];
     }
 
 
