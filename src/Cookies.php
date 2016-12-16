@@ -18,7 +18,6 @@ class Cookies
     public static function save($var, $value, $expire = 0)
     {
         setcookie($var, Crypt::encode($value), $expire);
-
     }
 
 
@@ -27,15 +26,11 @@ class Cookies
         $data = null;
         (empty($_COOKIE[$v]) === false) ? $data = Crypt::decode($_COOKIE[$v]) : $data = null;
         return $data;
-
     }
 
 
     public static function delete($var)
     {
         setcookie($var, '');
-
     }
-
-
 }

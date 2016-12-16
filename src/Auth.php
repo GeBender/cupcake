@@ -7,7 +7,7 @@ use Cupcake\Cookies;
 class Auth
 {
 
-    public $authName = 'authCupcake2';
+    const AUTH_NAME = 'authCupcake2';
 
 
     public function register($sistema, $assinanteId, $userId, $extra = array())
@@ -18,46 +18,46 @@ class Auth
                 'userId' => $userId
         );
         $cupcakeAuth = array_merge($cupcakeAuth, $extra);
-        Cookies::save($this->authName, $cupcakeAuth);
+        Cookies::save(self::AUTH_NAME, $cupcakeAuth);
     }
 
 
     public function restore()
     {
-        return Cookies::restore($this->authName);
+        return Cookies::restore(self::AUTH_NAME);
     }
 
 
     public function unAuth()
     {
-        Cookies::delete($this->authName);
+        Cookies::delete(self::AUTH_NAME);
     }
 
 
     public function assinanteId()
     {
-        $auth = Cookies::restore($this->authName);
+        $auth = Cookies::restore(self::AUTH_NAME);
         return $auth['assinanteId'];
     }
 
 
     public function sistema()
     {
-        $auth = Cookies::restore($this->authName);
+        $auth = Cookies::restore(self::AUTH_NAME);
         return $auth['sistema'];
     }
 
 
     public function userId()
     {
-        $auth = Cookies::restore($this->authName);
+        $auth = Cookies::restore(self::AUTH_NAME);
         return $auth['userId'];
     }
 
 
     public function getInfo($var)
     {
-        $auth = Cookies::restore($this->authName);
+        $auth = Cookies::restore(self::AUTH_NAME);
         return @$auth[$var];
     }
 

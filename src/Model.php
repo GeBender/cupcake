@@ -49,17 +49,17 @@ abstract class Model
     protected $identifier = 'id';
 
     protected $internalFields = [
-    		'listSeparator',
-    		'icon',
-    		'saida',
-    		'labels',
-    		'plural',
-    		'singular',
-    		'genero',
-    		'identifier',
-    		'internalFields',
-    		'extraInternalFields',
-    		'lista'
+            'listSeparator',
+            'icon',
+            'saida',
+            'labels',
+            'plural',
+            'singular',
+            'genero',
+            'identifier',
+            'internalFields',
+            'extraInternalFields',
+            'lista'
     ];
 
     protected $lista = [];
@@ -81,80 +81,83 @@ abstract class Model
 
         if ($prefix === 'has') {
             return isset($this->$param);
-        } else if ($prefix === 'set') {
+        } elseif ($prefix === 'set') {
             $this->$param = $arguments[0];
             return true;
-        } else if ($prefix === 'sum') {
+        } elseif ($prefix === 'sum') {
             $this->$param += $arguments[0];
             return true;
-        } else if ($prefix === 'cct') {
+        } elseif ($prefix === 'cct') {
             $this->$param .= $arguments[0];
             return true;
-        } else if ($prefix === 'add') {
+        } elseif ($prefix === 'add') {
             if (($this->$param instanceof \Doctrine\Common\Collections\ArrayCollection) === false) {
                 $this->$param = new ArrayCollection();
             }
 
             return $this->$param->add($arguments[0]);
-        } else if ($prefix === 'fnd') {
-        	$getter = 'get' . $param;
-        	if ((bool) $this->$getter()) {
-	        	$manyToManies = $this->$getter()->toArray();
-		    	foreach ($manyToManies as $manyToMany) {
-		    		if ($manyToMany->getId() === $arguments[0]) {
-		    			return true;
-		    		}
-		    	}
-        	}
-	    	return false;
-        } else if (property_exists($this, $param) === true && $prefix !== 'add') {
+        } elseif ($prefix === 'fnd') {
+            $getter = 'get' . $param;
+            if ((bool) $this->$getter()) {
+                $manyToManies = $this->$getter()->toArray();
+                foreach ($manyToManies as $manyToMany) {
+                    if ($manyToMany->getId() === $arguments[0]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } elseif (property_exists($this, $param) === true && $prefix !== 'add') {
             return $this->$param;
-        } else if (isset($this->$name) === true) {
+        } elseif (isset($this->$name) === true) {
             return $this->$name;
         }//end if
 
         $stacktrace = debug_backtrace();
         die('Método de Model não encontrado: <b>'.$name . '</b> em ' . $stacktrace[0]['file'] . '#' . $stacktrace[0]['line']);
-
     }
-    
+
+
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
 
-    public function get($campo) {
-    	$getter = 'get' . ucfirst($campo);
-    	return $this->$getter();
+
+    public function get($campo)
+    {
+        $getter = 'get' . ucfirst($campo);
+        return $this->$getter();
     }
 
 
     public function defineCallParam($name)
     {
-    	$name = lcfirst(substr($name, 3));
+        $name = lcfirst(substr($name, 3));
 
-    	$vars = get_object_vars($this);
-    	foreach ($vars as $k => $v) {
-    		if ((bool) strchr($k, '_') === true) {
-    			$camelize = explode('_', $k);
-				$camel = '';
-				foreach ($camelize as $part) {
-					$camel .= ucfirst($part);
-				}
-				if (lcfirst($camel) === $name) {
-					$name = $k;
-				}
-    		}
+        $vars = get_object_vars($this);
+        foreach ($vars as $k => $v) {
+            if ((bool) strchr($k, '_') === true) {
+                $camelize = explode('_', $k);
+                $camel = '';
+                foreach ($camelize as $part) {
+                    $camel .= ucfirst($part);
+                }
+                if (lcfirst($camel) === $name) {
+                    $name = $k;
+                }
+            }
+        }
 
-    	}
-
-    	return $name;
+        return $name;
     }
+
 
     public function getIcon()
     {
-    	return $this->icon;
+        return $this->icon;
     }
+
 
     public function udata($data)
     {
@@ -165,45 +168,41 @@ abstract class Model
 
             return mktime($hora[0], $hora[1], $hora[2], $data[1], $data[2], $data[0]);
         }
-
     }
 
 
     public function setData($data)
     {
         if ((bool) $data === true) {
-        	$data = $this->checkAndConvertDataToDate($data);
-        	return new \DateTime($data);
+            $data = $this->checkAndConvertDataToDate($data);
+            return new \DateTime($data);
         }
-
     }
+
 
     public function checkAndConvertDataToDate($data)
     {
-    	if (strchr($data, '/')) {
-    		$data = explode('/', $data);
-    		return $data[2].'-'.$data[1].'-'.$data[0];
-    	}
-    	return $data;
-
+        if (strchr($data, '/')) {
+            $data = explode('/', $data);
+            return $data[2].'-'.$data[1].'-'.$data[0];
+        }
+        return $data;
     }
 
 
-    public function  getData($campo, $format)
+    public function getData($campo, $format)
     {
         if ($this->$campo instanceof \DateTime) {
             return $this->$campo->format($format);
         }
 
         return false;
-
     }
 
 
     public function ptbrToFloat($valor)
     {
         return (float) str_replace(',', '.', str_replace('.', '', $valor));
-
     }
 
 
@@ -214,89 +213,90 @@ abstract class Model
         }
 
         return $this->$param;
-
     }
 
-    public function validaCnpj($cnpj) {
-    	$cnpj = preg_replace('/(\.|\(|\)|\/|\-|_| )+/', '', $cnpj );
-    	if (strlen ( $cnpj ) != 14 || ! is_numeric ( $cnpj )) {
-    		return false;
-    	}
 
-    	switch ( $cnpj ) {
-    		case "00000000000000" :
-    		case "11111111111111" :
-    		case "22222222222222" :
-    		case "33333333333333" :
-    		case "44444444444444" :
-    		case "55555555555555" :
-    		case "66666666666666" :
-    		case "77777777777777" :
-    		case "88888888888888" :
-    		case "99999999999999" :
-    			return false;
-    	}
+    public function validaCnpj($cnpj)
+    {
+        $cnpj = preg_replace('/(\.|\(|\)|\/|\-|_| )+/', '', $cnpj);
+        if (strlen($cnpj) != 14 || ! is_numeric($cnpj)) {
+            return false;
+        }
 
-    	$k = 6;
-    	$soma1 = "";
-    	$soma2 = "";
-    	for($i = 0; $i < 13; $i ++) {
-    		$k = $k == 1 ? 9 : $k;
-    		$soma2 += ($cnpj {$i} * $k);
-    		$k --;
-    		if ($i < 12) {
-    			if ($k == 1) {
-    				$k = 9;
-    				$soma1 += ($cnpj {$i} * $k);
-    				$k = 1;
-    			} else {
-    				$soma1 += ($cnpj {$i} * $k);
-    			}
-    		}
-    	}
+        switch ($cnpj) {
+            case "00000000000000":
+            case "11111111111111":
+            case "22222222222222":
+            case "33333333333333":
+            case "44444444444444":
+            case "55555555555555":
+            case "66666666666666":
+            case "77777777777777":
+            case "88888888888888":
+            case "99999999999999":
+                return false;
+        }
 
-    	$digito1 = $soma1 % 11 < 2 ? 0 : 11 - $soma1 % 11;
-    	$digito2 = $soma2 % 11 < 2 ? 0 : 11 - $soma2 % 11;
+        $k = 6;
+        $soma1 = "";
+        $soma2 = "";
+        for ($i=0; $i<13; $i++) {
+            $k = $k == 1 ? 9 : $k;
+            $soma2 += ($cnpj {$i} * $k);
+            $k --;
+            if ($i < 12) {
+                if ($k == 1) {
+                    $k = 9;
+                    $soma1 += ($cnpj {$i} * $k);
+                    $k = 1;
+                } else {
+                    $soma1 += ($cnpj {$i} * $k);
+                }
+            }
+        }
 
-    	return ( $cnpj[12] == $digito1 && $cnpj[13] == $digito2 );
+        $digito1 = $soma1 % 11 < 2 ? 0 : 11 - $soma1 % 11;
+        $digito2 = $soma2 % 11 < 2 ? 0 : 11 - $soma2 % 11;
+
+        return ( $cnpj[12] == $digito1 && $cnpj[13] == $digito2 );
     }
 
 
     public function getLabel($coluna)
     {
-    	return (isset($this->labels[$coluna]) === true) ? $this->labels[$coluna] : ucfirst($coluna);
+        return (isset($this->labels[$coluna]) === true) ? $this->labels[$coluna] : ucfirst($coluna);
     }
 
     public function getPlural()
     {
-    	if ((bool) $this->plural === true) {
-    		return $this->plural;
-    	}
+        if ((bool) $this->plural === true) {
+            return $this->plural;
+        }
 
-    	return get_class($this);
-
+        return get_class($this);
     }
+
 
     public function getSingular()
     {
-    	if ((bool) $this->singular === true) {
-    		return $this->singular;
-    	}
+        if ((bool) $this->singular === true) {
+            return $this->singular;
+        }
 
-    	return get_class($this);
-
+        return get_class($this);
     }
+
 
     public function getColunasDaLista()
     {
-    	if(count($this->lista) === 0) {
-    		$internalFields = array_merge($this->internalFields, $this->extraInternalFields);
-    		$fields = array_keys(get_class_vars(get_class($this)));
-    	} else {
-    		return $this->lista;
-    	}
+        if (count($this->lista) === 0) {
+            $internalFields = array_merge($this->internalFields, $this->extraInternalFields);
+            $fields = array_keys(get_class_vars(get_class($this)));
+        } else {
+            return $this->lista;
+        }
 
-    	return array_diff($fields, $internalFields);
+        return array_diff($fields, $internalFields);
     }
 
     public function getOrder()
