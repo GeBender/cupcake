@@ -19,7 +19,7 @@ class Helper extends Controller
     public $model;
 
 
-    public function __construct($app, $routeEntity=false)
+    public function __construct($app, $routeEntity = false)
     {
         parent::__construct($app);
 
@@ -30,18 +30,15 @@ class Helper extends Controller
         $helperName = $this->entity;
         if ($app['route']['entity'] !== '') {
             $modelClass = $routeEntity;
-
+            $daoClass = ($this->app['GPS']->fs->classExists('\Apps\\'.$app['route']['appName'].'\DAO\\'.$modelClass.'DAO')) ? '\Apps\\'.$app['route']['appName'].'\DAO\\'.$modelClass.'DAO' : 'Cupcake\DAO';
             $this->entity = $routeEntity;
 
             ($this->app['GPS']->fs->classExists($modelClass) === true) ? $this->model = new $modelClass() : $this->model = false;
-            $this->DAO = new DAO($app, $this->entity);
+            $this->DAO = new $daoClass($app, $this->entity);
         }
 
 
         $setName = 'set'.$helperName;
         $this->$setName($this);
-
     }
-
-
 }

@@ -39,7 +39,6 @@ class Lista extends \Cupcake\Helper
     {
         parent::__construct($app, $entity);
         $this->setDefaults();
-
     }
 
 
@@ -52,19 +51,18 @@ class Lista extends \Cupcake\Helper
         (isset($this->request['limit']) === true) ? $this->setLimit($this->request['limit']) : $this->setLimit($model::LIMIT);
         (isset($this->request['offset']) === true) ? $this->setOffset($this->request['offset']) : $this->setOffset($model::OFFSET);
         (isset($this->request['group']) === true) ? $this->setGroup($this->request['group']) : $this->setGroup($model::GROUP);
-
     }
 
 
     public function get(array $criteria = array(), array $joins = array())
-    {
-        $qb = $this->app['db']->createQueryBuilder()
-            ->select($this->entity)
-            ->from($this->entity, $this->entity)
+    {   $entity = (!strchr($this->order, '.')) ? $this->entity . '.' : '';
+        $qb = $this->DAO->createQueryBuilder()
+//            ->select($this->entity)
+            //->from($this->entity, $this->entity)
             ->where($this->mountWhere())
             ->setFirstResult($this->offset)
             ->setMaxResults($this->limit)
-            ->orderBy($this->entity . '.' . $this->order, $this->direction);
+            ->orderBy($entity . $this->order, $this->direction);
 
         foreach ($joins as $k => $v) {
             $qb->leftJoin($k, $v);
@@ -85,7 +83,6 @@ class Lista extends \Cupcake\Helper
         $this->help('Pages');
 
         return $lista;
-
     }
 
 
@@ -105,7 +102,6 @@ class Lista extends \Cupcake\Helper
         }
 
         return $where;
-
     }
 
 
@@ -123,7 +119,6 @@ class Lista extends \Cupcake\Helper
         $_GET = $bkp;
 
         return $link;
-
     }
 
 
@@ -141,7 +136,6 @@ class Lista extends \Cupcake\Helper
         $_GET = $bkp;
 
         return $link;
-
     }
 
 
@@ -153,7 +147,6 @@ class Lista extends \Cupcake\Helper
         $_GET = $bkp;
 
         return $link;
-
     }
 
 
@@ -165,7 +158,17 @@ class Lista extends \Cupcake\Helper
         $_GET = $bkp;
 
         return $link;
+    }
 
+
+    public function getLinkOrderAlt($order)
+    {
+        $bkp = $_GET;
+        $_GET['order'] = $order;
+        $link = $this->getHere() . $this->paramsToUrl();
+        $_GET = $bkp;
+
+        return $link;
     }
 
 
@@ -187,7 +190,6 @@ class Lista extends \Cupcake\Helper
         }
 
         return $paramsUrl;
-
     }
 
 
@@ -206,7 +208,6 @@ class Lista extends \Cupcake\Helper
         ($campo === $this->order) ? $retorna = $iconDirection : $retorna = $false;
 
         return 'fa fa-' . $retorna;
-
     }
 
 
@@ -217,7 +218,6 @@ class Lista extends \Cupcake\Helper
         ($campo === $this->group) ? $retorna = $true : $retorna = $false;
 
         return 'fa fa-' . $retorna;
-
     }
 
 
@@ -225,14 +225,12 @@ class Lista extends \Cupcake\Helper
     {
 //        return false;
          return $this->paginator->count();
-
     }
 
 
     public function getPages()
     {
         return ceil(($this->getTotal() / $this->limit));
-
     }
 
 
@@ -240,14 +238,12 @@ class Lista extends \Cupcake\Helper
     {
         $page = ceil(($this->offset + 1) / $this->limit);
         return $page;
-
     }
 
 
     public function getPaginateMargem()
     {
         return floor(($this->navigateQtd / 2));
-
     }
 
 
@@ -255,7 +251,6 @@ class Lista extends \Cupcake\Helper
     {
         $ini = (($this->getPage() - $this->getPaginateMargem()));
         return ($ini > 1) ? $ini : 1;
-
     }
 
 
@@ -268,7 +263,6 @@ class Lista extends \Cupcake\Helper
         $TamanhoCorrigido = ($ini - $corrigeTamanho);
 
         return ($TamanhoCorrigido > 1) ? $TamanhoCorrigido : 1;
-
     }
 
 
@@ -282,18 +276,18 @@ class Lista extends \Cupcake\Helper
         ($end < $this->getPages()) ? $return = $end : $return = $this->getPages();
 
         return $return;
-
     }
 
-    public function getTituloColuna($coluna) {
-    	return $this->model->getLabel($coluna);
+
+    public function getTituloColuna($coluna)
+    {
+        return $this->model->getLabel($coluna);
     }
 
 
     public function getPaginateTamanho()
     {
         return ($this->getPageEnd() - (($this->getPageIni() - 1)));
-
     }
 
 
@@ -305,43 +299,35 @@ class Lista extends \Cupcake\Helper
         }
 
         return ($end < $this->getPages()) ? $end : $this->getPages();
-
     }
 
 
     public function setOrder($order)
     {
         $this->order = NoInjection::sql($order);
-
     }
 
 
     public function setDirection($direction)
     {
         $this->direction = NoInjection::sql($direction);
-
     }
 
 
     public function setLimit($limit)
     {
         $this->limit = NoInjection::sql($limit);
-
     }
 
 
     public function setOffset($offset)
     {
         $this->offset = NoInjection::sql($offset);
-
     }
 
 
     public function setGroup($group)
     {
         $this->group = NoInjection::sql($group);
-
     }
-
-
 }

@@ -55,6 +55,11 @@ function CupcakeReady() {
     	window.location.href = $(this).val();
     });
 
+	$('#select-order').change(function() {
+		loadModal();
+		window.location.href = $(this).val();
+	});
+
 	$('.Cupcake-form').submit(function() {
 		loadingModal();
 		$(this).submit();

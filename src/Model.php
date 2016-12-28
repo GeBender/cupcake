@@ -62,6 +62,8 @@ abstract class Model
             'lista'
     ];
 
+    protected $ordens = [];
+
     protected $lista = [];
 
     protected $extraInternalFields = [];

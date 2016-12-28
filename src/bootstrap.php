@@ -84,6 +84,9 @@ $cupcake->match('{url}', function (Request $request) use ($cupcake) {
             $conn['password'] = $conn['pass'];
         }
         $cupcake['db'] = EntityManager::create($conn, $config);
+        /* $cupcake['db']->getConnection()
+              ->getConfiguration()
+              ->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger()); */
     } else {
         $cupcake['db'] = [];
     }

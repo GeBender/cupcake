@@ -36,6 +36,8 @@ class DAO
 
     public $direction = 'ASC';
 
+    public $dbg = false;
+
     const PAGE = 'page';
 
     const PAGE_SIZE = 'page-size';
@@ -82,6 +84,11 @@ class DAO
         }
     }
 
+
+    public function dbg()
+    {
+        $this->dbg;
+    }
 
     /**
      * Encontra ou carrega o model
