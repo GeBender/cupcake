@@ -18,15 +18,15 @@ class Form extends \Cupcake\Helper
 
     public $types = array(
             'integer' => 'number',
-    		'date' => 'date'
+            'date' => 'date'
     );
 
 
-    public function __construct($app, $entity=false)
+    public function __construct($app, $entity = false)
     {
         parent::__construct($app, $entity);
         if ((bool) $this->DAO->ClassMetadata === true) {
-        	$this->mappings = $this->DAO->ClassMetadata->getAssociationMappings();
+            $this->mappings = $this->DAO->ClassMetadata->getAssociationMappings();
         }
 
         $this->addExtraFooter('<script type="text/javascript" src="' . $this->getCupcakeAsset() . 'js/jquery/chosen.jquery.min.js"></script>');
@@ -53,7 +53,6 @@ class Form extends \Cupcake\Helper
     {
         $fieldFunction = $this->defineField($field);
         return $this->$fieldFunction($field, $value, $attr);
-
     }
 
 
@@ -68,28 +67,24 @@ class Form extends \Cupcake\Helper
         }
 
         return 'input';
-
     }
 
 
     public function ehMapeado($field)
     {
         return array_key_exists($field, $this->mappings);
-
     }
 
 
     public function input($field, $value, array $attr = array())
     {
         return '<input ' . $this->required($field) . ' id="form-' . $this->entity . '-' . $field . '" name="' . $this->entity . '[' . $field . ']" ' . $this->concatAttr($attr) . ' type="' . $this->type($field) . '" value="' . $this->value($value, $field) . '"/>'.$this->mask($field);
-
     }
 
 
     public function textarea($field, $value, array $attr = array())
     {
         return '<textarea ' . $this->required($field) . ' id="form-' . $this->entity . '-' . $field . '" name="' . $this->entity . '[' . $field . ']" ' . $this->concatAttr($attr) . '>' . $this->value($value, $field) . '</textarea>';
-
     }
 
 
@@ -102,7 +97,6 @@ class Form extends \Cupcake\Helper
                         });
                     </script>';
         }
-
     }
 
 
@@ -111,11 +105,10 @@ class Form extends \Cupcake\Helper
         if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'float') {
             return ($value > 0 ) ? number_format($value, 2, ',', '.') : false;
         } else if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'date' && (bool) $value) {
-        	return $value->format('Y-m-d');
+            return $value->format('Y-m-d');
         }
 
         return $value;
-
     }
 
 
@@ -131,7 +124,6 @@ class Form extends \Cupcake\Helper
         }
 
         return $strOpts;
-
     }
 
 
@@ -143,7 +135,6 @@ class Form extends \Cupcake\Helper
                 ' . $this->selecione($multiple) . '
                 ' . $this->options($field, $value) . '
                 </select>';
-
     }
 
 
@@ -152,7 +143,6 @@ class Form extends \Cupcake\Helper
         if ($multiple === null) {
             return '<option value="">Selecione</option>';
         }
-
     }
 
 
@@ -182,7 +172,6 @@ class Form extends \Cupcake\Helper
         }
 
         return $strOpts;
-
     }
 
 
@@ -195,7 +184,6 @@ class Form extends \Cupcake\Helper
         $data = $this->$mappedDAO->findAll([], [$model::ORDER => $model::DIRECTION]);
 
         return $data;
-
     }
 
 
@@ -204,7 +192,6 @@ class Form extends \Cupcake\Helper
         if ((string) $v1 === (string) $v2) {
             return 'selected';
         }
-
     }
 
 
@@ -212,7 +199,6 @@ class Form extends \Cupcake\Helper
     {
         (property_exists($v, 'identifier') === true) ? $getter = 'get' . ucfirst($v->getIdentifier()) : $getter = 'getId';
         return $v->$getter();
-
     }
 
 
@@ -221,7 +207,6 @@ class Form extends \Cupcake\Helper
         if (in_array($v1, $v2) === true) {
             return 'checked';
         }
-
     }
 
 
@@ -230,7 +215,6 @@ class Form extends \Cupcake\Helper
         if (property_exists($this->entity, $field . 'Multiple') === true) {
             return 'multiple data-placeholder="Selecione um ou mais itens"';
         }
-
     }
 
 
@@ -242,7 +226,6 @@ class Form extends \Cupcake\Helper
         }
 
         return $attrs;
-
     }
 
 
@@ -273,7 +256,6 @@ class Form extends \Cupcake\Helper
         if ($required === true) {
             return 'required="required"';
         }
-
     }
 
 
@@ -284,8 +266,5 @@ class Form extends \Cupcake\Helper
         }
 
         return 'text';
-
     }
-
-
 }

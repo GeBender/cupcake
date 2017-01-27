@@ -200,7 +200,7 @@ class Controller
     {
         $this->layout = false;
         $dados = $this->DAO->listen($_POST);
-
+        $dados = $this->uploadFiles($dados);
         $dados = $this->DAO->salvar($dados);
 
         if (isset($_POST['flashMsg']) === true) {
@@ -223,6 +223,30 @@ class Controller
         }
     }
 
+
+    public function uploadFiles($dados)
+    {
+        $this->help('JQFileUpload');
+        $uploadsFolder = dirname(dirname(dirname(__DIR__))) . DS . $this->app['route']['appsFolder'] . DS . $this->app['route']['appName'] . DS . $this->app['route']['uploadsFolder'] . DS;
+
+        $result = $this->JQFileUpload->upload($this->entity);
+
+        $i = 0;
+        if (@$_FILES[$this->entity]['name'] && $result) {
+            foreach ($_FILES[$this->entity]['name'] as $k => $v) {
+                if (property_exists($dados, $k)) {
+                    if ((bool) $_FILES[$this->entity]['name'][$k]) {
+                        if ((bool) $dados->$k && file_exists($uploadsFolder . $dados->$k)) {
+                            unlink($uploadsFolder . $dados->$k);
+                        }
+                        $dados->$k = $result[0][$i]->name;
+                    }
+                }
+                $i++;
+            }
+        }
+        return $dados;
+    }
 
     public function uses($entity)
     {

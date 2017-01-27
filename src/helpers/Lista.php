@@ -48,16 +48,24 @@ class Lista extends \Cupcake\Helper
 
         (isset($this->request['order']) === true) ? $this->setOrder($this->request['order']) : $this->setOrder($model::ORDER);
         (isset($this->request['direction']) === true) ? $this->setDirection($this->request['direction']) : $this->setDirection($model::DIRECTION);
-        (isset($this->request['limit']) === true) ? $this->setLimit($this->request['limit']) : $this->setLimit($model::LIMIT);
         (isset($this->request['offset']) === true) ? $this->setOffset($this->request['offset']) : $this->setOffset($model::OFFSET);
         (isset($this->request['group']) === true) ? $this->setGroup($this->request['group']) : $this->setGroup($model::GROUP);
+
+        if (isset($this->request['limit']) === true) {
+            if ($this->request['limit'] !== 'all') {
+                $this->setLimit($this->request['limit']);
+            }
+        } else {
+            $this->setLimit($model::LIMIT);
+        }
     }
 
 
-    public function get(array $criteria = array(), array $joins = array())
-    {   $entity = (!strchr($this->order, '.')) ? $this->entity . '.' : '';
+    public function get($criteria = [], $joins = [], $groupBy = false)
+    {
+        $entity = (!strchr($this->order, '.')) ? $this->entity . '.' : '';
         $qb = $this->DAO->createQueryBuilder()
-//            ->select($this->entity)
+//             ->addSelect('DadosDaCacamba')
             //->from($this->entity, $this->entity)
             ->where($this->mountWhere())
             ->setFirstResult($this->offset)
@@ -65,7 +73,12 @@ class Lista extends \Cupcake\Helper
             ->orderBy($entity . $this->order, $this->direction);
 
         foreach ($joins as $k => $v) {
-            $qb->leftJoin($k, $v);
+            $qb->addSelect($v)
+               ->leftJoin($k, $v);
+        }
+
+        if ((bool) $groupBy === true) {
+            $qb->groupBy($groupBy);
         }
 
         if (count($criteria) > 0) {
@@ -230,7 +243,7 @@ class Lista extends \Cupcake\Helper
 
     public function getPages()
     {
-        return ceil(($this->getTotal() / $this->limit));
+        return ((int) $this->limit > 0) ? ceil(($this->getTotal() / $this->limit)) : 1;
     }
 
 

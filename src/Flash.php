@@ -20,7 +20,6 @@ class Flash
     public static function alert($msg)
     {
         Sessions::save('flashAlert', $msg);
-
     }
 
 
@@ -30,8 +29,8 @@ class Flash
         Sessions::delete('flashAlert');
 
         return $alert;
-
     }
+
 
     public static function panel($msg)
     {
@@ -45,14 +44,13 @@ class Flash
         Sessions::delete('panelMsg');
 
         return $msg;
-
     }
 
-    public static function topFull($msg, $type='information')
+
+    public static function topFull($msg, $type = 'information')
     {
         Sessions::save('flashTopFull', $msg);
         Sessions::save('flashTopFullType', $type);
-
     }
 
 
@@ -69,14 +67,12 @@ class Flash
         }
 
         return false;
-
     }
 
 
     public static function modal($layout)
     {
         Sessions::save('flashModal', $layout);
-
     }
 
 
@@ -86,8 +82,5 @@ class Flash
         Sessions::delete('flashModal');
 
         return $modal;
-
     }
-
-
 }

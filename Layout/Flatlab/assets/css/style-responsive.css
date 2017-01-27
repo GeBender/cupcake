@@ -44,6 +44,10 @@
         position: none !important;
     }
 
+    #sidebar > ul {
+	display: none;	
+    }
+
     #sidebar > ul > li > a > span {
         line-height: 35px;
     }

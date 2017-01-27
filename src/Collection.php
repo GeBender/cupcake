@@ -30,7 +30,6 @@ class Collection extends Model
     public function __construct($collection)
     {
         $this->collection = $collection;
-
     }
 
 
@@ -38,7 +37,6 @@ class Collection extends Model
     {
         $this->args = $args;
         return $this;
-
     }
 
 
@@ -52,7 +50,6 @@ class Collection extends Model
         }
 
         return $i;
-
     }
 
 
@@ -66,7 +63,6 @@ class Collection extends Model
         }
 
         return $total;
-
     }
 
 
@@ -85,7 +81,6 @@ class Collection extends Model
         }
 
         return $total;
-
     }
 
 
@@ -102,7 +97,6 @@ class Collection extends Model
         }
 
         $this->collection = $lista;
-
     }
 
 
@@ -114,7 +108,6 @@ class Collection extends Model
         }
 
         return $orderOptions;
-
     }
 
 
@@ -128,7 +121,6 @@ class Collection extends Model
         }
 
         return $item->$getter();
-
     }
 
 
@@ -147,8 +139,5 @@ class Collection extends Model
         }
 
         $this->collection = $lista;
-
     }
-
-
 }

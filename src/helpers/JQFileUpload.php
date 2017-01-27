@@ -21,47 +21,50 @@ use Cupcake\Flash;
 class JQFileUpload extends \Cupcake\Helper
 {
 
-	public $validator = [];
-	public $mimeTypeValidator;
-	public $sizeValidator;
-	public $pathresolver;
-	public $filesystem;
+    public $validator = [];
+    public $mimeTypeValidator;
+    public $sizeValidator;
+    public $pathresolver;
+    public $filesystem;
 
     public function __construct($app)
     {
         parent::__construct($app);
 
         $this->simpleValidator(1024 * 1024, ['image/png', 'image/jpeg']);
-		$this->setSimplePathresolver($app['GPS']->getUploadFolder());
-		$this->setSimpleFileSystem();
+        $this->setSimplePathresolver($app['GPS']->getUploadFolder());
+        $this->setSimpleFileSystem();
     }
 
     public function upload($field)
     {
-    	$fileupload = new FileUpload($_FILES[$field], $_SERVER);
+        if (@$_FILES[$field]) {
+            $fileupload = new FileUpload($_FILES[$field], $_SERVER);
 
-    	$this->pathresolver = new PathResolverSimple(dirname(dirname(dirname(dirname(__DIR__)))).'/Apps/'.$this->app['route']['appName'].'/uploads');
-    	$fileupload->setPathResolver($this->pathresolver);
-    	$result = $fileupload->setFileSystem($this->filesystem);
+            $this->pathresolver = new PathResolverSimple(dirname(dirname(dirname(dirname(__DIR__)))).'/Apps/'.$this->app['route']['appName'].'/uploads');
+            $fileupload->setPathResolver($this->pathresolver);
+            $result = $fileupload->setFileSystem($this->filesystem);
 
-    	foreach ($this->validator as $validator) {
-	    	$fileupload->addValidator($validator);
-    	}
+            foreach ($this->validator as $validator) {
+                $fileupload->addValidator($validator);
+            }
 
-    	$result = $fileupload->processAll();
-    	$this->checkForErrors($result);
+            $result = $fileupload->processAll();
+            $this->checkForErrors($result);
 
-    	return $result;
+            return $result;
+        }
+        return false;
     }
 
     public function checkForErrors($result)
     {
-    	$erros = ['Tipo de arquivo não permitido. Envie PNG ou JPG', 'Imagem muito grande. Tamanho máximo: 1 mega.'];
-    	foreach ($result[0] as $upload) {
-    		if ($upload->error !== 0) {
-				Flash::alert($erros[$upload->error_code]);
-    		}
-    	}
+        $erros = ['Tipo de arquivo não permitido. Envie PNG ou JPG', 'Imagem muito grande. Tamanho máximo: 1 mega.'];
+        foreach ($result[0] as $upload) {
+            if ($upload->error !== 0) {
+                Flash::alert($erros[$upload->error_code]);
+            }
+        }
     }
 
     /**
@@ -70,7 +73,7 @@ class JQFileUpload extends \Cupcake\Helper
      */
     public function simpleValidator($size, $mimeTypes)
     {
-    	$this->validator[] = new Simple($size, $mimeTypes);
+        $this->validator[] = new Simple($size, $mimeTypes);
     }
 
 
@@ -80,7 +83,7 @@ class JQFileUpload extends \Cupcake\Helper
      */
     public function mimeTypeValidator($mimeTypes)
     {
-    	$this->validator[] = new MimeTypeValidator($mimeTypes);
+        $this->validator[] = new MimeTypeValidator($mimeTypes);
     }
 
 
@@ -90,7 +93,7 @@ class JQFileUpload extends \Cupcake\Helper
      */
     public function sizeValidator($max, $min)
     {
-    	$this->validator[] = new SizeValidator($max, $min);
+        $this->validator[] = new SizeValidator($max, $min);
     }
 
     /**
@@ -98,12 +101,12 @@ class JQFileUpload extends \Cupcake\Helper
      */
     public function setSimplePathResolver($path)
     {
-    	$this->pathresolver = new \FileUpload\PathResolver\Simple($path);
+        $this->pathresolver = new \FileUpload\PathResolver\Simple($path);
     }
 
     public function setSimpleFileSystem()
     {
-    	$this->filesystem = new \FileUpload\FileSystem\Simple();
+        $this->filesystem = new \FileUpload\FileSystem\Simple();
     }
 
 }
