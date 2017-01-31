@@ -88,6 +88,10 @@ class Controller
         $this->app['GPS']->route['layout'] = $layout;
     }
 
+    public function getLayoutAsset()
+    {
+        return $this->app['GPS']->getLayoutAsset();
+    }
 
     public function welcomeToCupcake()
     {

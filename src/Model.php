@@ -305,4 +305,10 @@ abstract class Model
     {
         return self::ORDER;
     }
+
+    public function getMesPTBR($mes)
+    {
+        $meses = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        return $meses[(int) $mes];
+    }
 }
