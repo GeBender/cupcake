@@ -204,7 +204,11 @@ abstract class Model
 
     public function ptbrToFloat($valor)
     {
-        return (float) str_replace(',', '.', str_replace('.', '', $valor));
+        if ((bool) $valor) {
+            return (float) str_replace(',', '.', str_replace('.', '', $valor));
+        }
+
+        return null;
     }
 
 

@@ -93,7 +93,7 @@ class Form extends \Cupcake\Helper
         if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'float') {
             return '<script>
                         $(document).ready(function() {
-                            $("#form-' . $this->entity . '-' . $field . '").maskMoney({thousands:\'.\', decimal:\',\'});
+                            $("#form-' . $this->entity . '-' . $field . '").maskMoney({thousands:\'.\', decimal:\',\',allowZero:true});
                         });
                     </script>';
         }
@@ -104,7 +104,7 @@ class Form extends \Cupcake\Helper
     {
         if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'float') {
             return ($value > 0 ) ? number_format($value, 2, ',', '.') : false;
-        } else if ($this->DAO->ClassMetadata->getTypeOfField($field) === 'date' && (bool) $value) {
+        } elseif ($this->DAO->ClassMetadata->getTypeOfField($field) === 'date' && (bool) $value) {
             return $value->format('Y-m-d');
         }
 
