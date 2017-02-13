@@ -12,6 +12,7 @@
 namespace Cupcake;
 
 use \Cupcake\Flash as Flash;
+use Cupcake\Logs;
 use Apps\Simplesys\Controller\IndexController;
 use Symfony\Component\Debug\header;
 
@@ -204,6 +205,9 @@ class Controller
     {
         $this->layout = false;
         $dados = $this->DAO->listen($_POST);
+
+        Logs::atividadeAssinante(((bool) $dados->getId()) ? 'Editar' : 'Cadastrar', $dados->getSingular());
+
         $dados = $this->uploadFiles($dados);
         $dados = $this->DAO->salvar($dados);
 
@@ -216,6 +220,8 @@ class Controller
             return '2;' . $this->getIndexController() . 'ver/' . $dados->getId();
         } elseif ($saida === 'model') {
             return $dados;
+        } elseif ($saida === 'lista') {
+            return '2;' . $this->getIndexController();
         } elseif ($saida === 'id') {
             return $dados->getId();
         } elseif ($saida === 'reload') {
@@ -466,6 +472,7 @@ class Controller
     {
         try {
             $this->layout = false;
+            $registro = $this->DAO->find($this->args[0]);
             $this->DAO->deletar($this->args[0]);
 
             if (isset($_GET['saida']) === true) {
@@ -473,6 +480,8 @@ class Controller
             } else {
                 $saida = '4;' . $this->getIndexController();
             }
+
+            Logs::atividadeAssinante('Deletar', $registro->getSingular());
 
             return $saida;
         } catch (\Exception $e) {
