@@ -34,6 +34,8 @@ class HeaderLandX4 extends Controller
         $this->setTitulo($this->getSistema()->getTitulo());
         $this->setDescription($this->getSistema()
             ->getDescricao());
+        $this->setKeywords($this->getSistema()
+            ->getKeywords());
         $this->setFavicon($this->getSistema()
             ->getFavicon());
         $this->setLogo($this->getSistema()

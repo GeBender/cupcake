@@ -34,6 +34,7 @@ class Header extends LogistickController
     {
         $this->setTitulo($this->getSistema()->getTitulo());
         $this->setDescription($this->getSistema()->getDescricao());
+        $this->setKeywords($this->getSistema()->getKeywords());
         $this->setFavicon($this->getSistema()->getFavicon());
 
         if ($this->app['Vars']->getExtraHeaderA() === false) {
