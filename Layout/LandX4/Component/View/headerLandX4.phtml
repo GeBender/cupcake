@@ -5,12 +5,13 @@
 <!--[if !(IE 8) ]><!-->
 <html lang="pt-br">
 <head>
-
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<title><?php echo $titulo; ?></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta NAME="Author" CONTENT="Gê Bender">
-<meta name="description" content="<?php echo $description?>">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $titulo; ?></title>
+    <meta name="description" content="<?php echo $description?>">
+    <meta name="keywords" content="<?php echo @$keywords; ?>">
+    <meta NAME="Author" CONTENT="Gê Bender">
+    <meta name="robots" content="index, follow">
 
 <?php
 foreach ($extraHeaderA as $header) {
