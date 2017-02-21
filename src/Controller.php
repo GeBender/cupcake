@@ -586,7 +586,7 @@ class Controller
         $this->uses('Faturas');
         foreach ($semFaturas as $semFatura) {
             $this->FaturasDAO->faturarPedido($semFatura);
-            dbg(count($semFatura->getId()));
+            dbg($semFatura->getId());
             flush();
         }
 
