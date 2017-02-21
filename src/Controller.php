@@ -570,4 +570,25 @@ class Controller
     {
         return $this->allow;
     }
+
+    public function refaturar()
+    {
+        $this->allow();
+        $this->uses('Pedidos');
+        $pedidos = $this->PedidosDAO->findAll();
+        $semFaturas = [];
+        foreach ($pedidos as $pedido) {
+            if (!$pedido->temFatura()) {
+                $semFaturas[] = $pedido;
+            }
+        }
+
+        $this->uses('Faturas');
+        foreach ($semFaturas as $semFatura) {
+            $this->FaturasDAO->faturarPedido($semFatura);
+            dbg(count($semFatura->getId()));
+            flush();
+        }
+
+    }
 }

@@ -326,7 +326,7 @@ class DAO
             ->select($modelName)
             ->from($modelName, $modelName);
 
-        if (property_exists($model, 'assinante') === true) {
+        if (property_exists($model, 'assinante') === true && $this->app['Auth']->assinanteId()) {
             $query->where($modelName . '.assinante = ' . $this->app['Auth']->assinanteId());
         }
 
