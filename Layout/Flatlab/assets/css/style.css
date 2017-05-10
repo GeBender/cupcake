@@ -4792,7 +4792,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .most-popular {
-    background: #f77b6f;
+    background: #57c8f2;
     color: #fff;
 }
 
@@ -4803,16 +4803,16 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .most-popular h2 {
-    background: #d76b61 !important;
+    background: #16a3d8 !important;
     margin-top: 20px !important;
 }
 
 .most-popular ul li {
-    border-bottom: 1px dotted #d76b61 !important;
+    border-bottom: 1px dotted #16a3d8 !important;
 }
 
 .most-popular .price-actions .btn {
-    background: #d76b61 !important;
+    background: #16a3d8 !important;
     margin: 10px 0;
     cursor: pointer;
 }
