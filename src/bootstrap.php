@@ -42,7 +42,7 @@ if (getenv('AMBIENT') === false) {
 if ($cupcake['debug'] === true) {
     ini_set('display_errors', true);
 } else {
-    ini_set('display_errors', false);
+    // ini_set('display_errors', false);
 }
 
 $cupcake['autoload'] = $autoload;
