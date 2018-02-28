@@ -30,7 +30,7 @@ $cupcake['debug'] = true;
 
 if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
     putenv('AMBIENT=homolog');
-} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') === true) {
+} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true) {
     putenv('AMBIENT=development');
 }
 
@@ -62,6 +62,7 @@ Debug::setCupcaker($cupcake['debug']);
 $cupcake->match('{url}', function (Request $request) use ($cupcake) {
     $cupcake['GPS'] = new Cupcake\GPS($cupcake['route'], $cupcake['config'], substr($request->getPathInfo(), 1));
     $cupcake['route'] = $cupcake['GPS']->route();
+
     $cupcake['config'] = $cupcake['GPS']->config();
     $cupcake['request'] = $request;
     $cupcake['Auth'] = new Cupcake\Auth();

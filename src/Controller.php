@@ -101,15 +101,18 @@ class Controller
         //
     }
 
+    public function notFund() {
+        $this->layout = 'Flatlab';
+        $this->setClassBody("body-404");
+        $this->hideElements();
+        return $this->renderView('Index/404.phtml');
+    }
 
     public function home($criteria = [], $joins = [])
     {
         if ($this->app['route']['entity'] !== '') {
             if (class_exists($this->app['route']['entity']) === false) {
-                $this->layout = 'Flatlab';
-                $this->setClassBody("body-404");
-                $this->hideElements();
-                return $this->renderView('Index/404.phtml');
+                return $this->notFund();
             }
 
             $this->view = 'lista.phtml';
