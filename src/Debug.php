@@ -94,3 +94,8 @@ function debug($var, $die = false, $backtrace = 1)
 {
     Debug::dbg($var, $die, $backtrace);
 }
+
+function isCupcaker()
+{
+    Debug::isCupcaker();
+}

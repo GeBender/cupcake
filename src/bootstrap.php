@@ -30,13 +30,13 @@ $cupcake['debug'] = true;
 
 if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
     putenv('AMBIENT=homolog');
-} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true) {
+} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true || in_array($_SERVER["REMOTE_ADDR"], ['172.17.0.1', '200.175.62.234'])) {
     putenv('AMBIENT=development');
 }
 
 if (getenv('AMBIENT') === false) {
     putenv('AMBIENT=production');
-//    $cupcake['debug'] = false;
+    $cupcake['debug'] = false;
 }
 
 if ($cupcake['debug'] === true) {
