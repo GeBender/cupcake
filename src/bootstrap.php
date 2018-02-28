@@ -29,11 +29,9 @@ $cupcake = new Application();
 $cupcake['debug'] = true;
 
 if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
-    echo '<!-- . -->';
     putenv('AMBIENT=homolog');
 
 } elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true || in_array($_SERVER["REMOTE_ADDR"], ['172.17.0.1', '200.175.62.234'])) {
-    echo '<!-- .. -->';
     putenv('AMBIENT=development');
 }
 
