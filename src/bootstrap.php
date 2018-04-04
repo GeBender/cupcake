@@ -12,7 +12,7 @@
 header('Content-Type: text/html; charset=utf-8');
 
 error_reporting(E_ALL);
-ini_set('display_errors', true);
+ini_set('display_errors', false);
 
 define('DS', DIRECTORY_SEPARATOR);
 $autoload = require_once('vendor' . DS . 'autoload.php');
