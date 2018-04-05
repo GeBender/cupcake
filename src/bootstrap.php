@@ -12,7 +12,7 @@
 header('Content-Type: text/html; charset=utf-8');
 
 error_reporting(E_ALL);
-ini_set('display_errors', false);
+ini_set('display_errors', true);
 
 define('DS', DIRECTORY_SEPARATOR);
 $autoload = require_once('vendor' . DS . 'autoload.php');
@@ -36,7 +36,7 @@ if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
 
 if (getenv('AMBIENT') === false) {
     putenv('AMBIENT=production');
-   $cupcake['debug'] = false;
+   // $cupcake['debug'] = false;
 }
 
 if ($cupcake['debug'] === true) {
