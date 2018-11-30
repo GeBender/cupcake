@@ -17,7 +17,7 @@ class Sessions
 
     public static function start($name)
     {
-        session_name($name);
+        // session_name($name);
         @session_start();
 
     }
