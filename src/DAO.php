@@ -97,6 +97,9 @@ class DAO
      */
     public function findModel($data)
     {
+        if (!isset($data[$this->name]['id'])) {
+            $data[$this->name]['id'] = '';
+        }
         $id = (is_array($data[$this->name]['id'])) ? @$data[$this->name]['id'][0] : $data[$this->name]['id'];
         $model = $this->EntityRepository->find($id);
         if ($model === null) {

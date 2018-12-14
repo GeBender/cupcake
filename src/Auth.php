@@ -13,9 +13,9 @@ class Auth
     public function register($sistema, $assinanteId, $userId, $extra = array())
     {
         $cupcakeAuth = array(
-                'sistema' => $sistema,
-                'assinanteId' => $assinanteId,
-                'userId' => $userId
+            'sistema' => $sistema,
+            'assinanteId' => $assinanteId,
+            'userId' => $userId
         );
         $cupcakeAuth = array_merge($cupcakeAuth, $extra);
         Cookies::save(self::AUTH_NAME, $cupcakeAuth);

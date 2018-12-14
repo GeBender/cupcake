@@ -30,7 +30,7 @@ $cupcake['debug'] = true;
 
 if ((bool) strstr($_SERVER['HTTP_HOST'], 'homolog') === true) {
     putenv('AMBIENT=homolog');
-} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true) {
+} elseif ((bool) strstr($_SERVER['HTTP_HOST'], '.dev') || (bool) strstr($_SERVER['HTTP_HOST'], '.local') === true || (bool) strstr($_SERVER['HTTP_HOST'], 'lvh.me') === true) {
     putenv('AMBIENT=development');
 }
 
