@@ -17,6 +17,7 @@ class Cookies
 
     public static function save($var, $value, $expire = 0)
     {
+        var_dump($var, $value);
         $result = setcookie($var, Crypt::encode($value), $expire);
         var_dump($result, $_COOKIE); die;
     }
