@@ -42,47 +42,8 @@ class GoogleOAuth extends \Cupcake\Helper
         if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
           $this->client->setAccessToken($_SESSION['access_token']);
         }
-
-        if (isset($_GET['code'])) {
-            $IndexController = new IndexController($this->app);
-            $IndexController->entrarComGmail();
-            // $this->proccessCode($_GET['code']);
-        }
-
     }
 
-    public function proccessCode($code) {
-
-        $this->auth($code);
-        $userData = $this->getUserData();
-
-        if(!empty($userData)) {
-            $this->uses('Usuarios');
-            if(!$this->UsuariosDAO->recuperarLogin($userData->email)) {
-                $this->newAccess($userData);
-            }
-        }
-
-        $IndexController = new IndexController($this->app);
-        $saida = $IndexController->entrar($this->UsuariosDAO->loginByGoogleOAuthId($userData->id));
-        $saida = explode(";", $saida);
-        
-        header('location:' . $saida[1]);
-        die;
-    }
-
-    public function newAccess($userData) {
-        $IndexController = new IndexController($this->app);
-
-        $_POST['Leads']['nome'] = $userData->name;
-        $_POST['Leads']['email'] = $userData->email;
-        $_POST['Leads']['callToAction'] = "Entrar com Google";
-        $_POST['Leads']['google_id'] = $userData->id;
-        $_POST['landing'] = "";
-
-        return $IndexController->testeGratis(false, false);
-    }
-    
     public function logout() {
       unset($_SESSION['access_token']);
       $this->client->revokeToken();

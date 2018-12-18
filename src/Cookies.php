@@ -17,16 +17,12 @@ class Cookies
 
     public static function save($var, $value, $expire = 0)
     {
-        var_dump($var, $value);
-        $result = setcookie($var, Crypt::encode($value), $expire);
-        var_dump($result, $_COOKIE); die;
+        setcookie($var, Crypt::encode($value), $expire);
     }
 
 
     public static function restore($v)
     {
-        // var_dump($_COOKIE[$v]);
-        // var_dump($_COOKIE); die;
         $data = null;
         (empty($_COOKIE[$v]) === false) ? $data = Crypt::decode($_COOKIE[$v]) : $data = null;
         return $data;

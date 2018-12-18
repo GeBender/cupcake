@@ -538,9 +538,9 @@ class Controller
 
 
     public function checkLogin()
-    {//var_dump($this->app['Auth']->restore());
+    {
         if ($this->app['Auth']->restore() === null && $this->isAllowed() === false) {
-            header('location: '.$this->getIndex() . 'login');
+            header('location: '.$this->getIndex());
             die;
         }
     }

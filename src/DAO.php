@@ -291,8 +291,6 @@ class DAO
     {
         $original = $this->find($model->getId());
         if ($original === null) {
-            //$model->setId($this->getNext('id'));
-
             $this->db->persist($model);
             $model = $this->defineIdLocal($model);
             $model = $this->defineAssinante($model);
