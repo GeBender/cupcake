@@ -430,7 +430,7 @@ class Controller
         $layout = new $layoutClassName($this->app);
 
         $layout->index();
-        return $this->app['Templating']->render($this->layout.'/View/'.$this->app['GPS']->getLayoutViewFile($this->layout), $this->app['Vars']->vars);
+        return $this->app['Templating']->render($this->app['GPS']->getLayoutViewFile($this->layout), $this->app['Vars']->vars);
     }
 
 
