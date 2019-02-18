@@ -110,7 +110,7 @@ class Asaas implements PagamentosInterface
             "name" => $Assinante->getRazao(),
             "email" => $Assinante->getEmail(),
             "mobilePhone" => $Assinante->getCelular(),
-//             "cpfCnpj" => $Assinante->getDocClean(),
+            "cpfCnpj" => $Assinante->getDocClean(),
             "postalCode" => $Endereco->getCep(),
             "address" => $Endereco->getEndereco(),
             "addressNumber" => $Endereco->getNumero(),
