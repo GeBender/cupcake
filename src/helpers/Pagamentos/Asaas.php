@@ -105,7 +105,7 @@ class Asaas implements PagamentosInterface
      */
     public function createClient($Assinante, $Endereco)
     {
-        try {
+        // try {
         $clientData = [
             "name" => $Assinante->getRazao(),
             "email" => $Assinante->getEmail(),
@@ -119,33 +119,30 @@ class Asaas implements PagamentosInterface
         ];
 
         return $this->driver->customer()->create($clientData);
-        } catch (\Softr\Asaas\Exception\HttpException $e) {
-            dbg($e, true);
-        }
+        // } catch (\Softr\Asaas\Exception\HttpException $e) {
+        //     dbg($e, true);
+        // }
     }
 
     public function updateSubscription($Assinante) {
-        try {
-            $subscriptionData = [
-                "customer" => $Assinante->getIdGatewayPagamento(),
-                "description" => $Assinante->getDescricaoAssinatura(),
-                "billingType" => $this->getSubscriptionBillingType($Assinante->getFormaDePagamento()),
-                "nextDueDate" => $Assinante->getProximoVencimento(),
-                "value" => $Assinante->getValor(),
-                "status" => 'ACTIVE',
-                "cycle" => $this->getSubscriptionCycle($Assinante->getPeriodo())
-            ];
+        $subscriptionData = [
+            "customer" => $Assinante->getIdGatewayPagamento(),
+            "description" => $Assinante->getDescricaoAssinatura(),
+            "billingType" => $this->getSubscriptionBillingType($Assinante->getFormaDePagamento()),
+            "nextDueDate" => $Assinante->getProximoVencimento(),
+            "value" => $Assinante->getValor(),
+            "status" => 'ACTIVE',
+            "cycle" => $this->getSubscriptionCycle($Assinante->getPeriodo())
+        ];
 
-            if($subscription = $this->driver->subscription()->getByCustomer($Assinante->getIdGatewayPagamento())) {
-                $this->cancelPendingPayments($Assinante);
-                $subscription = $this->driver->subscription()->delete($subscription[0]->id);
-            }
-            $subscription = $this->driver->subscription()->create($subscriptionData);
-            return $subscription;
-        } catch (\Softr\Asaas\Exception\HttpException $e) {
-            dbg($e, true);
-            die;
+        if($subscription = $this->driver->subscription()->getByCustomer($Assinante->getIdGatewayPagamento())) {
+            $this->cancelPendingPayments($Assinante);
+            $subscription = $this->driver->subscription()->delete($subscription[0]->id);
         }
+        $subscription = $this->driver->subscription()->create($subscriptionData);
+
+
+        return $subscription;
 
     }
 
