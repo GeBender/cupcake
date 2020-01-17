@@ -144,6 +144,7 @@ class Asaas implements PagamentosInterface
             return $subscription;
         } catch (\Softr\Asaas\Exception\HttpException $e) {
             dbg($e, true);
+            die;
         }
 
     }
