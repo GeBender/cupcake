@@ -125,24 +125,26 @@ class Asaas implements PagamentosInterface
     }
 
     public function updateSubscription($Assinante) {
-        $subscriptionData = [
-            "customer" => $Assinante->getIdGatewayPagamento(),
-            "description" => $Assinante->getDescricaoAssinatura(),
-            "billingType" => $this->getSubscriptionBillingType($Assinante->getFormaDePagamento()),
-            "nextDueDate" => $Assinante->getProximoVencimento(),
-            "value" => $Assinante->getValor(),
-            "status" => 'ACTIVE',
-            "cycle" => $this->getSubscriptionCycle($Assinante->getPeriodo())
-        ];
+        try {
+            $subscriptionData = [
+                "customer" => $Assinante->getIdGatewayPagamento(),
+                "description" => $Assinante->getDescricaoAssinatura(),
+                "billingType" => $this->getSubscriptionBillingType($Assinante->getFormaDePagamento()),
+                "nextDueDate" => $Assinante->getProximoVencimento(),
+                "value" => $Assinante->getValor(),
+                "status" => 'ACTIVE',
+                "cycle" => $this->getSubscriptionCycle($Assinante->getPeriodo())
+            ];
 
-        if($subscription = $this->driver->subscription()->getByCustomer($Assinante->getIdGatewayPagamento())) {
-            $this->cancelPendingPayments($Assinante);
-            $subscription = $this->driver->subscription()->delete($subscription[0]->id);
+            if($subscription = $this->driver->subscription()->getByCustomer($Assinante->getIdGatewayPagamento())) {
+                $this->cancelPendingPayments($Assinante);
+                $subscription = $this->driver->subscription()->delete($subscription[0]->id);
+            }
+            $subscription = $this->driver->subscription()->create($subscriptionData);
+            return $subscription;
+        } catch (\Softr\Asaas\Exception\HttpException $e) {
+            dbg($e, true);
         }
-        $subscription = $this->driver->subscription()->create($subscriptionData);
-
-
-        return $subscription;
 
     }
 
